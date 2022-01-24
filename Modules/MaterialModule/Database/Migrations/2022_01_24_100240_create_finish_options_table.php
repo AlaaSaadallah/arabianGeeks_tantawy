@@ -16,7 +16,7 @@ class CreateFinishOptionsTable extends Migration
         Schema::create('finish_options', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->decimal('price', 8, 2);
+            $table->decimal('price', 8, 2)->nullable();
             $table->boolean('is_available')->default(1);
             $table->timestamps();
         });

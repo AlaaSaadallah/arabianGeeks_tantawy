@@ -16,7 +16,7 @@ class CreateFinishDirectionsTable extends Migration
         Schema::create('finish_directions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->decimal('price', 8, 2);
+            $table->decimal('price', 8, 2)->nullable();
             $table->boolean('is_available')->default(1);
             $table->timestamps();
         });

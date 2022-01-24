@@ -16,9 +16,9 @@ class CreatePaperTypesTable extends Migration
         Schema::create('paper_types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->decimal('width', 8, 2);
-            $table->decimal('height', 8, 2);
-            $table->decimal('price', 8, 2);
+            $table->decimal('width', 8, 2)->nullable();
+            $table->decimal('height', 8, 2)->nullable();
+            $table->decimal('price', 8, 2)->default(0);
             $table->boolean('is_available')->default(1);
             $table->timestamps();
         });
