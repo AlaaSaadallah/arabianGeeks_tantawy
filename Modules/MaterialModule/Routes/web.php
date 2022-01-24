@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('materialmodule')->group(function() {
-    Route::get('/', 'MaterialModuleController@index');
-});
+// Route::prefix('materialmodule')->group(function() {
+//     Route::get('/', 'MaterialModuleController@index');
+// });

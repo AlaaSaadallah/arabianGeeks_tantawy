@@ -11,6 +11,11 @@
 |
 */
 
-Route::prefix('categorymodule')->group(function() {
-    Route::get('/', 'CategoryModuleController@index');
+use Illuminate\Support\Facades\Route;
+
+// Route::prefix('category')->group(function() {
+    Route::group(['prefix' => 'category', 'namespace' => 'User'], function () {
+
+    /*************************views route ************************************** */
+    Route::get('/{category_id}', 'CategoryUserController@create')->name('user.create');
 });

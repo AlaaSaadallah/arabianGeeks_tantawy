@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('locationmodule')->group(function() {
-    Route::get('/', 'LocationModuleController@index');
-});
+// Route::prefix('locationmodule')->group(function() {
+//     Route::get('/', 'LocationModuleController@index');
+// });

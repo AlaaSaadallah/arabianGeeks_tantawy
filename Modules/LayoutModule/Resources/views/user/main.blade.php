@@ -14,7 +14,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="keywords" content=" مطابع طنطاوى كل ماهو جديد فى عالم الطباعة و مطابع طنطاوى فى جميع انحاء جمهورية مصر العربية " />
-	
+
 	<!--//for-mobile-apps -->
 	<!--Custom Theme files -->
 	<!--
@@ -24,9 +24,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
   -->
 	<link href="{{asset('assets/user/css/bootstrap.css')}}" rel="stylesheet" type="text/css" media="all" />
 	<link href="{{asset('assets/user/css/style.css')}}" rel="stylesheet" type="text/css" media="all" />
-	<link rel="stylesheet" href="{{asset('assets/user/css/flexslider.css')}}" type="text/css" media="screen" />
 	<!--//Custom Theme files -->
-	
+
 	<!--web-fonts-->
 	<link href='//fonts.googleapis.com/css?family=Raleway:400,100,100italic,200,200italic,300,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic' rel='stylesheet' type='text/css'>
 	<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
@@ -34,20 +33,21 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<link href='//fonts.googleapis.com/css?family=Fascinate' rel='stylesheet' type='text/css'>
 	<!--web-fonts-->
 	<!--animation-effect-->
+	<link rel="stylesheet" href="{{asset('assets/user/css/flexslider1.css')}}" type="text/css" media="screen" />
 	<link href="{{asset('assets/user/css/animate.min.css')}}" rel="stylesheet">
-	
+
 </head>
 
 <body>
 	<div class="container-fluid">
-@include ('layoutmodule::user.nav')
+		@include ('layoutmodule::user.nav',['cat' => $cat = Modules\CategoryModule\Entities\Category::all()])
 
-<section class="section">
-                                        @yield('content')
-                                </section>
+		<section class="section">
+			@yield('content')
+		</section>
 
-@include ('layoutmodule::user.footer')
-</div>
+		@include ('layoutmodule::user.footer')
+	</div>
 	<!--search jQuery-->
 
 	<script type="application/x-javascript">
@@ -72,6 +72,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<!--smooth-scrolling-of-move-up-->
 
 	<script src="{{asset('assets/user/js/wow.min.js')}}"></script>
+	<script defer src="{{asset('assets/user/js/jquery.flexslider.js')}}"></script>
+
 	<script>
 		new WOW().init();
 	</script>
