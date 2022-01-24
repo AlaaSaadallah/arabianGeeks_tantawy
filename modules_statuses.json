@@ -1,0 +1,9 @@
+{
+    "AdminModule": true,
+    "CategoryModule": true,
+    "LayoutModule": true,
+    "OrderModule": true,
+    "CustomerModule": true,
+    "MaterialModule": true,
+    "LocationModule": true
+}
