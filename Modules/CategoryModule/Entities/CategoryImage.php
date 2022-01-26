@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CategoryImage extends Model
 {
-    
+
+    protected $table = 'category_image';
+    protected $guarded = [];
 }

@@ -17,7 +17,7 @@ class CreateCategoryImagesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('category_id');
             $table->string('img_name');
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 

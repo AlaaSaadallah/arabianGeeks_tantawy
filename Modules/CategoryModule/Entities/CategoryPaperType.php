@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CategoryPaperType extends Model
 {
+    protected $table = 'category_paper_type' ;
     protected $guarded = [];
- 
+
 }

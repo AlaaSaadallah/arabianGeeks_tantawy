@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CategoryFinishOption extends Model
 {
+    protected $table = 'category_finish_option';
     protected $guarded = [];
 
 }

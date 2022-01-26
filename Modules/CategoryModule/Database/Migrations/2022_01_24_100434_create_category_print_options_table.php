@@ -17,7 +17,7 @@ class CreateCategoryPrintOptionsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('category_id');
             $table->bigInteger('print_option_id');
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 
