@@ -17,7 +17,7 @@ class CreateCategoryCoverTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('category_id');
             $table->bigInteger('cover_id');
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 

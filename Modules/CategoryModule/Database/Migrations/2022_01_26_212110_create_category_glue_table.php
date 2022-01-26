@@ -14,8 +14,9 @@ class CreateCategoryGlueTable extends Migration
     public function up()
     {
         Schema::create('category_glue', function (Blueprint $table) {
-            $table->id();
-
+            $table->bigIncrements('id');
+            $table->bigInteger('category_id');
+            $table->bigInteger('glue_id');
             $table->timestamps();
         });
     }

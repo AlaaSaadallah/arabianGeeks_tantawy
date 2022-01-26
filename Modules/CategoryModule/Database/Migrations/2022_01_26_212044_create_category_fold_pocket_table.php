@@ -14,9 +14,10 @@ class CreateCategoryFoldPocketTable extends Migration
     public function up()
     {
         Schema::create('category_fold_pocket', function (Blueprint $table) {
-            $table->bigIncrements('id');
+          $table->bigIncrements('id');
             $table->bigInteger('category_id');
             $table->bigInteger('fold_pocket_id');
+            $table->timestamps();
         });
     }
 

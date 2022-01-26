@@ -14,8 +14,9 @@ class CreateCategoryCutStyleTable extends Migration
     public function up()
     {
         Schema::create('category_cut_style', function (Blueprint $table) {
-            $table->id();
-
+            $table->bigIncrements('id');
+            $table->bigInteger('category_id');
+            $table->bigInteger('cut_style_id');
             $table->timestamps();
         });
     }

@@ -18,6 +18,8 @@ class CreateGluesTable extends Migration
             $table->string('name');
             $table->decimal('price', 8, 2)->nullable();
             $table->boolean('is_available')->default(1);
+            $table->timestamps();
+
         });
     }
 

@@ -7,9 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Modules\CategoryModule\Entities\Category;
 use Modules\CategoryModule\Entities\CategoryColor;
+use Modules\CategoryModule\Entities\CategoryCover;
+use Modules\CategoryModule\Entities\CategoryCutStyle;
+use Modules\CategoryModule\Entities\CategoryFoldNumber;
+use Modules\CategoryModule\Entities\CategoryFoldPocket;
+use Modules\CategoryModule\Entities\CategoryGlue;
 use Modules\CategoryModule\Entities\CategoryPaperSize;
 use Modules\CategoryModule\Entities\CategoryPaperType;
 use Modules\CategoryModule\Entities\CategoryPrintOption;
+use Modules\CategoryModule\Entities\CategryCutStyle;
+use Modules\CategoryModule\Entities\CategryFoldNumber;
+use Modules\CategoryModule\Entities\CategryFoldPocket;
+use Modules\CategoryModule\Entities\CategryGlue;
 
 class CategoryModuleDatabaseSeeder extends Seeder
 {
@@ -373,6 +382,119 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'print_option_id' => "4",
         ]);
 
+
+        DB::table('category_cover')->truncate();
+        CategoryCover::create([
+            'category_id' => "11",
+            'cover_id' => "1",
+        ]);
+        CategoryCover::create([
+            'category_id' => "11",
+            'cover_id' => "2",
+        ]);
+        CategoryCover::create([
+            'category_id' => "11",
+            'cover_id' => "3",
+        ]);
+        CategoryCover::create([
+            'category_id' => "11",
+            'cover_id' => "4",
+        ]);
+        CategoryCover::create([
+            'category_id' => "12",
+            'cover_id' => "1",
+        ]);
+        CategoryCover::create([
+            'category_id' => "12",
+            'cover_id' => "2",
+        ]);
+        CategoryCover::create([
+            'category_id' => "12",
+            'cover_id' => "3",
+        ]);
+        CategoryCover::create([
+            'category_id' => "12",
+            'cover_id' => "4",
+        ]);
+
+
+        DB::table('category_fold_pocket')->truncate();
+        CategoryFoldPocket::create([
+            'category_id' => "11",
+            'fold_pocket_id' => "1",
+        ]);
+        CategoryFoldPocket::create([
+            'category_id' => "11",
+            'fold_pocket_id' => "2",
+        ]);    CategoryFoldPocket::create([
+            'category_id' => "11",
+            'fold_pocket_id' => "3",
+        ]);    CategoryFoldPocket::create([
+            'category_id' => "11",
+            'fold_pocket_id' => "4",
+        ]);
+        CategoryFoldPocket::create([
+            'category_id' => "12",
+            'fold_pocket_id' => "1",
+        ]);
+        CategoryFoldPocket::create([
+            'category_id' => "12",
+            'fold_pocket_id' => "2",
+        ]);    CategoryFoldPocket::create([
+            'category_id' => "12",
+            'fold_pocket_id' => "3",
+        ]);    CategoryFoldPocket::create([
+            'category_id' => "12",
+            'fold_pocket_id' => "4",
+        ]);
+
+        DB::table('category_fold_number')->truncate();
+        CategoryFoldNumber::create([
+            'category_id' => "11",
+            'fold_number_id' => "1",
+        ]);
+        CategoryFoldNumber::create([
+            'category_id' => "12",
+            'fold_number_id' => "1",
+        ]);
+
+
+        DB::table('category_glue')->truncate();
+        CategoryGlue::create([
+            'category_id' => "11",
+            'glue_id' => "1",
+        ]);
+        CategoryGlue::create([
+            'category_id' => "11",
+            'glue_id' => "2",
+        ]);
+        CategoryGlue::create([
+            'category_id' => "12",
+            'glue_id' => "1",
+        ]);
+        CategoryGlue::create([
+            'category_id' => "12",
+            'glue_id' => "2",
+        ]);
+
+
+        DB::table('category_cut_style')->truncate();
+        CategoryCutStyle::create([
+            'category_id' => "11",
+            'cut_style_id' => "1",
+        ]);
+        CategoryCutStyle::create([
+            'category_id' => "11",
+            'cut_style_id' => "2",
+        ]);
+        CategoryCutStyle::create([
+            'category_id' => "12",
+            'cut_style_id' => "1",
+        ]);
+        CategoryCutStyle::create([
+            'category_id' => "12",
+            'cut_style_id' => "2",
+        ]);
         // $this->call("OthersTableSeeder");
     }
 }

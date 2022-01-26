@@ -14,8 +14,9 @@ class CreateCategoryFoldNumberTable extends Migration
     public function up()
     {
         Schema::create('category_fold_number', function (Blueprint $table) {
-            $table->id();
-
+            $table->bigIncrements('id');
+            $table->bigInteger('category_id');
+            $table->bigInteger('fold_number_id');
             $table->timestamps();
         });
     }
