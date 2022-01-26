@@ -17,7 +17,7 @@ class CreateCategoryColorsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('category_id');
             $table->bigInteger('color_id');
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 

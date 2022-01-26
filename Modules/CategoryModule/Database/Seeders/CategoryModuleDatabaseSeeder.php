@@ -88,7 +88,7 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'category_id' => "12",
             'paper_size_id' => "3",
         ]);
-        Category::create([
+        CategoryPaperSize::create([
             'category_id' => "12",
             'paper_size_id' => "7",
         ]);
@@ -372,7 +372,7 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'category_id' => "11",
             'print_option_id' => "4",
         ]);
-      
+
         // $this->call("OthersTableSeeder");
     }
 }

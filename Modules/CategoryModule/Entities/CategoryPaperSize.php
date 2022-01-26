@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CategoryPaperSize extends Model
 {
+    protected $table = 'category_paper_size';
     protected $guarded = [];
 
 }

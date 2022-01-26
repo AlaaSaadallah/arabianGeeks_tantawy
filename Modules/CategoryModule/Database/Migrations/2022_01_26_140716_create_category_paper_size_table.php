@@ -17,7 +17,7 @@ class CreateCategoryPaperSizeTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('category_id');
             $table->bigInteger('paper_size_id');
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 

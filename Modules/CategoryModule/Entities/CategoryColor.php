@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CategoryColor extends Model
 {
+    protected $table = 'category_color';
     protected $guarded = [];
 
 }

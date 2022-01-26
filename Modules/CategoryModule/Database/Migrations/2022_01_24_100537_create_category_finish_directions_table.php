@@ -17,7 +17,7 @@ class CreateCategoryFinishDirectionsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('category_id');
             $table->bigInteger('finish_direction_id');
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 

@@ -17,7 +17,7 @@ class CreateCategoryFinishOptionsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('category_id');
             $table->bigInteger('finish_option_id');
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 
