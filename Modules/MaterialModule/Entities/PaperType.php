@@ -1,4 +1,5 @@
 <?php
+/************************************نوع الورق******************************************** */
 
 namespace Modules\MaterialModule\Entities;
 
@@ -14,4 +15,9 @@ class PaperType extends Model
     protected $hidden = [
        'created_at','updated_at'
     ];
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
 }
