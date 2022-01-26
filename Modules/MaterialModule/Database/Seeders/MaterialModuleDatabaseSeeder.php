@@ -6,8 +6,14 @@ use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Modules\MaterialModule\Entities\Color;
+use Modules\MaterialModule\Entities\Cover;
+use Modules\MaterialModule\Entities\CutStyle;
 use Modules\MaterialModule\Entities\FinishDirection;
 use Modules\MaterialModule\Entities\FinishOption;
+use Modules\MaterialModule\Entities\FlodPocket;
+use Modules\MaterialModule\Entities\FoldNumber;
+use Modules\MaterialModule\Entities\FoldPocket;
+use Modules\MaterialModule\Entities\Glue;
 use Modules\MaterialModule\Entities\PaperSize;
 use Modules\MaterialModule\Entities\PaperType;
 use Modules\MaterialModule\Entities\PrintOption;
@@ -633,10 +639,6 @@ class MaterialModuleDatabaseSeeder extends Seeder
         ]);
 
 
-
-
-
-
         DB::table('finish_options')->truncate();
         FinishOption::create([
             'name' => "غراء",
@@ -660,6 +662,75 @@ class MaterialModuleDatabaseSeeder extends Seeder
         ]);
         FinishDirection::create([
             'name' => "شمال",
+        ]);
+
+
+        DB::table('covers')->truncate();
+        Cover::create([
+            'name' => "لامع وجه",
+            'width' => "100",
+            'height' => "70",
+            'price' => "1.6",
+        ]);
+        Cover::create([
+            'name' => "لامع وجهين",
+            'width' => "100",
+            'height' => "70",
+            'price' => "1.20",
+        ]);
+        Cover::create([
+            'name' => "مط وجه",
+            'width' => "100",
+            'height' => "70",
+            'price' => "1.6",
+        ]);
+        Cover::create([
+            'name' => "مط وجهين",
+            'width' => "100",
+            'height' => "70",
+            'price' => "1.20",
+        ]);
+
+
+        DB::table('fold_pockets')->truncate();
+        FoldPocket::create([
+            'name' => "جيب فقط-لزق",
+        ]);
+        FoldPocket::create([
+            'name' => "جيب و شباك-لزق",
+        ]);
+        FoldPocket::create([
+            'name' => "جيب قفل ذاتي",
+        ]);
+        FoldPocket::create([
+            'name' => "جيب و شباك قفل ذاتي",
+        ]);
+
+
+        DB::table('fold_numbers')->truncate();
+        FoldNumber::create([
+            'name' => "ريجة",
+            'price' => "25",
+        ]);
+
+
+
+        DB::table('cut_styles')->truncate();
+        CutStyle::create([
+            'name' => "عادي",
+        ]);
+        CutStyle::create([
+            'name' => "كيرفي",
+        ]);
+
+        DB::table('glues')->truncate();
+        Glue::create([
+            'name' => "لزق الجيب منه فيه",
+            'price' => "0.15",
+        ]);
+        Glue::create([
+            'name' => "لزق جيب خارجي",
+            'price' => "45",
         ]);
         // $this->call("OthersTableSeeder");
     }
