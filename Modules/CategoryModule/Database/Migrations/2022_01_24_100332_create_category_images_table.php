@@ -13,9 +13,9 @@ class CreateCategoryImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('category_images', function (Blueprint $table) {
+        Schema::create('category_image', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('cat_id');
+            $table->bigInteger('category_id');
             $table->string('img_name');
             // $table->timestamps();
         });
@@ -28,6 +28,6 @@ class CreateCategoryImagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('category_images');
+        Schema::dropIfExists('category_image');
     }
 }

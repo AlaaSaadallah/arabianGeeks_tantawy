@@ -13,9 +13,9 @@ class CreateCategoryPrintOptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('category_print_options', function (Blueprint $table) {
+        Schema::create('category_print_option', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('cat_id');
+            $table->bigInteger('category_id');
             $table->bigInteger('print_option_id');
             // $table->timestamps();
         });
@@ -28,6 +28,6 @@ class CreateCategoryPrintOptionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('category_print_options');
+        Schema::dropIfExists('category_print_option');
     }
 }

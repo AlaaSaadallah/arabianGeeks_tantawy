@@ -17,5 +17,8 @@ use Illuminate\Support\Facades\Route;
     Route::group(['prefix' => 'category', 'namespace' => 'User'], function () {
 
     /*************************views route ************************************** */
-    Route::get('/{category_id}', 'CategoryUserController@create')->name('user.create');
+    Route::get('/brochure', 'CategoryUserController@createBrochure')->name('user.create.brochure');
+    Route::get('/largeFolder', 'CategoryUserController@createLargeFolder')->name('user.create.large.folder');
+    Route::get('/smallFolder', 'CategoryUserController@createSmallFolder')->name('user.create.small.folder');
+
 });

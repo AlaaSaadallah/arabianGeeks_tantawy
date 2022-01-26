@@ -7,12 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CategoryColor extends Model
 {
-    use HasFactory;
+    protected $guarded = [];
 
-    protected $fillable = [];
-    
-    protected static function newFactory()
-    {
-        return \Modules\CategoryModule\Database\factories\CategoryColorFactory::new();
-    }
 }

@@ -13,9 +13,9 @@ class CreateCategoryFinishDirectionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('category_finish_directions', function (Blueprint $table) {
+        Schema::create('category_finish_direction', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('cat_id');
+            $table->bigInteger('category_id');
             $table->bigInteger('finish_direction_id');
             // $table->timestamps();
         });
@@ -28,6 +28,6 @@ class CreateCategoryFinishDirectionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('category_finish_directions');
+        Schema::dropIfExists('category_finish_direction');
     }
 }

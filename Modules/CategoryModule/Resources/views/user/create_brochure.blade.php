@@ -31,7 +31,7 @@
 				</div>
 			
 				<div class="col-md-6 single-top-left simpleCart_shelfItem wow fadeInRight animated" dir="rtl" lang="ar" data-wow-delay=".5s">
-					<h3>كارت شخصى</h3>
+					<h3>{{$category->name}}</h3>
 	
 					<h6 class="item_price">ارفع التصميم</h6><br>	
 					<form action="/action_page.php">
@@ -98,10 +98,12 @@
 							<td>
 									<select class="form-select" aria-label="Default select example">
 								<option selected>اختر</option>
-								<option value="9mm*55mm">1 لون</option>
-								<option value="84mm*55mm">2 لون</option>
+								@foreach($category->colors as $color)
+								<option value="{{$color->id}}">{{$color->name}}</option>
+								@endforeach
+								<!-- <option value="84mm*55mm">2 لون</option>
 								<option value="9mm*55mm">3 لون</option>
-								<option value="84mm*55mm">4 لون</option>
+								<option value="84mm*55mm">4 لون</option> -->
 							
 							  </select>
 							</td>

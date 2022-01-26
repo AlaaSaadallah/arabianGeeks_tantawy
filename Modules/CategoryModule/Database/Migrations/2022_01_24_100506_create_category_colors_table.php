@@ -13,9 +13,9 @@ class CreateCategoryColorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('category_colors', function (Blueprint $table) {
+        Schema::create('category_color', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('cat_id');
+            $table->bigInteger('category_id');
             $table->bigInteger('color_id');
             // $table->timestamps();
         });
@@ -28,6 +28,6 @@ class CreateCategoryColorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('category_colors');
+        Schema::dropIfExists('category_color');
     }
 }

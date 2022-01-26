@@ -13,9 +13,9 @@ class CreateCategoryPaperTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('category_paper_types', function (Blueprint $table) {
+        Schema::create('category_paper_type', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('cat_id');
+            $table->bigInteger('category_id');
             $table->bigInteger('paper_type_id');
             // $table->timestamps();
         });
@@ -28,6 +28,6 @@ class CreateCategoryPaperTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('category_paper_types');
+        Schema::dropIfExists('category_paper_type');
     }
 }

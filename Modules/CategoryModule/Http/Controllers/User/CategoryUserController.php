@@ -5,9 +5,17 @@ namespace Modules\CategoryModule\Http\Controllers\user;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\CategoryModule\Entities\Category;
+use Modules\CategoryModule\Services\CategoryService;
 
 class CategoryUserController extends Controller
 {
+
+    private $categoryService;
+    public function __construct(CategoryService $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
     /**
      * Display a listing of the resource.
      * @return Renderable
@@ -21,11 +29,22 @@ class CategoryUserController extends Controller
      * Show the form for creating a new resource.
      * @return Renderable
      */
-    public function create()
+    public function createBrochure()
     {
-        return view('categorymodule::user.create');
-    }
+        // $category = Category::firstWhere('id', 2);
+        $category=  $this->categoryService->findWhere(['id' => 2])->first(); // get all main categories for count in blade
+        // dd($category->colors);
 
+        return view('categorymodule::user.create_brochure',compact('category'));
+    }
+    public function createSmallFolder()
+    {
+        return view('categorymodule::user.create_small_folder');
+    }
+    public function createLargeFolder()
+    {
+        return view('categorymodule::user.create_large_folder');
+    }
     /**
      * Store a newly created resource in storage.
      * @param Request $request

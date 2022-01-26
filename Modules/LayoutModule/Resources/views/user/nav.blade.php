@@ -74,20 +74,17 @@
 										<div class="col-sm-3 menu-grids">
 										
 											<ul class="multi-column-dropdown">
-												@foreach($cat as $category)
-												<li><a class="list" href="{{route('user.create',$category->id)}}">{{ $category->name }}</a></li>
-												<!-- <li><a class="list" href="products.html">روشتات</a></li>
+												<li><a class="list" href="products.html">روشتات</a></li>
 												<li><a class="list" href="products.html">دفاتر</a></li>
 												<li><a class="list" href="products.html">مظاريف </a></li>
 												<li><a class="list" href="products.html">العلب </a></li>
-												<li><a class="list" href="products.html">الامساكيات الرمضانية</a></li> -->
-												@endforeach
+												<li><a class="list" href="products.html">الامساكيات الرمضانية</a></li>
 											</ul>
 										</div>
-										<!-- <div class="col-sm-3 menu-grids">
+										<div class="col-sm-3 menu-grids">
 
 											<ul class="multi-column-dropdown">
-												<li><a class="list" href="single.html">بروشورات</a></li>
+												<li><a class="list" href="{{route('user.create.brochure')}}">بروشورات</a></li>
 												<li><a class="list" href="products.html">بطاقات دعوة</a></li>
 												<li><a class="list" href="single.html">فولدرات صغيرة</a></li>
 												<li><a class="list" href="products.html">فولدرات كبيرة</a></li>
@@ -106,7 +103,7 @@
 												<li><a class="list" href="products.html">ملصقات</a></li>
 												<li><a class="list" href="products.html">جميع أنواع التكسير</a></li>
 											</ul>
-										</div> -->
+										</div>
 										<div class="col-sm-3 menu-grids new-add2">
 											<a href="index.html">
 												<h6> مطابع طنطاوى </h6>

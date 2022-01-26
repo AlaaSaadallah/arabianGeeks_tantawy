@@ -13,9 +13,9 @@ class CreateCategoryFinishOptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('category_finish_options', function (Blueprint $table) {
+        Schema::create('category_finish_option', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('cat_id');
+            $table->bigInteger('category_id');
             $table->bigInteger('finish_option_id');
             // $table->timestamps();
         });
@@ -28,6 +28,6 @@ class CreateCategoryFinishOptionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('category_finish_options');
+        Schema::dropIfExists('category_finish_option');
     }
 }
