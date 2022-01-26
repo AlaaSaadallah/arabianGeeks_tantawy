@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CategoryPrintOption extends Model
 {
-    
+    protected $guarded = [];
+
 }

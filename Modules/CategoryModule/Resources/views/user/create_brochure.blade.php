@@ -49,8 +49,10 @@
 							<td> المقاس :  </td>
 							<td><select class="form-select" aria-label="Default select example">
 								<option selected>اختر</option>
-								<option value="9mm*55mm">A4 عادى</option>
-								<option value="84mm*55mm">A4 جاير</option>
+								@foreach($category->PaperType as $type)
+								<option value="{{$type->paper_type_id}}">{{$type->name}}</option>
+								@endforeach
+								<!-- <option value="84mm*55mm">A4 جاير</option> -->
 							
 							  </select>
 							</td>	

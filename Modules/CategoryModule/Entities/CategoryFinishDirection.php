@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CategoryFinishDirection extends Model
 {
-   
+    protected $guarded = [];
+
 }
