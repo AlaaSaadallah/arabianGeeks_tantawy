@@ -6,7 +6,7 @@ use App\Helpers\UploaderHelper;
 use Illuminate\Support\Facades\Hash;
 use Modules\MaterialModule\Repository\PaperTypeRepository;
 
-class ColorService
+class PaperTypeService
 {
     private $paperTypeRepository;
     public function __construct(PaperTypeRepository $paperTypeRepository)
@@ -24,6 +24,7 @@ class ColorService
         return $this->paperTypeRepository->find($id);
     }
 
+    
     public function create($requests)
     {
 

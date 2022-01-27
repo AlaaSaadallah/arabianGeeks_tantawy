@@ -11,6 +11,12 @@
 |
 */
 
-Route::prefix('ordermodule')->group(function() {
-    Route::get('/', 'OrderModuleController@index');
+use Illuminate\Support\Facades\Route;
+
+
+Route::group(['prefix' => 'order', 'namespace' => 'User'], function () {
+
+    /*************************views route ************************************** */
+    Route::post('store', 'OrderUserController@store')->name('user.order.store'); // add new orderaction
+
 });

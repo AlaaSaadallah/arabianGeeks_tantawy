@@ -35,15 +35,18 @@ class CategoryUserController extends Controller
         // $category=  $this->categoryService->findWhere(['id' => 2])->first(); // get all main categories for count in blade
         // dd($category->colors);
 // dd($category->paperType);
-        return view('categorymodule::user.create_brochure',compact('category'));
+        return view('ordermodule::user.create_brochure',compact('category'));
     }
     public function createSmallFolder()
     {
-        return view('categorymodule::user.create_small_folder');
+        $category = Category::firstWhere('id', 11);
+        return view('ordermodule::user.create_small_folder',compact('category'));
     }
     public function createLargeFolder()
     {
-        return view('categorymodule::user.create_large_folder');
+        $category = Category::firstWhere('id', 12);
+        // dd($category);
+        return view('ordermodule::user.create_large_folder',compact('category'));
     }
     /**
      * Store a newly created resource in storage.

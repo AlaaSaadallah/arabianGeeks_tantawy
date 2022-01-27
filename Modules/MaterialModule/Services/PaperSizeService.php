@@ -6,7 +6,7 @@ use App\Helpers\UploaderHelper;
 use Illuminate\Support\Facades\Hash;
 use Modules\MaterialModule\Repository\PaperSizeRepository;
 
-class ColorService
+class PaperSizeService
 {
     private $paperSizeRepository;
     public function __construct(PaperSizeRepository $paperSizeRepository)
@@ -18,6 +18,11 @@ class ColorService
     public function findAll()
     {
         return $this->paperSizeRepository->findAll();
+    }
+
+    public function findWhere($arr)
+    {
+        return $this->paperSizeRepository->findWhere($arr);
     }
     public function findOne($id)
     {

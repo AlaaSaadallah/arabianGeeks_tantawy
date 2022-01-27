@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\MaterialModule\Entities\Color;
 use Modules\MaterialModule\Entities\Cover;
+use Modules\MaterialModule\Entities\CutStyle;
 use Modules\MaterialModule\Entities\FinishDirection;
 use Modules\MaterialModule\Entities\FinishOption;
 use Modules\MaterialModule\Entities\FoldNumber;
@@ -71,8 +72,13 @@ class Category extends Model
         return $this->belongsToMany(FoldNumber::class);
     }
 
-    public function Glues()
+    public function glues()
     {
         return $this->belongsToMany(Glue::class);
+    }
+
+    public function cutStyles()
+    {
+        return $this->belongsToMany(CutStyle::class);
     }
 }

@@ -31,7 +31,7 @@
 				</div>
 			
 				<div class="col-md-6 single-top-left simpleCart_shelfItem wow fadeInRight animated" dir="rtl" lang="ar" data-wow-delay=".5s">
-					<h3>small folder</h3>
+					<h3>{{ $category->name }}</h3>
 	
 					<h6 class="item_price">ارفع التصميم</h6><br>	
 					<form action="/action_page.php">
@@ -47,42 +47,39 @@
 						<tbody>
 						  <tr>
 							<td> المقاس :  </td>
-							<td><select class="form-select" aria-label="Default select example">
-								<option selected>اختر</option>
-								<option value="9mm*55mm">A4 عادى</option>
-								<option value="84mm*55mm">A4 جاير</option>
-							
-							  </select>
-							</td>	
+							<td><select class="form-select" aria-label="Default select example" name="paper_size">
+                                    <option selected>اختر</option>
+                                    @foreach ($category->paperSizes as $size)
+                                    <option value="{{ $size->id }}">{{ $size->name }}</option>
+                                    @endforeach
+                                    <!-- <option value="84mm*55mm">A4 جاير</option> -->
+
+                                </select>
+                            </td>
 						  </tr>
 						  <tr>
 							<td>شكل الطباعة :</td>
-							<td>
-									<select class="form-select" aria-label="Default select example">
-								<option selected>اختر</option>
-								<option value="9mm*55mm">وجه فقط</option>
-								
-							
-							  </select>
-							</td>
+						    <td>
+                                <select class="form-select" aria-label="Default select example" name="print_option">
+                                    <option selected>اختر</option>
+                                    @foreach ($category->printOptions as $option)
+                                    <option value="{{ $option->id }}">{{ $option->name }}</option>
+                                    @endforeach
+
+                                </select>
+                            </td>
 						  </tr>
 						  <tr>
 							<td>نوع الورق :</td>
 							<td>
-									<select class="form-select" aria-label="Default select example">
-								<option selected>اختر</option>
-								<option value="9mm*55mm">60 جم</option>
-								<option value="84mm*55mm">70 جم</option>
+                                <select class="form-select" aria-label="Default select example" name="paper_type">
+                                    <option selected>اختر</option>
+                                    @foreach ($category->paperTypes as $type)
+                                    <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                    @endforeach
 
-								<option value="9mm*55mm">80 جم</option>
-								<option value="84mm*55mm">100 جم</option>
-								<option value="9mm*55mm">120 جم</option>
-								<option value="84mm*55mm">115 جم كوشيه</option>
-								<option value="9mm*55mm">130 جم كوشيه</option>
-								<option value="84mm*55mm">150 جم كوشيه</option>
-							
-							  </select>
-							</td>
+                                </select>
+                            </td>
 						  </tr>
 						  <tr>
 							<td>الكمية : </td>
@@ -96,29 +93,30 @@
 						  <tr>
 							<td>عدد الألوان</td>
 							<td>
-									<select class="form-select" aria-label="Default select example">
-								<option selected>اختر</option>
-								<option value="9mm*55mm">1 لون</option>
-								<option value="84mm*55mm">2 لون</option>
-								<option value="9mm*55mm">3 لون</option>
-								<option value="84mm*55mm">4 لون</option>
-							
-							  </select>
-							</td>
+                                <select class="form-select" aria-label="Default select example" name="colors">
+                                    <option selected>اختر</option>
+                                    @foreach ($category->colors as $color)
+                                    <option value="{{ $color->id }}">{{ $color->name }}</option>
+                                    @endforeach
+                                    <!-- <option value="84mm*55mm">2 لون</option>
+                <option value="9mm*55mm">3 لون</option>
+                <option value="84mm*55mm">4 لون</option> -->
+
+                                </select>
+                            </td>
 						  </tr>
 						  <tr>
 							<td>القص</td>
 							<td>
 									<select class="form-select" aria-label="Default select example">
 								<option selected>اختر</option>
-								<option value="9mm*55mm">A4 مستطيل</option>
-								<option value="84mm*55mm">A4 كيرف</option>
-							
-							
+								@foreach ($category->cutStyles as $style)
+                                    <option value="{{ $style->id }}">{{ $style->name }}</option>
+                                    @endforeach
 							  </select>
 							</td>
 						  </tr>
-						  <tr>
+						  <!-- <tr>
 							<td>جهة التقفيل </td>
 							<td>
 									<select class="form-select" aria-label="Default select example">
@@ -130,8 +128,8 @@
 							
 							  </select>
 							</td>
-						  </tr>
-						  <tr>
+						  </tr> -->
+						  <!-- <tr>
 							<td>التقفيل</td>
 							<td>
 									<select class="form-select" aria-label="Default select example">
@@ -142,8 +140,8 @@
 							
 							  </select>
 							</td>
-						  </tr>
-						  <tr>
+						  </tr> -->
+						  <!-- <tr>
 							<td>الشرشرة</td>
 							<td>
 								<select class="form-select" aria-label="Default select example">
@@ -154,16 +152,22 @@
 							
 							  </select>
 							</td>
-						  </tr>
+						  </tr> -->
 						  
 						  <tr>
 							<td>ريجه :</td>
 							<td>
 									<select class="form-select" aria-label="Default select example">
 								<option selected>اختر</option>
-								<option value="yes">نعم</option>
-								<option value="no">لا</option>
-							
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+
 							  </select>
 							</td>
 						  </tr>
@@ -172,10 +176,9 @@
 							<td>
 									<select class="form-select" aria-label="Default select example">
 								<option selected>اختر</option>
-								<option value="bright one side">لامع وجه واحد </option>
-								<option value="bright two sides">لامع وجهين  </option>
-								<option value="matt one side">مط وجه واحد </option>
-								<option value="matt two sides">مط وجهين  </option>
+								@foreach ($category->covers as $cover)
+                                    <option value="{{ $cover->id }}">{{ $cover->name }}</option>
+                                    @endforeach
 							  </select>
 							</td>
 						  </tr>
@@ -184,10 +187,9 @@
 							<td>
 								<select class="form-select" aria-label="Default select example">
 									<option selected>اختر</option>
-									<option value="stick pocket">جيب فقط لزق</option>
-									<option value="stick pocket and window">جيب وشباك لزق </option>
-									<option value="self lock poket">جيب قفل ذاتى</option>
-									<option value="self lock pocketand window">جيب وشباك قفل ذاتى </option>
+									@foreach ($category->foldPockets as $fold)
+                                    <option value="{{ $fold->id }}">{{ $fold->name }}</option>
+                                    @endforeach
 								
 								  </select>
 							</td>
@@ -197,9 +199,9 @@
 							<td>
 								<select class="form-select" aria-label="Default select example">
 									<option selected>اختر</option>
-									<option value="stick pocket">لزق الجيب منه فيه</option>
-									<option value="external pocket">لزق جيب خارجى</option>
-								
+									<	@foreach ($category->glues as $glue)
+                                    <option value="{{ $glue->id }}">{{ $glue->name }}</option>
+                                    @endforeach
 								  </select>
 							</td>
 						  </tr>

@@ -86,8 +86,8 @@
 											<ul class="multi-column-dropdown">
 												<li><a class="list" href="{{route('user.create.brochure')}}">بروشورات</a></li>
 												<li><a class="list" href="products.html">بطاقات دعوة</a></li>
-												<li><a class="list" href="single.html">فولدرات صغيرة</a></li>
-												<li><a class="list" href="products.html">فولدرات كبيرة</a></li>
+												<li><a class="list" href="{{route('user.create.small.folder')}}">فولدرات صغيرة</a></li>
+												<li><a class="list" href="{{route('user.create.large.folder')}}">فولدرات كبيرة</a></li>
 												<li><a class="list" href="single.html">كروت شخصية</a></li>
 												<li><a class="list" href="products.html">نتائج التقويم الميلادى</a></li>
 

@@ -9,6 +9,7 @@ use Modules\CategoryModule\Entities\Category;
 use Modules\CategoryModule\Entities\CategoryColor;
 use Modules\CategoryModule\Entities\CategoryCover;
 use Modules\CategoryModule\Entities\CategoryCutStyle;
+use Modules\CategoryModule\Entities\CategoryFinishOption;
 use Modules\CategoryModule\Entities\CategoryFoldNumber;
 use Modules\CategoryModule\Entities\CategoryFoldPocket;
 use Modules\CategoryModule\Entities\CategoryGlue;
@@ -61,7 +62,12 @@ class CategoryModuleDatabaseSeeder extends Seeder
         Category::create([
             'name' => "ملصقات",
         ]);
-
+        Category::create([
+            'name' => "فولدرات صغيرة",
+        ]);
+        Category::create([
+            'name' => "فولدرات كبيرة",
+        ]);
 
 
         DB::table('category_paper_size')->truncate();
@@ -382,7 +388,6 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'print_option_id' => "4",
         ]);
 
-
         DB::table('category_cover')->truncate();
         CategoryCover::create([
             'category_id' => "11",
@@ -426,10 +431,12 @@ class CategoryModuleDatabaseSeeder extends Seeder
         CategoryFoldPocket::create([
             'category_id' => "11",
             'fold_pocket_id' => "2",
-        ]);    CategoryFoldPocket::create([
+        ]);
+        CategoryFoldPocket::create([
             'category_id' => "11",
             'fold_pocket_id' => "3",
-        ]);    CategoryFoldPocket::create([
+        ]);
+        CategoryFoldPocket::create([
             'category_id' => "11",
             'fold_pocket_id' => "4",
         ]);
@@ -440,10 +447,12 @@ class CategoryModuleDatabaseSeeder extends Seeder
         CategoryFoldPocket::create([
             'category_id' => "12",
             'fold_pocket_id' => "2",
-        ]);    CategoryFoldPocket::create([
+        ]);
+        CategoryFoldPocket::create([
             'category_id' => "12",
             'fold_pocket_id' => "3",
-        ]);    CategoryFoldPocket::create([
+        ]);
+        CategoryFoldPocket::create([
             'category_id' => "12",
             'fold_pocket_id' => "4",
         ]);
