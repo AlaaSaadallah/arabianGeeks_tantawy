@@ -18,5 +18,6 @@ Route::group(['prefix' => 'order', 'namespace' => 'User'], function () {
 
     /*************************views route ************************************** */
     Route::post('store', 'OrderUserController@store')->name('user.order.store'); // add new orderaction
+    // Route::post('store', 'OrderUserController@storeFolder')->name('user.order.storeFolder'); // add new orderaction
 
 });

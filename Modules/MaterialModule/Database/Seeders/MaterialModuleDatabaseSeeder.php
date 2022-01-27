@@ -140,25 +140,25 @@ class MaterialModuleDatabaseSeeder extends Seeder
 
         ]);
         PaperSize::create([
-            'name' => "a3",
+            'name' => "A3",
             'width' => '29.7',
             'height' => '42',
 
         ]);
         PaperSize::create([
-            'name' => "a4",
+            'name' => "A4",
             'width' => '21',
             'height' => '29.7',
 
         ]);
         PaperSize::create([
-            'name' => "a5",
+            'name' => "A5",
             'width' => '15',
             'height' => '21',
 
         ]);
         PaperSize::create([
-            'name' => "a6",
+            'name' => "A6",
             'width' => '10',
             'height' => '15',
 
@@ -175,6 +175,22 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'height' => '42.5',
 
         ]);
+        PaperSize::create([
+            'name' => "B4",
+            'width' => '24',
+            'height' => '33',
+        ]);
+        PaperSize::create([
+            'name' => "B5",
+            'width' => '16',
+            'height' => '24',
+        ]);
+        PaperSize::create([
+            'name' => "B6",
+            'width' => '12',
+            'height' => '16',
+        ]);
+
 
         DB::table('paper_types')->truncate();
         PaperType::create([

@@ -8,13 +8,17 @@ use Illuminate\Routing\Controller;
 use Modules\MaterialModule\Services\ColorService;
 use Modules\MaterialModule\Services\PaperSizeService;
 use Modules\MaterialModule\Services\PaperTypeService;
+use Modules\OrderModule\Services\OrderService;
+
+use function PHPUnit\Framework\assertIsFloat;
 
 class OrderUserController extends Controller
 {
 
     private $paperSizeService;
-    public function __construct(PaperSizeService $paperSizeService, PaperTypeService $paperTypeService, ColorService $colorService)
+    public function __construct(OrderService $orderService,PaperSizeService $paperSizeService, PaperTypeService $paperTypeService, ColorService $colorService)
     {
+        $this->orderService = $orderService;
         $this->paperSizeService = $paperSizeService;
         $this->paperTypeService = $paperTypeService;
         $this->colorService = $colorService;
@@ -46,6 +50,17 @@ class OrderUserController extends Controller
     {
         // dd('jjjj');
         // dd($request->toArray());
+        $this->orderService->createBrochureOrder($request->all());
+
+// dd($data);
+
+       
+    }
+
+
+    public function storeFolder(Request $request)
+    {
+        // dd($request->toArray());
         $paper_size = $this->paperSizeService->findOne($request->paper_size); // get chosen size data 
         $no_of_width_to_quarter = floor(50 / $paper_size->width); // العدد بالنسبة للعرض
         $no_of_height_to_quarter = floor(35 / $paper_size->height); //  العدد بالنسبه للطول
@@ -56,28 +71,8 @@ class OrderUserController extends Controller
         $standard_sheet_price = $paper_type->price; // تحديد سعر الورقة
         $total_sheets_price =  ($standard_sheet_price / 4) * $total_number_of_sheets; // حساب ثمن الورق كله
 
-        $color_data = $this->colorService->findOne($request->colors);
-        // تحديد عدد الزنجات
-        if ($request->print_option == 1) {
-            $zinkat = $request->colors * 30 ;
-        }
-        elseif ($request->print_option == 2) {
-            $zinkat = $request->colors * 30 * 2;
-        }
-        $traj =  $total_number_of_sheets * $request->colors * $color_data->price;
 
-        $shipping_fees = 20 ;
-        if($total_number_of_sheets > 1000){
-            $over_1000 = floor($total_number_of_sheets/1000)+1;
-            // dd($over_1000);
-            $shipping_fees += 10 ;
-        }
-        
-        // dd($shipping_fees);
-
-        $total_order_price = $total_sheets_price + $zinkat + $traj + $shipping_fees;
     }
-
     /**
      * Show the specified resource.
      * @param int $id

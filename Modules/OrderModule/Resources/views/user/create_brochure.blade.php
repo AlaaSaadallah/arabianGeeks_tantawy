@@ -37,7 +37,7 @@
                 <!-- <form action="/action_page.php"> -->
                 <form action="{{route('user.order.store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
-                    <input type="file" id="myFile" name="filename">
+                    <input type="file" id="myFile" name="image">
 
                
                 <p>
@@ -52,7 +52,7 @@
                         <tr>
                             <td> المقاس : </td>
                             <td><select class="form-select" aria-label="Default select example" name="paper_size">
-                                    <option selected>اختر</option>
+                                    <option disabled>اختر</option>
                                     @foreach ($category->paperSizes as $size)
                                     <option value="{{ $size->id }}">{{ $size->name }}</option>
                                     @endforeach
@@ -65,7 +65,7 @@
                             <td>شكل الطباعة :</td>
                             <td>
                                 <select class="form-select" aria-label="Default select example" name="print_option">
-                                    <option selected>اختر</option>
+                                    <option disabled>اختر</option>
                                     @foreach ($category->printOptions as $option)
                                     <option value="{{ $option->id }}">{{ $option->name }}</option>
                                     @endforeach
@@ -77,7 +77,7 @@
                             <td>نوع الورق :</td>
                             <td>
                                 <select class="form-select" aria-label="Default select example" name="paper_type">
-                                    <option selected>اختر</option>
+                                    <option disabled>اختر</option>
                                     @foreach ($category->paperTypes as $type)
                                     <option value="{{ $type->id }}">{{ $type->name }}</option>
                                     @endforeach
@@ -98,7 +98,7 @@
                             <td>عدد الألوان</td>
                             <td>
                                 <select class="form-select" aria-label="Default select example" name="colors">
-                                    <option selected>اختر</option>
+                                    <option disabled>اختر</option>
                                     @foreach ($category->colors as $color)
                                     <option value="{{ $color->id }}">{{ $color->name }}</option>
                                     @endforeach
@@ -113,7 +113,7 @@
                                 <td>جهة التقفيل </td>
                                 <td>
                                     <select class="form-select" aria-label="Default select example" name="finish_direction">
-                                        <option selected>اختر</option>
+                                        <option disabled>اختر</option>
                                         @foreach ($category->finishDirections as $finish_direction)
                                             <option value="{{ $finish_direction->id }}">{{ $finish_direction->name }}
                                             </option>
@@ -125,7 +125,7 @@
                                 <td>التقفيل</td>
                                 <td>
                                     <select class="form-select" aria-label="Default select example" name="finish_option">
-                                        <option selected>اختر</option>
+                                        <option disabled>اختر</option>
                                          @foreach ($category->finishOptions as $finish_option)
                                             <option value="{{ $finish_option->id }}">{{ $finish_option->name }}
                                             </option>
