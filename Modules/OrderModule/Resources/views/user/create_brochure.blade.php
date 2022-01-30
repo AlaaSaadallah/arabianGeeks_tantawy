@@ -36,80 +36,80 @@
                 <h6 class="item_price">ارفع التصميم</h6><br>
                 <!-- <form action="/action_page.php"> -->
                 <form action="{{route('user.order.store')}}" method="POST" enctype="multipart/form-data">
-                @csrf
+                    @csrf
                     <input type="file" id="myFile" name="image">
 
-               
-                <p>
-                    كرت شخصي :الكروت الشخصية افضل و أول وسيلة تواصل بينك وبين عملائك المستقلبيين وزملائك في العمل وافضل
-                    وسيله جذب العملاء المحتملين وزيادة التعريف بعلامتك التجارية احرص على اقتنائها دائما ودعنا نقدم لك
-                    ليتر هيد بافضل جودة واسعار رائعة عبر عدة اختيارات تلبي جميع رغباتك.
 
-                </p>
-                <table class="table">
+                    <p>
+                        كرت شخصي :الكروت الشخصية افضل و أول وسيلة تواصل بينك وبين عملائك المستقلبيين وزملائك في العمل وافضل
+                        وسيله جذب العملاء المحتملين وزيادة التعريف بعلامتك التجارية احرص على اقتنائها دائما ودعنا نقدم لك
+                        ليتر هيد بافضل جودة واسعار رائعة عبر عدة اختيارات تلبي جميع رغباتك.
 
-                    <tbody>
-                        <tr>
-                            <td> المقاس : </td>
-                            <td><select class="form-select" aria-label="Default select example" name="paper_size">
-                                    <option disabled>اختر</option>
-                                    @foreach ($category->paperSizes as $size)
-                                    <option value="{{ $size->id }}">{{ $size->name }}</option>
-                                    @endforeach
-                                    <!-- <option value="84mm*55mm">A4 جاير</option> -->
+                    </p>
+                    <table class="table">
 
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>شكل الطباعة :</td>
-                            <td>
-                                <select class="form-select" aria-label="Default select example" name="print_option">
-                                    <option disabled>اختر</option>
-                                    @foreach ($category->printOptions as $option)
-                                    <option value="{{ $option->id }}">{{ $option->name }}</option>
-                                    @endforeach
+                        <tbody>
+                            <tr>
+                                <td> المقاس : </td>
+                                <td><select class="form-select" aria-label="Default select example" name="paper_size">
+                                        <option disabled>اختر</option>
+                                        @foreach ($category->paperSizes as $size)
+                                        <option value="{{ $size->id }}">{{ $size->name }}</option>
+                                        @endforeach
+                                        <!-- <option value="84mm*55mm">A4 جاير</option> -->
 
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>نوع الورق :</td>
-                            <td>
-                                <select class="form-select" aria-label="Default select example" name="paper_type">
-                                    <option disabled>اختر</option>
-                                    @foreach ($category->paperTypes as $type)
-                                    <option value="{{ $type->id }}">{{ $type->name }}</option>
-                                    @endforeach
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>شكل الطباعة :</td>
+                                <td>
+                                    <select class="form-select" aria-label="Default select example" name="print_option">
+                                        <option disabled>اختر</option>
+                                        @foreach ($category->printOptions as $option)
+                                        <option value="{{ $option->id }}">{{ $option->name }}</option>
+                                        @endforeach
 
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>الكمية : </td>
-                            <td>
-                                <div class="form-group mx-sm-3 mb-2">
-                                    <label for="quantity" class="sr-only">الكمية</label>
-                                    <input type="text" class="form-control" id="quantity" placeholder="ادخل الكمية 1000 ومضاعفاتها" name="quantity">
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>عدد الألوان</td>
-                            <td>
-                                <select class="form-select" aria-label="Default select example" name="colors">
-                                    <option disabled>اختر</option>
-                                    @foreach ($category->colors as $color)
-                                    <option value="{{ $color->id }}">{{ $color->name }}</option>
-                                    @endforeach
-                                    <!-- <option value="84mm*55mm">2 لون</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>نوع الورق :</td>
+                                <td>
+                                    <select class="form-select" aria-label="Default select example" name="paper_type">
+                                        <option disabled>اختر</option>
+                                        @foreach ($category->paperTypes as $type)
+                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                        @endforeach
+
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>الكمية : </td>
+                                <td>
+                                    <div class="form-group mx-sm-3 mb-2">
+                                        <label for="quantity" class="sr-only">الكمية</label>
+                                        <input type="text" class="form-control" id="quantity" placeholder="ادخل الكمية 1000 ومضاعفاتها" name="quantity">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>عدد الألوان</td>
+                                <td>
+                                    <select class="form-select" aria-label="Default select example" name="colors">
+                                        <option disabled>اختر</option>
+                                        @foreach ($category->colors as $color)
+                                        <option value="{{ $color->id }}">{{ $color->name }}</option>
+                                        @endforeach
+                                        <!-- <option value="84mm*55mm">2 لون</option>
                 <option value="9mm*55mm">3 لون</option>
                 <option value="84mm*55mm">4 لون</option> -->
 
-                                </select>
-                            </td>
-                        </tr>
-                        <!-- <tr>
+                                    </select>
+                                </td>
+                            </tr>
+                            <!-- <tr>
                                 <td>جهة التقفيل </td>
                                 <td>
                                     <select class="form-select" aria-label="Default select example" name="finish_direction">
@@ -121,7 +121,7 @@
                                     </select>
                                 </td>
                             </tr> -->
-                        <!-- <tr>
+                            <!-- <tr>
                                 <td>التقفيل</td>
                                 <td>
                                     <select class="form-select" aria-label="Default select example" name="finish_option">
@@ -133,20 +133,20 @@
                                     </select>
                                 </td>
                             </tr> -->
-                        <tr>
-                            <td>ملاحظات</td>
-                            <td>
-                                <textarea class="form-control rounded-0" rows="5" name="notes">
+                            <tr>
+                                <td>ملاحظات</td>
+                                <td>
+                                    <textarea class="form-control rounded-0" rows="5" name="notes">
                  </textarea>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
 
-                <div class="btn_form">
-                    <button class="btn add-cart item_add">اضافة للسلة</button>
-                </div>
+                    <div class="btn_form">
+                        <button class="btn add-cart item_add">اضافة للسلة</button>
+                    </div>
             </div>
             </form>
             <div class="clearfix"> </div>

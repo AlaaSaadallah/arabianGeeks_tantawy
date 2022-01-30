@@ -6,7 +6,7 @@ use App\Helpers\UploaderHelper;
 use Illuminate\Support\Facades\Hash;
 use Modules\MaterialModule\Repository\FinishOptionRepository;
 
-class ColorService
+class FinishOptionService
 {
     private $finishOptionRepository;
     public function __construct(FinishOptionRepository $finishOptionRepository)

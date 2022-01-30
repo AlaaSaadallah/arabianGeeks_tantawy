@@ -34,7 +34,14 @@ class CategoryUserController extends Controller
         $category = Category::firstWhere('id', 2);
         // $category=  $this->categoryService->findWhere(['id' => 2])->first(); // get all main categories for count in blade
         // dd($category->colors);
-// dd($category->paperType);
+        // $sizes = $category->paperSizes;
+        // foreach($sizes as $size){
+        //     foreach($size->paperTypesForSize as $type){
+                
+        //         dd($type->name);
+        //     }
+        // }
+// dd($x );
         return view('ordermodule::user.create_brochure',compact('category'));
     }
     public function createSmallFolder()

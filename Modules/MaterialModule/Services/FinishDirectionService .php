@@ -6,7 +6,7 @@ use App\Helpers\UploaderHelper;
 use Illuminate\Support\Facades\Hash;
 use Modules\MaterialModule\Repository\FinishDirectionRepository;
 
-class ColorService
+class FinishDirectionService
 {
     private $finishDirectionRepository;
     public function __construct(FinishDirectionRepository $finishDirectionRepository)

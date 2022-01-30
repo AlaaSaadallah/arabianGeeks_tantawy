@@ -6,7 +6,7 @@ use App\Helpers\UploaderHelper;
 use Illuminate\Support\Facades\Hash;
 use Modules\MaterialModule\Repository\PrintOptionRepository;
 
-class ColorService
+class PrintOptionService
 {
     private $printOptionRepository;
     public function __construct(PrintOptionRepository $printOptionRepository)

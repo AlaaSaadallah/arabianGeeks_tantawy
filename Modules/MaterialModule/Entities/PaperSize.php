@@ -20,4 +20,9 @@ class PaperSize extends Model
     {
         return $this->belongsToMany(Category::class);
     }
+
+    public function paperTypesForSize()
+    {
+        return $this->belongsToMany(PaperType::class);
+    }
 }

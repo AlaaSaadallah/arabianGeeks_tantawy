@@ -12,27 +12,17 @@ class OrderRepository extends BaseRepository
     {
         return Order::class;
     }
-    function getPass($id)
+    function genOrderNu()
     {
-        $pass = Order::where('id', $id)->pluck('password')->first();
-        return $pass;
+        $latestNumber = Order::max('order_nu');
+        if ($latestNumber == null) {
+            $new_number = 1000;
+        } else {
+            $new_number = $latestNumber + 1;
+        }
+        return $new_number;
     }
-
-    public function findAll()
-    {
-        return Order::where('id', '!=', 1)->get();
-    }
-
-    public function getByIds($ids)
-    {
-        return Order::whereIN('id', $ids)->get();
-    }
-
-    public function getField($id, $field)
-    {
-        $admin = Order::where('id', $id)->first();
-        return $admin[$field];
-    }
+    
     public function findWith($array_with)
     {
         return Order::where('id', '!=', 1)->with($array_with)->get();
