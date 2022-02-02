@@ -51,10 +51,10 @@
                         <tbody>
                             <tr>
                                 <td> المقاس : </td>
-                                <td><select class="form-select" aria-label="Default select example" name="paper_size">
+                                <td><select class="form-select select" aria-label="Default select example" name="paper_size" id="paper_size">
                                         <option disabled>اختر</option>
                                         @foreach ($category->paperSizes as $size)
-                                        <option value="{{ $size->id }}">{{ $size->name }}</option>
+                                        <option class="size_option" value="{{ $size->id }}">{{ $size->name }}</option>
                                         @endforeach
                                         <!-- <option value="84mm*55mm">A4 جاير</option> -->
 
@@ -76,11 +76,11 @@
                             <tr>
                                 <td>نوع الورق :</td>
                                 <td>
-                                    <select class="form-select" aria-label="Default select example" name="paper_type">
+                                    <select class="form-select" aria-label="Default select example" name="paper_type" id="paper_type">
                                         <option disabled>اختر</option>
                                         @foreach ($category->paperTypes as $type)
                                         <option value="{{ $type->id }}">{{ $type->name }}</option>
-                                        @endforeach
+                                        @endforeach 
 
                                     </select>
                                 </td>
@@ -228,12 +228,49 @@
 <!--//single-page-->
 
 @push('scripts')
+<!-- ajax -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxy/1.6.1/scripts/jquery.ajaxy.min.js" integrity="sha512-bztGAvCE/3+a1Oh0gUro7BHukf6v7zpzrAb3ReWAVrt+bVNNphcl2tDTKCBr5zk7iEDmQ2Bv401fX3jeVXGIcA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxy/1.6.1/scripts/jquery.ajaxy.js" integrity="sha512-4WpSQe8XU6Djt8IPJMGD9Xx9KuYsVCEeitZfMhPi8xdYlVA5hzRitm0Nt1g2AZFS136s29Nq4E4NVvouVAVrBw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script>
     // Can also be used with $(document).ready()
     $(window).load(function() {
         $('.flexslider').flexslider({
             animation: "slide",
             controlNav: "thumbnails"
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#paper_size').on('change', function() {
+            var optionSelected = $(this).find("option:selected");
+            var sizeid = optionSelected.val();
+            // alert(examid)
+            var route = '/order/filterPaperTypes/' + sizeid;
+            route = `{{route('user.order.filterPaperTypes' , 'Id')}}`,
+                url = route.replace('Id', sizeid);
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                },
+                success: function(data) {
+                    var options = '';
+                    for (var i = 0; i < data.length; i++) {
+                        options += ` <option value="${data[i].id}"
+                              >${data[i].name}
+                                </option>`
+                    }
+                    $('#paper_type').html(options);
+                },
+                error: function() {
+                    console.log("failure From php side!!! ");
+                }
+            });
         });
     });
 </script>

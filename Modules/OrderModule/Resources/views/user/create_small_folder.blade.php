@@ -60,7 +60,7 @@
 						<tr>
 							<td>شكل الطباعة :</td>
 							<td>
-								<select class="form-select" aria-label="Default select example" name="print_option">
+								<select class="form-select" id="selector" aria-label="Default select example" name="print_option">
 									<option selected>اختر</option>
 									@foreach ($category->printOptions as $option)
 									<option value="{{ $option->id }}">{{ $option->name }}</option>
@@ -315,11 +315,11 @@
 
 	function show4() {
 		var x = document.getElementById("selector").value;
-		if (x == 'two sides') {
+		if (x == 2) {
 			document.getElementById('div5').style.display = 'block';
 			document.getElementById('div6').style.display = 'block';
 
-		} else if (x == 'face') {
+		} else if (x == 1) {
 			document.getElementById('div5').style.display = 'block';
 			document.getElementById('div6').style.display = 'none';
 		} else {

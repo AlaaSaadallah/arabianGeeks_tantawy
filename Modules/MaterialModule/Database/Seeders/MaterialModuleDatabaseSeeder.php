@@ -29,6 +29,7 @@ class MaterialModuleDatabaseSeeder extends Seeder
     public function run()
     {
         Model::unguard();
+        // *************************************************colors***********************************************************
 
         DB::table('colors')->truncate();
         Color::create([
@@ -48,6 +49,8 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'price' => "120"
         ]);
 
+        // *************************************************print options***********************************************************
+
         DB::table('print_options')->truncate();
         PrintOption::create([
             'name' => "وجه فقط",
@@ -55,6 +58,8 @@ class MaterialModuleDatabaseSeeder extends Seeder
         PrintOption::create([
             'name' => "وجه و ضهر",
         ]);
+
+        // *************************************************paper size***********************************************************
 
         DB::table('paper_sizes')->truncate();
         PaperSize::create([
@@ -76,83 +81,69 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'name' => "ثمن الفرخ",
             'width' => '24.25',
             'height' => '33.5',
-
         ]);
         PaperSize::create([
             'name' => "نص ثمن الفرخ",
             'width' => '16.75',
             'height' => '24.25',
-
         ]);
         PaperSize::create([
             'name' => "ربع ثمن الفرخ",
             'width' => '12.12',
             'height' => '16.75',
-
         ]);
         PaperSize::create([
             'name' => "خمس الفرخ",
             'width' => '28.5',
             'height' => '38.5',
             'quantity_in_quarter' => '20'
-
         ]);
         PaperSize::create([
             'name' => "نص خمس الفرخ",
             'width' => '19.25',
             'height' => '28.5',
-
         ]);
         PaperSize::create([
             'name' => "ربع خمس الفرخ",
             'width' => '14',
             'height' => '19.25',
-
         ]);
         PaperSize::create([
             'name' => "سدس الفرخ",
             'width' => '21.5',
             'height' => '48.5',
             'quantity_in_quarter' => '24'
-
-
         ]);
         PaperSize::create([
             'name' => "نص سدس الفرخ-عرض",
             'width' => '21.5',
             'height' => '24.25',
-
         ]);
         PaperSize::create([
             'name' => "نص سدس الفرخ-طول",
             'width' => '12.25',
             'height' => '21.5',
-
         ]);
         PaperSize::create([
             'name' => "11 حته",
             'width' => '18.5',
             'height' => '28.5',
-
         ]);
         PaperSize::create([
             'name' => "تسع الفرخ",
             'width' => '21.25',
             'height' => '31.5',
-
         ]);
         PaperSize::create([
             'name' => "دبل تسعات",
             'width' => '31.5',
             'height' => '44.5',
-
         ]);
         PaperSize::create([
             'name' => "A3",
             'width' => '29.7',
             'height' => '42',
             'quantity_in_quarter' => '1'
-
         ]);
         PaperSize::create([
             'name' => "A4",
@@ -207,7 +198,27 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'height' => '16',
             'quantity_in_quarter' => '8'
         ]);
-
+        PaperSize::create([
+            'name' => "DL",
+            'width' => '11',
+            'height' => '22',
+        ]);
+        PaperSize::create([
+            'name' => "C3",
+            'width' => '45.7',
+            'height' => '32.4',
+        ]);
+        PaperSize::create([
+            'name' => "C4",
+            'width' => '32.4',
+            'height' => '22.9',
+        ]);
+        PaperSize::create([
+            'name' => "C5",
+            'width' => '16.2',
+            'height' => '22.9',
+        ]);
+        // *************************************************paper type***********************************************************
 
         DB::table('paper_types')->truncate();
         PaperType::create([
@@ -670,6 +681,7 @@ class MaterialModuleDatabaseSeeder extends Seeder
 
             'price' => '0.85',
         ]);
+        // *************************************************paper size->paper type***********************************************************
 
         DB::table('paper_size_paper_type')->truncate();
         PaperTypePaperSize::create([
@@ -1101,6 +1113,7 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_type_id' => "52",
         ]);
 
+        // *************************************************finish options***********************************************************
 
         DB::table('finish_options')->truncate();
         FinishOption::create([
@@ -1112,6 +1125,7 @@ class MaterialModuleDatabaseSeeder extends Seeder
         FinishOption::create([
             'name' => "سلك",
         ]);
+        // *************************************************finish direction***********************************************************
 
         DB::table('finish_directions')->truncate();
         FinishDirection::create([
@@ -1127,6 +1141,7 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'name' => "شمال",
         ]);
 
+        // *************************************************cover***********************************************************
 
         DB::table('covers')->truncate();
         Cover::create([
@@ -1153,7 +1168,7 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'height' => "70",
             'price' => "1.20",
         ]);
-
+        // *************************************************fold pockets***********************************************************
 
         DB::table('fold_pockets')->truncate();
         FoldPocket::create([
@@ -1169,6 +1184,7 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'name' => "جيب و شباك قفل ذاتي",
         ]);
 
+        // *************************************************fold number***********************************************************
 
         DB::table('fold_numbers')->truncate();
         FoldNumber::create([
@@ -1177,6 +1193,7 @@ class MaterialModuleDatabaseSeeder extends Seeder
         ]);
 
 
+        // *************************************************cut style***********************************************************
 
         DB::table('cut_styles')->truncate();
         CutStyle::create([
@@ -1185,6 +1202,7 @@ class MaterialModuleDatabaseSeeder extends Seeder
         CutStyle::create([
             'name' => "كيرفي",
         ]);
+        // *************************************************glue***********************************************************
 
         DB::table('glues')->truncate();
         Glue::create([

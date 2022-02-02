@@ -60,6 +60,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		}
 	</script>
 
+
 	<!--js-->
 	<script src="{{asset('assets/user/js/jquery-1.11.1.min.js')}}"></script>
 	<script src="{{asset('assets/user/js/modernizr.custom.js')}}"></script>

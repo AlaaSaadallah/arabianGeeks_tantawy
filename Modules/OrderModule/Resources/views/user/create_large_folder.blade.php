@@ -35,10 +35,7 @@
 				<form action="{{route('user.order.storeFolder')}}" method="POST" enctype="multipart/form-data">
 					@csrf
 					<h6 class="item_price">ارفع التصميم</h6><br>
-
 					<input type="file" id="myFile" name="image">
-
-
 					<p>
 						كرت شخصي :الكروت الشخصية افضل و أول وسيلة تواصل بينك وبين عملائك المستقلبيين وزملائك في العمل وافضل وسيله جذب العملاء المحتملين وزيادة التعريف بعلامتك التجارية احرص على اقتنائها دائما ودعنا نقدم لك ليتر هيد بافضل جودة واسعار رائعة عبر عدة اختيارات تلبي جميع رغباتك.
 
@@ -49,7 +46,7 @@
 							<tr>
 								<td> المقاس : </td>
 								<td><select class="form-select" aria-label="Default select example" name="paper_size">
-										<option selected>اختر</option>
+										<option disabled>اختر</option>
 										@foreach ($category->paperSizes as $size)
 										<option value="{{ $size->id }}">{{ $size->name }}({{$size->width}} * {{$size->height}} )</option>
 										@endforeach
@@ -59,7 +56,7 @@
 							<tr>
 								<td>شكل الطباعة :</td>
 								<td>
-									<select class="form-select" aria-label="Default select example" name="print_option" onchange="show4();">
+									<select class="form-select" id="selector" aria-label="Default select example" name="print_option" onchange="show4();">
 										<option disabled>اختر</option>
 										@foreach ($category->printOptions as $option)
 										<option value="{{ $option->id }}">{{ $option->name }}</option>
@@ -72,7 +69,7 @@
 								<td>عدد ألوان الوجه</td>
 								<td>
 									<select class="form-select" aria-label="Default select example" name="frontcolors">
-										<option selected>اختر</option>
+										<option disabled>اختر</option>
 										@foreach ($category->colors as $color)
 										<option value="{{ $color->id }}">{{ $color->name }}</option>
 										@endforeach
@@ -84,7 +81,7 @@
 								<td>عدد ألوان الظهر</td>
 								<td>
 									<select class="form-select" aria-label="Default select example" name="backcolors">
-									@foreach ($category->colors as $color)
+										@foreach ($category->colors as $color)
 										<option value="{{ $color->id }}">{{ $color->name }}</option>
 										@endforeach
 									</select>
@@ -108,7 +105,7 @@
 								<td>
 									<div class="form-group mx-sm-3 mb-2">
 										<label for="quantity" class="sr-only">الكمية</label>
-										<input type="text" class="form-control" id="quantity" placeholder="ادخل الكمية 1000 ومضاعفاتها">
+										<input type="text" class="form-control" id="quantity" name='quantity' placeholder="ادخل الكمية 1000 ومضاعفاتها">
 									</div>
 								</td>
 							</tr>
@@ -125,67 +122,67 @@
 							</tr>
 
 							<tr>
-								  <td>
-									<input type="radio" class="flat" name="avilability" id="genderM" value="avilable"  onclick="show1();"  > تكسير
-									<input type="radio" class="flat" name="avilability" id="genderM" value="avilable"  onclick="show2();"  > ريجة
-									<input type="radio" class="flat" name="avilability" id="genderF" value="not avilable"  onclick="show3();"  /> بدون
-								
-								  </td>
-							  </tr>
-							  <tr id="div1" style="display: none;">
-							<td>تكسير</td>
-							<td>
-								<select class="form-select" aria-label="Default select example" name='foldPockets'>
-									<option disabled>اختر</option>
-									@foreach ($category->foldPockets as $fold)
-									<option value="{{ $fold->id }}">{{ $fold->name }}</option>
-									@endforeach
-								</select>
-							</td>
-						</tr>
-						<tr id="div3" style="display: none;">
-							<td>لزق</td>
-							<td>
-								<select class="form-select" aria-label="Default select example" name="glue">
-									<option disabled>اختر</option>
-									@foreach ($category->glues as $glue)
-									<option value="{{ $glue->id }}">{{ $glue->name }}</option>
-									@endforeach
-								</select>
-							</td>
-						</tr>
+								<td>
+									<input type="radio" class="flat" name="option" value='fold'  id="genderM"  onclick="show1();"> تكسير
+									<input type="radio" class="flat" name="option" value='rega' id="genderM"  onclick="show2();"> ريجة
+									<input type="radio" class="flat" name="option" value='none' id="genderF"  onclick="show3();" /> بدون
 
-						<tr id="div2" style="display: none;">
+								</td>
+							</tr>
+							<tr id="div1" style="display: none;">
+								<td>تكسير</td>
+								<td>
+									<select class="form-select" aria-label="Default select example" name='foldPockets'>
+										<option disabled>اختر</option>
+										@foreach ($category->foldPockets as $fold)
+										<option value="{{ $fold->id }}">{{ $fold->name }}</option>
+										@endforeach
+									</select>
+								</td>
+							</tr>
+							<tr id="div3" style="display: none;">
+								<td>لزق</td>
+								<td>
+									<select class="form-select" aria-label="Default select example" name="glue">
+										<option disabled>اختر</option>
+										@foreach ($category->glues as $glue)
+										<option value="{{ $glue->id }}">{{ $glue->name }}</option>
+										@endforeach
+									</select>
+								</td>
+							</tr>
 
-							<td>ريجه :</td>
-							<td>
-								<select class="form-select" aria-label="Default select example" name="rega">
-									<option selected>اختر</option>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-									<option value="6">6</option>
-									<option value="7">7</option>
-									<option value="8">8</option>
+							<tr id="div2" style="display: none;">
 
-								</select>
-							</td>
-						</tr>
+								<td>ريجه :</td>
+								<td>
+									<select class="form-select" aria-label="Default select example" name="rega">
+										<option disable>اختر</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+										<option value="6">6</option>
+										<option value="7">7</option>
+										<option value="8">8</option>
+
+									</select>
+								</td>
+							</tr>
 
 
-						<tr id="div4" style="display: none;">
-							<td>شكل القص</td>
-							<td>
-								<select class="form-select" aria-label="Default select example" name="cutStyle">
-									<option disabled>اختر</option>
-									@foreach ($category->cutStyles as $style)
-									<option value="{{ $style->id }}">{{ $style->name }}</option>
-									@endforeach
-								</select>
-							</td>
-						</tr>
+							<tr id="div4" style="display: none;">
+								<td>شكل القص</td>
+								<td>
+									<select class="form-select" aria-label="Default select example" name="cutStyle">
+										<option disabled>اختر</option>
+										@foreach ($category->cutStyles as $style)
+										<option value="{{ $style->id }}">{{ $style->name }}</option>
+										@endforeach
+									</select>
+								</td>
+							</tr>
 							<tr>
 								<td>ملاحظات</td>
 								<td>
@@ -313,11 +310,11 @@
 
 	function show4() {
 		var x = document.getElementById("selector").value;
-		if (x == 'two sides') {
+		if (x == 2) {
 			document.getElementById('div5').style.display = 'block';
 			document.getElementById('div6').style.display = 'block';
 
-		} else if (x == 'face') {
+		} else if (x == 1) {
 			document.getElementById('div5').style.display = 'block';
 			document.getElementById('div6').style.display = 'none';
 		} else {
@@ -326,6 +323,38 @@
 		}
 
 	}
+</script>
+<script>
+    $(document).ready(function() {
+        $('#paper_size').on('change', function() {
+            var optionSelected = $(this).find("option:selected");
+            var sizeid = optionSelected.val();
+            // alert(examid)
+            var route = '/order/filterPaperTypes/' + sizeid;
+            route = `{{route('user.order.filterPaperTypes' , 'Id')}}`,
+                url = route.replace('Id', sizeid);
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                },
+                success: function(data) {
+                    var options = '';
+                    for (var i = 0; i < data.length; i++) {
+                        options += ` <option value="${data[i].id}"
+                              >${data[i].name}
+                                </option>`
+                    }
+                    $('#paper_type').html(options);
+                },
+                error: function() {
+                    console.log("failure From php side!!! ");
+                }
+            });
+        });
+    });
 </script>
 @endpush
 @endsection

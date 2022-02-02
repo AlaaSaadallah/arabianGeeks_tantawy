@@ -5,6 +5,7 @@ namespace Modules\OrderModule\Http\Controllers\user;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\MaterialModule\Entities\PaperSize;
 use Modules\MaterialModule\Services\PaperSizeService;
 use Modules\MaterialModule\Services\PaperTypeService;
 use Modules\OrderModule\Services\OrderService;
@@ -44,51 +45,25 @@ class OrderUserController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function store(Request $request)
+    public function storeBrochure(Request $request)
     {
 
         // dd($request->toArray());
 
         $this->orderService->createBrochureOrder($request->all());
-          }
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
-    {
-        return view('ordermodule::show');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
+    public function storeLargeFolder(Request $request)
     {
-        return view('ordermodule::edit');
+        $this->orderService->createLargeFolder($request->all());
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
+    // filter dropdown menu
+    public function filterPaperTypes($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
-    public function destroy($id)
-    {
-        //
+        $selected_size = $this->paperSizeService->findOne($id);
+        // dd($selected_size);
+        $filtered_types =  $selected_size->paperTypesForSize->toArray();
+        return $filtered_types;
     }
 }
