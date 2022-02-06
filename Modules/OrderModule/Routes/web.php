@@ -19,5 +19,7 @@ Route::group(['prefix' => 'order', 'namespace' => 'User'], function () {
     /*************************views route ************************************** */
     Route::post('store', 'OrderUserController@storeBrochure')->name('user.order.store'); // add new orderaction
     Route::post('storeFolder', 'OrderUserController@storeLargeFolder')->name('user.order.storeFolder'); // add new orderaction
+    // Route::post('storeSmallFolder', 'OrderUserController@storeSmallFolder')->name('user.order.storeFolder'); // add new orderaction
+
     Route::post('filterPaperTypes/{id}', 'OrderUserController@filterPaperTypes')->name('user.order.filterPaperTypes'); // add new orderaction
 });
