@@ -77,7 +77,7 @@ class CategoryModuleDatabaseSeeder extends Seeder
         // *************************************************paper size***********************************************************
 
         DB::table('category_paper_size')->truncate();
-      
+
         //    brochure
         CategoryPaperSize::create([
             'category_id' => "2",
@@ -93,15 +93,15 @@ class CategoryModuleDatabaseSeeder extends Seeder
         ]);
         CategoryPaperSize::create([
             'category_id' => "2",
-            'paper_size_id' => "22",
-        ]);
-        CategoryPaperSize::create([
-            'category_id' => "2",
             'paper_size_id' => "23",
         ]);
         CategoryPaperSize::create([
             'category_id' => "2",
             'paper_size_id' => "24",
+        ]);
+        CategoryPaperSize::create([
+            'category_id' => "2",
+            'paper_size_id' => "25",
         ]);
         // large folder
         CategoryPaperSize::create([
@@ -119,11 +119,11 @@ class CategoryModuleDatabaseSeeder extends Seeder
         // small folder
         CategoryPaperSize::create([
             'category_id' => "11",
-            'paper_size_id' => "22",
+            'paper_size_id' => "17",
         ]);
         CategoryPaperSize::create([
             'category_id' => "11",
-            'paper_size_id' => "17",
+            'paper_size_id' => "18",
         ]);
         CategoryPaperSize::create([
             'category_id' => "11",
@@ -131,7 +131,7 @@ class CategoryModuleDatabaseSeeder extends Seeder
         ]);
         CategoryPaperSize::create([
             'category_id' => "11",
-            'paper_size_id' => "18",
+            'paper_size_id' => "4",
         ]);
         // medical prescription
         CategoryPaperSize::create([
@@ -158,7 +158,7 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'category_id' => "13",
             'paper_size_id' => "25",
         ]);
-        // notebooks
+        // notebooks(دفاتر)
         CategoryPaperSize::create([
             'category_id' => "14",
             'paper_size_id' => "17",
@@ -192,20 +192,94 @@ class CategoryModuleDatabaseSeeder extends Seeder
         CategoryPaperSize::create([
             'category_id' => "9",
             'paper_size_id' => "26",
-        ]);CategoryPaperSize::create([
+        ]);
+        CategoryPaperSize::create([
             'category_id' => "9",
             'paper_size_id' => "27",
-        ]);CategoryPaperSize::create([
+        ]);
+        CategoryPaperSize::create([
             'category_id' => "9",
             'paper_size_id' => "28",
-        ]);CategoryPaperSize::create([
+        ]);
+        CategoryPaperSize::create([
             'category_id' => "9",
             'paper_size_id' => "29",
+        ]);
+        // magazine
+        CategoryPaperSize::create([
+            'category_id' => "4",
+            'paper_size_id' => "17",
+        ]);
+        CategoryPaperSize::create([
+            'category_id' => "4",
+            'paper_size_id' => "23",
+        ]);
+        CategoryPaperSize::create([
+            'category_id' => "4",
+            'paper_size_id' => "3",
+        ]);
+        CategoryPaperSize::create([
+            'category_id' => "4",
+            'paper_size_id' => "7",
+        ]);
+        CategoryPaperSize::create([
+            'category_id' => "4",
+            'paper_size_id' => "10",
+        ]);
+        // block note
+        CategoryPaperSize::create([
+            'category_id' => "6",
+            'paper_size_id' => "17",
+        ]);
+        CategoryPaperSize::create([
+            'category_id' => "6",
+            'paper_size_id' => "18",
+        ]);
+        CategoryPaperSize::create([
+            'category_id' => "6",
+            'paper_size_id' => "19",
+        ]);
+        CategoryPaperSize::create([
+            'category_id' => "6",
+            'paper_size_id' => "23",
+        ]);
+        CategoryPaperSize::create([
+            'category_id' => "6",
+            'paper_size_id' => "24",
+        ]);
+        CategoryPaperSize::create([
+            'category_id' => "6",
+            'paper_size_id' => "25",
+        ]);
+        // flyer
+        CategoryPaperSize::create([
+            'category_id' => "3",
+            'paper_size_id' => "17",
+        ]);
+        CategoryPaperSize::create([
+            'category_id' => "3",
+            'paper_size_id' => "18",
+        ]);
+        CategoryPaperSize::create([
+            'category_id' => "3",
+            'paper_size_id' => "19",
+        ]);
+        CategoryPaperSize::create([
+            'category_id' => "3",
+            'paper_size_id' => "23",
+        ]);
+        CategoryPaperSize::create([
+            'category_id' => "3",
+            'paper_size_id' => "24",
+        ]);
+        CategoryPaperSize::create([
+            'category_id' => "3",
+            'paper_size_id' => "25",
         ]);
         // *************************************************color***********************************************************
 
         DB::table('category_color')->truncate();
-       
+
         //    brochure
         CategoryColor::create([
             'category_id' => "2",
@@ -261,7 +335,7 @@ class CategoryModuleDatabaseSeeder extends Seeder
         // *************************************************paper type***********************************************************
 
         DB::table('category_paper_type')->truncate();
-        
+
         //   large folder
         CategoryPaperType::create([
             'category_id' => "12",

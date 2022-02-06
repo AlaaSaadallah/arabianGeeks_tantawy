@@ -74,9 +74,9 @@
 										<div class="col-sm-3 menu-grids">
 										
 											<ul class="multi-column-dropdown">
-												<li><a class="list" href="products.html">روشتات</a></li>
+												<li><a class="list" href="{{route('user.create.prescription')}}">روشتات</a></li>
 												<li><a class="list" href="products.html">دفاتر</a></li>
-												<li><a class="list" href="products.html">مظاريف </a></li>
+												<li><a class="list" href="{{route('user.create.envelope')}}">مظاريف </a></li>
 												<li><a class="list" href="products.html">العلب </a></li>
 												<li><a class="list" href="products.html">الامساكيات الرمضانية</a></li>
 											</ul>

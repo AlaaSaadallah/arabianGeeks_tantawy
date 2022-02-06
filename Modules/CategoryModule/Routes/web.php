@@ -20,5 +20,7 @@ use Illuminate\Support\Facades\Route;
     Route::get('/brochure', 'CategoryUserController@createBrochure')->name('user.create.brochure');
     Route::get('/largeFolder', 'CategoryUserController@createLargeFolder')->name('user.create.large.folder');
     Route::get('/smallFolder', 'CategoryUserController@createSmallFolder')->name('user.create.small.folder');
+    Route::get('/envelope', 'CategoryUserController@createEnvelope')->name('user.create.envelope');
+    Route::get('/prescription', 'CategoryUserController@createPrescription')->name('user.create.prescription');
 
 });

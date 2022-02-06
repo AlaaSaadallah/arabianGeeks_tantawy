@@ -32,29 +32,34 @@ class CategoryUserController extends Controller
     public function createBrochure()
     {
         $category = Category::firstWhere('id', 2);
-        // $category=  $this->categoryService->findWhere(['id' => 2])->first(); // get all main categories for count in blade
-        // dd($category->colors);
-        // $sizes = $category->paperSizes;
-        // foreach($sizes as $size){
-        //     foreach($size->paperTypesForSize as $type){
-                
-        //         dd($type->name);
-        //     }
-        // }
-// dd($x );
-        return view('ordermodule::user.create_brochure',compact('category'));
+        return view('ordermodule::user.create_brochure', compact('category'));
     }
     public function createSmallFolder()
     {
         $category = Category::firstWhere('id', 11);
-        return view('ordermodule::user.create_small_folder',compact('category'));
+        return view('ordermodule::user.create_small_folder', compact('category'));
     }
     public function createLargeFolder()
     {
         $category = Category::firstWhere('id', 12);
         // dd($category);
-        return view('ordermodule::user.create_large_folder',compact('category'));
+        return view('ordermodule::user.create_large_folder', compact('category'));
     }
+
+    public function createEnvelope()
+    {
+        $category = Category::firstWhere('id', 9);
+        // dd($category);
+        return view('ordermodule::user.create_envelope', compact('category'));
+    }
+
+    public function createPrescription()
+    {
+        $category = Category::firstWhere('id', 13);
+        // dd($category);
+        return view('ordermodule::user.create_prescription', compact('category'));
+    }
+
     /**
      * Store a newly created resource in storage.
      * @param Request $request
