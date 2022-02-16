@@ -1,12 +1,12 @@
 @extends('layoutmodule::user.main')
 @section('content')
 <div class="breadcrumbs" dir="rtl" lang="ar">
-    <div class="container">
-        <ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
-            <li><a href="index.html"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>الرئيسية</a></li>
-            <li class="active"> {{$category->name}} </li>
-        </ol>
-    </div>
+	<div class="container">
+		<ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
+			<li><a href="index.html"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>الرئيسية</a></li>
+			<li class="active"> {{$category->name}} </li>
+		</ol>
+	</div>
 </div>
 <!--single-page-->
 <div class="single">
@@ -46,140 +46,115 @@
                     @csrf
                     <input type="hidden" name="" id="cat_id" value="{{$category->id}}">
 
-                    <input type="file" id="myFile" name="image">
-
-
-                    <p>
-                        كرت شخصي :الكروت الشخصية افضل و أول وسيلة تواصل بينك وبين عملائك المستقلبيين وزملائك في العمل وافضل
-                        وسيله جذب العملاء المحتملين وزيادة التعريف بعلامتك التجارية احرص على اقتنائها دائما ودعنا نقدم لك
-                        ليتر هيد بافضل جودة واسعار رائعة عبر عدة اختيارات تلبي جميع رغباتك.
-
-                    </p>
-                    <table class="table">
-
-                        <tbody>
-                            <tr>
-                                <td> المقاس : </td>
-                                <td><select class="form-select select" aria-label="Default select example" name="paper_size" id="paper_size">
+                    <input type="file" id="myFile" name="filename">
+						
+                        <p>
+                            الكتب  :
+                            هي الواجهة الاولى لتعاملاتك مع الجهات الخارجية والداخلية، فمن خلالها يمكنك إنجاز الكثير من الأعمال الهامة والحيوية .نقدم لك الكتب  بافضل جودة واسعار رائعة عبر عدة اختيارات تلبي جميع رغباتك.	</p>
+                        <table class="table">
+                        
+                            <tbody>
+                                <tr>
+                                    <td> المقاس :  </td>
+                                    <td><select class="form-select" aria-label="Default select example" id="paper_size">
                                         <option value="" selected>اختر</option>
                                         @foreach ($category->paperSizes as $size)
-                                        <option class="size_option" value="{{ $size->id }}">
-                                        @if($size->id == 8 || $size->id == 9 || $size->id == 7)
-                                            {{$size->width}} * {{$size->height}}
-                                            @else
-                                            {{ $size->name }}({{$size->width}} * {{$size->height}} )
-                                            @endif
-                                        </option>
+                                        <option value="{{ $size->id }}">{{ $size->name }}({{$size->width}} * {{$size->height}} )</option>
                                         @endforeach
-                                        <!-- <option value="84mm*55mm">A4 جاير</option> -->
-
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>شكل الطباعة :</td>
-                                <td>
-                                <select class="form-select" id="selector" aria-label="Default select example" name="print_option" onchange="show4();">
-										<option selected>اختر</option>
-										@foreach ($category->printOptions as $option)
-										<option value="{{ $option->id }}">{{ $option->name }}</option>
-										@endforeach
-									</select>
-                                </td>
-                            </tr>
-                            <tr style="display: none;" id="div5">
-                                <td>عدد ألوان الوجه</td>
-                                <td>
-                                    <select class="form-select" aria-label="Default select example" name="frontcolors">
-                                        <option disabled>اختر</option>
-                                        @foreach ($category->colors as $color)
-                                        <option value="{{ $color->id }}">{{ $color->name }}</option>
+                                      </select>
+                                    </td>	
+                                  </tr>
+                                  <tr>
+                                    <td>شكل الطباعة :</td>
+                                    <td>
+                                    <select class="form-select" onchange="show4();" id="selector" aria-label="Default select example">
+                                        <option value="" selected>اختر</option>
+                                        @foreach ($category->printOptions as $option)
+                                        <option value="{{ $option->id }}">{{ $option->name }}</option>
                                         @endforeach
-                                    </select>
-                                </td>
-
-                            </tr>
-                            <tr style="display: none;" id="div6">
-                                <td>عدد ألوان الظهر</td>
-                                <td>
-                                    <select class="form-select" aria-label="Default select example" name="backcolors">
-                                        @foreach ($category->colors as $color)
-                                        <option value="{{ $color->id }}">{{ $color->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>نوع الورق :</td>
-                                <td>
-                                    <select class="form-select" aria-label="Default select example" name="paper_type" id="paper_type">
-                                        <option disabled>اختر</option>
-                                       
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr id="div2">
-
-                                <td>ريجه :</td>
-                                <td>
-                                    <select class="form-select" aria-label="Default select example" name="rega">
-                                        <option disable>اختر</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-
-                                    </select>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>الكمية : </td>
-                                <td>
-                                    <div class="form-group mx-sm-3 mb-2">
-                                        <label for="quantity" class="sr-only">الكمية</label>
-                                        <input type="text" class="form-control" id="quantity" placeholder="ادخل الكمية 1000 ومضاعفاتها" name="quantity">
-                                    </div>
-                                </td>
-                            </tr>
-                            
-                            <!-- <tr>
-                                <td>جهة التقفيل </td>
-                                <td>
-                                    <select class="form-select" aria-label="Default select example" name="finish_direction">
-                                        <option disabled>اختر</option>
-                                        @foreach ($category->finishDirections as $finish_direction)
-                                            <option value="{{ $finish_direction->id }}">{{ $finish_direction->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                            </tr> -->
-                            <!-- <tr>
-                                <td>التقفيل</td>
-                                <td>
-                                    <select class="form-select" aria-label="Default select example" name="finish_option">
-                                        <option disabled>اختر</option>
-                                         @foreach ($category->finishOptions as $finish_option)
-                                            <option value="{{ $finish_option->id }}">{{ $finish_option->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                            </tr> -->
-                            <tr>
+                                      </select>
+                                    </td>
+                                  </tr>
+                                  <tr style="display: none;" id="div5">
+                                    <td>عدد ألوان الوجه</td>
+                                    <td>
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option value="" selected>اختر</option>
+                                            <option value="1">1 لون</option>
+                                            <option value="2">2 لون</option>
+                                            <option value="3">3 لون</option>
+                                            <option value="4">4 لون</option>
+                                        
+                                          </select>
+                                    </td>
+                                    
+                                  </tr>
+                                  <tr  style="display: none;" id="div6">
+                                    <td>عدد ألوان الظهر</td>
+                                    <td> 
+                                      <select class="form-select" aria-label="Default select example">
+                                  <option value="" selected>اختر</option>
+                                  <option value="1">1 لون</option>
+                                  <option value="2">2 لون</option>
+                                  <option value="3">3 لون</option>
+                                  <option value="4">4 لون</option>
+                              
+                                </select>
+                                      </td>
+                                  </tr>
+                                 
+                                    <td>نوع الورق الداخلى  :</td>
+                                    <td>
+                                            <select class="form-select" aria-label="Default select example" id="paper_type">
+                                        <option value="" selected>اختر</option>
+                                                                          </select>
+                                    </td>
+                                  </tr>
+                                  
+                                  <tr>
+                                    <td>عدد النسخ : </td>
+                                    <td>
+                                        <div class="form-group mx-sm-3 mb-2">
+                                            <label for="quantity" class="sr-only">عدد النسخ</label>
+                                            <input type="text" class="form-control" id="quantity" placeholder="ادخل عدد النسخ ">
+                                          </div>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>عدد الورق : </td>
+                                    <td>
+                                        <div class="form-group mx-sm-3 mb-2">
+                                            <label for="quantity" class="sr-only">عدد الورق</label>
+                                            <input type="text" class="form-control" id="quantity" placeholder="ادخل عدد الورق  ">
+                                          </div>
+                                    </td>
+                                  </tr>
+                    
+    
+                                  <tr id="div3" style="display: none;">
+                                    <td>التشطيب والتغليف</td>
+                                    <td>
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option value="" selected>اختر</option>
+                                            @foreach ($category->finishOptions as $finish_option)
+                                        <option value="{{ $finish_option->id }}">{{ $finish_option->name }}</option>
+                                        @endforeach                                          </select>
+                                    </td>
+                                  </tr>
+                        
+                    
+                        
+                              
+                              <tr>
                                 <td>ملاحظات</td>
                                 <td>
-                                    <textarea class="form-control rounded-0" rows="5" name="notes">
-                 </textarea>
+                                        <textarea class="form-control rounded-0" rows="5" >
+                                        </textarea>
                                 </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                              </tr>
+                            </tbody>
+                          </table>
+                    
 
 
                     <div class="btn_form">
@@ -311,46 +286,6 @@
             });
         });
     });
-</script>
-
-<script>
-    function show1() {
-        document.getElementById('div2').style.display = 'none';
-        document.getElementById('div1').style.display = 'block';
-        document.getElementById('div3').style.display = 'block';
-        document.getElementById('div4').style.display = 'none';
-    }
-
-    function show2() {
-        document.getElementById('div1').style.display = 'none';
-        document.getElementById('div2').style.display = 'block';
-        document.getElementById('div3').style.display = 'none';
-        document.getElementById('div4').style.display = 'block';
-    }
-
-    function show3() {
-        document.getElementById('div1').style.display = 'none';
-        document.getElementById('div2').style.display = 'none';
-        document.getElementById('div3').style.display = 'none';
-        document.getElementById('div4').style.display = 'none';
-
-    }
-
-    function show4() {
-        var x = document.getElementById("selector").value;
-        if (x == 2) {
-            document.getElementById('div5').style.display = 'block';
-            document.getElementById('div6').style.display = 'block';
-
-        } else if (x == 1) {
-            document.getElementById('div5').style.display = 'block';
-            document.getElementById('div6').style.display = 'none';
-        } else {
-            document.getElementById('div5').style.display = 'none';
-            document.getElementById('div6').style.display = 'none';
-        }
-
-    }
 </script>
 @endpush
 @endsection

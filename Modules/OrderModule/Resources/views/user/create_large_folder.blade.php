@@ -1,6 +1,13 @@
 @extends('layoutmodule::user.main')
 @section('content')
-
+<div class="breadcrumbs" dir="rtl" lang="ar">
+	<div class="container">
+		<ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
+			<li><a href="index.html"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>الرئيسية</a></li>
+			<li class="active"> {{$category->name}} </li>
+		</ol>
+	</div>
+</div>
 <!--single-page-->
 <div class="single">
 	<div class="container">
@@ -32,8 +39,10 @@
 
 			<div class="col-md-6 single-top-left simpleCart_shelfItem wow fadeInRight animated" dir="rtl" lang="ar" data-wow-delay=".5s">
 				<h3>{{ $category->name }}</h3>
-				<form action="{{route('user.order.storeFolder')}}" method="POST" enctype="multipart/form-data">
+				<form action="{{route('user.order.storeFolder')}}" method="POST" enctype="multipart/form-data" class="form">
 					@csrf
+					<input type="hidden" name="" id="cat_id" value="{{$category->id}}">
+
 					<h6 class="item_price">ارفع التصميم</h6><br>
 					<input type="file" id="myFile" name="image">
 					<p>
@@ -41,14 +50,20 @@
 
 					</p>
 					<table class="table">
-						<input type="hidden" name="category_id" id="" value="{{$category->id}}">
+						<input type="hidden" name="category_id" id="cat_id" value="{{$category->id}}">
 						<tbody>
 							<tr>
 								<td> المقاس : </td>
-								<td><select class="form-select" aria-label="Default select example" name="paper_size">
-										<option disabled>اختر</option>
+								<td><select class="form-select" aria-label="Default select example" name="paper_size"  id="paper_size">
+										<option value="" selected>اختر</option>
 										@foreach ($category->paperSizes as $size)
-										<option value="{{ $size->id }}">{{ $size->name }}({{$size->width}} * {{$size->height}} )</option>
+										<option value="{{ $size->id }}">
+										@if($size->id == 7)
+                                            {{$size->width}} * {{$size->height}}
+                                            @else
+                                            {{ $size->name }}({{$size->width}} * {{$size->height}} )
+                                            @endif
+										</option>
 										@endforeach
 									</select>
 								</td>
@@ -57,11 +72,10 @@
 								<td>شكل الطباعة :</td>
 								<td>
 									<select class="form-select" id="selector" aria-label="Default select example" name="print_option" onchange="show4();">
-										<option disabled>اختر</option>
+										<option selected>اختر</option>
 										@foreach ($category->printOptions as $option)
 										<option value="{{ $option->id }}">{{ $option->name }}</option>
 										@endforeach
-
 									</select>
 								</td>
 							</tr>
@@ -69,7 +83,7 @@
 								<td>عدد ألوان الوجه</td>
 								<td>
 									<select class="form-select" aria-label="Default select example" name="frontcolors">
-										<option disabled>اختر</option>
+										<option selected>اختر</option>
 										@foreach ($category->colors as $color)
 										<option value="{{ $color->id }}">{{ $color->name }}</option>
 										@endforeach
@@ -91,12 +105,9 @@
 							<tr>
 								<td>نوع الورق :</td>
 								<td>
-									<select class="form-select" aria-label="Default select example" name="paper_type">
-										<option disabled>اختر</option>
-										@foreach ($category->paperTypes as $type)
-										<option value="{{ $type->id }}">{{ $type->name }}</option>
-										@endforeach
-
+									<select class="form-select" aria-label="Default select example" name="paper_type" id="paper_type">
+										<option selected>اختر</option>
+										
 									</select>
 								</td>
 							</tr>
@@ -113,7 +124,7 @@
 								<td>سلوفان :</td>
 								<td>
 									<select class="form-select" aria-label="Default select example" name="covers">
-										<option disabled>اختر</option>
+										<option selected>اختر</option>
 										@foreach ($category->covers as $cover)
 										<option value="{{ $cover->id }}">{{ $cover->name }}</option>
 										@endforeach
@@ -133,7 +144,7 @@
 								<td>تكسير</td>
 								<td>
 									<select class="form-select" aria-label="Default select example" name='foldPockets'>
-										<option disabled>اختر</option>
+										<option selected>اختر</option>
 										@foreach ($category->foldPockets as $fold)
 										<option value="{{ $fold->id }}">{{ $fold->name }}</option>
 										@endforeach
@@ -144,7 +155,7 @@
 								<td>لزق</td>
 								<td>
 									<select class="form-select" aria-label="Default select example" name="glue">
-										<option disabled>اختر</option>
+										<option selected>اختر</option>
 										@foreach ($category->glues as $glue)
 										<option value="{{ $glue->id }}">{{ $glue->name }}</option>
 										@endforeach
@@ -176,7 +187,7 @@
 								<td>شكل القص</td>
 								<td>
 									<select class="form-select" aria-label="Default select example" name="cutStyle">
-										<option disabled>اختر</option>
+										<option selected>اختر</option>
 										@foreach ($category->cutStyles as $style)
 										<option value="{{ $style->id }}">{{ $style->name }}</option>
 										@endforeach
@@ -282,6 +293,7 @@
 			animation: "slide",
 			controlNav: "thumbnails"
 		});
+		$(".form")[0].reset();
 	});
 </script>
 
@@ -326,27 +338,31 @@
 </script>
 <script>
     $(document).ready(function() {
-        $('#paper_size').on('change', function() {
+		$('#paper_size').on('change', function() {
             var optionSelected = $(this).find("option:selected");
             var sizeid = optionSelected.val();
-            // alert(examid)
-            var route = '/order/filterPaperTypes/' + sizeid;
-            route = `{{route('user.order.filterPaperTypes' , 'Id')}}`,
-                url = route.replace('Id', sizeid);
+			if (sizeid == '') {
+                $('#paper_type').html(`<option value=""
+                              >اختر</option>`);
+            }
 
+            var catid = $('#cat_id').val();
+            var route = '/order/filterPaperTypes/' + catid + '/' + sizeid;
             $.ajax({
-                url: url,
+                url: route,
                 type: "POST",
                 data: {
                     "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {
                     var options = '';
-                    for (var i = 0; i < data.length; i++) {
+                                            
+                    for (var i = 1; i <= Object.keys(data).length; i++) {
                         options += ` <option value="${data[i].id}"
                               >${data[i].name}
                                 </option>`
-                    }
+                            }
+                            console.log(options)
                     $('#paper_type').html(options);
                 },
                 error: function() {

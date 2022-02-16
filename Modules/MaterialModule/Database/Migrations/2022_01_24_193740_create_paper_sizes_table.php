@@ -15,7 +15,7 @@ class CreatePaperSizesTable extends Migration
     {
         Schema::create('paper_sizes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->decimal('width', 8, 2)->nullable();
             $table->decimal('height', 8, 2)->nullable();
             $table->decimal('price', 8, 2)->nullable();

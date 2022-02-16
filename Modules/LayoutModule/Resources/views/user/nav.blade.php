@@ -72,10 +72,11 @@
 								<ul class="dropdown-menu multi-column multi-column2">
 									<div class="row">
 										<div class="col-sm-3 menu-grids">
-										
+
 											<ul class="multi-column-dropdown">
+												<li><a class="list" href="{{route('user.create.letterhead')}}">ليترهيد</a></li>
 												<li><a class="list" href="{{route('user.create.prescription')}}">روشتات</a></li>
-												<li><a class="list" href="products.html">دفاتر</a></li>
+												<li><a class="list" href="{{route('user.create.copybook')}}">دفاتر</a></li>
 												<li><a class="list" href="{{route('user.create.envelope')}}">مظاريف </a></li>
 												<li><a class="list" href="products.html">العلب </a></li>
 												<li><a class="list" href="products.html">الامساكيات الرمضانية</a></li>
@@ -89,18 +90,18 @@
 												<li><a class="list" href="{{route('user.create.small.folder')}}">فولدرات صغيرة</a></li>
 												<li><a class="list" href="{{route('user.create.large.folder')}}">فولدرات كبيرة</a></li>
 												<li><a class="list" href="single.html">كروت شخصية</a></li>
-												<li><a class="list" href="products.html">نتائج التقويم الميلادى</a></li>
+												<li><a class="list" href="{{route('user.create.calender')}}">نتائج التقويم الميلادى</a></li>
 
 											</ul>
 										</div>
 										<div class="col-sm-3 menu-grids">
 
 											<ul class="multi-column-dropdown">
-												<li><a class="list" href="products.html">فلاير</a></li>
-												<li><a class="list" href="products.html">مجلات</a></li>
-												<li><a class="list" href="products.html">بلوك نوت </a></li>
-												<li><a class="list" href="products.html">كتب</a></li>
-												<li><a class="list" href="products.html">ملصقات</a></li>
+												<li><a class="list" href="{{route('user.create.flyer')}}">فلاير</a></li>
+												<li><a class="list" href="{{route('user.create.magazine')}}">مجلات</a></li>
+												<li><a class="list" href="{{route('user.create.blocknote')}}">بلوك نوت </a></li>
+												<li><a class="list" href="{{route('user.create.book')}}">كتب</a></li>
+												<li><a class="list" href="{{route('user.create.sticker')}}">ملصقات</a></li>
 												<li><a class="list" href="products.html">جميع أنواع التكسير</a></li>
 											</ul>
 										</div>

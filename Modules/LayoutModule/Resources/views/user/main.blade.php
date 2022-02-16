@@ -104,9 +104,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				easingType: 'linear'
 			};
 
-			$().UItoTop({
-				easingType: 'easeOutQuart'
-			});
+		
 
 		});
 	</script>

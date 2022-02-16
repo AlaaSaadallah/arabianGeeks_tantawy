@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePaperSizePaperTypeTable extends Migration
+class AddColumnsToPaperSizePaperTypeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreatePaperSizePaperTypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('paper_size_paper_type', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('paper_size_id');
-            $table->bigInteger('paper_type_id');
-            $table->timestamps();
+        Schema::table('paper_size_paper_type', function (Blueprint $table) {
+      $table->bigInteger('category_id')->after('id');
         });
     }
 
@@ -28,6 +25,9 @@ class CreatePaperSizePaperTypeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('paper_size_paper_type');
+        Schema::table('paper_size_paper_type', function (Blueprint $table) {
+            $table->dropColumn('category_id');
+
+        });
     }
 }

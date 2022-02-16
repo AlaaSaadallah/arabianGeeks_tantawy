@@ -23,7 +23,10 @@ class PaperTypeService
     {
         return $this->paperTypeRepository->find($id);
     }
-
+    public function findWhere($arr)
+    {
+        return $this->paperTypeRepository->findWhere($arr);
+    }
     
     public function create($requests)
     {
@@ -39,30 +42,9 @@ class PaperTypeService
         return $this->paperTypeRepository->create($admin_data);
     }
 
-    public function update($data)
-    {
-        $admin_data=$this->validateUpdateData($data);
-        return $this->paperTypeRepository->update($admin_data, $data['id']);
+    
 
-    }
-
-    public function validateUpdateData($data){
-        $admin_data=[];
-        if(key_exists('name',$data)){
-            $admin_data['name']=$data['name'];
-        }
-        if(key_exists('email',$data)){
-            $admin_data['email']=$data['email'];
-        }
-        if(key_exists('first_password',$data)){
-            $admin_data['first_password']=$data['first_password'];
-        }
-        if(key_exists('password',$data)&&$data['password'] !=null){
-            $admin_data['password']=bcrypt($data['password']);
-        }
-        return $admin_data;
-        
-    }
+    
     /*public function getAdminPermissions()
     {
     return $this->paperTypeRepository->getPermissions();

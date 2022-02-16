@@ -8,6 +8,7 @@
 		</ol>
 	</div>
 </div>
+
 <!--single-page-->
 <div class="single">
 	<div class="container">
@@ -39,24 +40,26 @@
 
 			<div class="col-md-6 single-top-left simpleCart_shelfItem wow fadeInRight animated" dir="rtl" lang="ar" data-wow-delay=".5s">
 				<h3>{{ $category->name }}</h3>
-				<form action="{{route('user.order.storeFolder')}}" method="POST" enctype="multipart/form-data" class="form">
+				<form action="{{route('user.order.storeSticker')}}" method="POST" enctype="multipart/form-data" class="form">
 					@csrf
-					<h6 class="item_price">ارفع التصميم</h6><br>
-					<input type="hidden" name="category_id" id="cat_id" value="{{$category->id}}">
-					<input type="file" id="myFile" name="image">
-					<p>
-						كرت شخصي :الكروت الشخصية افضل و أول وسيلة تواصل بينك وبين عملائك المستقلبيين وزملائك في العمل وافضل وسيله جذب العملاء المحتملين وزيادة التعريف بعلامتك التجارية احرص على اقتنائها دائما ودعنا نقدم لك ليتر هيد بافضل جودة واسعار رائعة عبر عدة اختيارات تلبي جميع رغباتك.
+					<input type="hidden" name="" id="cat_id" value="{{$category->id}}">
 
-					</p>
+					<h6 class="item_price">ارفع التصميم</h6><br>
+					<input type="file" id="myFile" name="filename">
+
+					<p>
+						الملصقات :
+						هي الواجهة الاولى لتعاملاتك مع الجهات الخارجية والداخلية، فمن خلالها يمكنك إنجاز الكثير من الأعمال الهامة والحيوية .نقدم لك ملصقات بافضل جودة واسعار رائعة عبر عدة اختيارات تلبي جميع رغباتك. </p>
 					<table class="table">
+
 						<tbody>
 							<tr>
 								<td> المقاس : </td>
-								<td><select class="form-select" aria-label="Default select example" name="paper_size"  id="paper_size">
-										<option value="" selected>اختر</option>
+								<td><select class="form-select" aria-label="Default select example" name="paper_size" id="paper_size">
+										<option value ="" selected>اختر</option>
 										@foreach ($category->paperSizes as $size)
 										<option value="{{ $size->id }}">
-										@if($size->id == 4)
+										@if($size->id == 8 || $size->id == 9 || $size->id == 10)
                                             {{$size->width}} * {{$size->height}}
                                             @else
                                             {{ $size->name }}({{$size->width}} * {{$size->height}} )
@@ -69,134 +72,63 @@
 							<tr>
 								<td>شكل الطباعة :</td>
 								<td>
-									<select class="form-select" id="selector" aria-label="Default select example" name="print_option" onchange="show4();">
+									<select class="form-select" onchange="show4();" id="selector" aria-label="Default select example" name="print_option">
 										<option selected>اختر</option>
+
 										@foreach ($category->printOptions as $option)
 										<option value="{{ $option->id }}">{{ $option->name }}</option>
 										@endforeach
 									</select>
 								</td>
 							</tr>
-							<tr style="display: none;" id="div5">
+							<tr style="display: none;" id="div5" name="frontcolors">
 								<td>عدد ألوان الوجه</td>
 								<td>
 									<select class="form-select" aria-label="Default select example" name="frontcolors">
 										<option selected>اختر</option>
-										@foreach ($category->colors as $color)
-										<option value="{{ $color->id }}">{{ $color->name }}</option>
-										@endforeach
+										<option value="1">1 لون</option>
+										<option value="2">2 لون</option>
+										<option value="3">3 لون</option>
+										<option value="4">4 لون</option>
+
 									</select>
 								</td>
 
 							</tr>
-							<tr style="display: none;" id="div6">
-								<td>عدد ألوان الظهر</td>
-								<td>
-									<select class="form-select" aria-label="Default select example" name="backcolors">
-										@foreach ($category->colors as $color)
-										<option value="{{ $color->id }}">{{ $color->name }}</option>
-										@endforeach
-									</select>
-								</td>
-							</tr>
 
-							<tr>
-								<td>نوع الورق :</td>
-								<td>
-									<select class="form-select" aria-label="Default select example" name="paper_type" id="paper_type">
-										<option selected>اختر</option>
-										
-									</select>
-								</td>
+							<td>نوع الورق :</td>
+							<td>
+								<select class="form-select" aria-label="Default select example" name="paper_type" id="paper_type">
+									<option selected>اختر</option>
+								</select>
+							</td>
 							</tr>
 							<tr>
 								<td>الكمية : </td>
 								<td>
 									<div class="form-group mx-sm-3 mb-2">
 										<label for="quantity" class="sr-only">الكمية</label>
-										<input type="text" class="form-control" id="quantity" name='quantity' placeholder="ادخل الكمية 1000 ومضاعفاتها">
+										<input type="text" class="form-control" name="quantity" id="quantity" placeholder="ادخل الكمية 1000 ومضاعفاتها">
 									</div>
 								</td>
 							</tr>
-							<tr>
-								<td>سلوفان :</td>
-								<td>
-									<select class="form-select" aria-label="Default select example" name="covers">
-										<option selected>اختر</option>
-										@foreach ($category->covers as $cover)
-										<option value="{{ $cover->id }}">{{ $cover->name }}</option>
-										@endforeach
-									</select>
-								</td>
-							</tr>
-
-							<tr>
-								<td>
-									<input type="radio" class="flat" name="option" value='fold'  id="genderM"  onclick="show1();"> تكسير
-									<input type="radio" class="flat" name="option" value='rega' id="genderM"  onclick="show2();"> ريجة
-									<input type="radio" class="flat" name="option" value='none' id="genderF"  onclick="show3();" /> بدون
-
-								</td>
-							</tr>
-							<tr id="div1" style="display: none;">
-								<td>تكسير</td>
-								<td>
-									<select class="form-select" aria-label="Default select example" name='foldPockets'>
-										<option selected>اختر</option>
-										@foreach ($category->foldPockets as $fold)
-										<option value="{{ $fold->id }}">{{ $fold->name }}</option>
-										@endforeach
-									</select>
-								</td>
-							</tr>
-							<tr id="div3" style="display: none;">
-								<td>لزق</td>
-								<td>
-									<select class="form-select" aria-label="Default select example" name="glue">
-										<option selected>اختر</option>
-										@foreach ($category->glues as $glue)
-										<option value="{{ $glue->id }}">{{ $glue->name }}</option>
-										@endforeach
-									</select>
-								</td>
-							</tr>
-
-							<tr id="div2" style="display: none;">
-
-								<td>ريجه :</td>
-								<td>
-									<select class="form-select" aria-label="Default select example" name="rega">
-										<option disable>اختر</option>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>
-										<option value="7">7</option>
-										<option value="8">8</option>
-
-									</select>
-								</td>
-							</tr>
-
-
-							<tr id="div4" style="display: none;">
+							<!-- <tr id="div4" style="display: none;">
 								<td>شكل القص</td>
 								<td>
-									<select class="form-select" aria-label="Default select example" name="cutStyle">
+									<select class="form-select" aria-label="Default select example">
 										<option selected>اختر</option>
-										@foreach ($category->cutStyles as $style)
-										<option value="{{ $style->id }}">{{ $style->name }}</option>
+										@foreach ($category->cutStyles as $cut_style)
+										<option value="{{ $cut_style->id }}">{{ $cut_style->name }}</option>
 										@endforeach
 									</select>
 								</td>
-							</tr>
+							</tr> -->
+
 							<tr>
 								<td>ملاحظات</td>
 								<td>
-									<textarea class="form-control rounded-0" rows="5" name="notes">
-									</textarea>
+									<textarea class="form-control rounded-0" rows="5">
+											</textarea>
 								</td>
 							</tr>
 						</tbody>
@@ -293,6 +225,38 @@
 		});
 		$(".form")[0].reset();
 	});
+
+	$('#paper_size').on('change', function() {
+		var optionSelected = $(this).find("option:selected");
+		var sizeid = optionSelected.val();
+		if (sizeid == '') {
+                $('#paper_type').html(`<option value=""
+                              >اختر</option>`);
+            }
+		var catid = $('#cat_id').val();
+		var route = '/order/filterPaperTypes/' + catid + '/' + sizeid;
+		$.ajax({
+			url: route,
+			type: "POST",
+			data: {
+				"_token": "{{ csrf_token() }}",
+			},
+			success: function(data) {
+				var options = '';
+
+				for (var i = 1; i <= Object.keys(data).length; i++) {
+					options += ` <option value="${data[i].id}"
+                              >${data[i].name}
+                                </option>`
+				}
+				console.log(options)
+				$('#paper_type').html(options);
+			},
+			error: function() {
+				console.log("failure From php side!!! ");
+			}
+		});
+	});
 </script>
 
 <script>
@@ -334,40 +298,6 @@
 
 	}
 </script>
-<script>
-    $(document).ready(function() {
-        $('#paper_size').on('change', function() {
-            var optionSelected = $(this).find("option:selected");
-            var sizeid = optionSelected.val();
-			if (sizeid == '') {
-                $('#paper_type').html(`<option value=""
-                              >اختر</option>`);
-            }
-            var catid = $('#cat_id').val();
-            var route = '/order/filterPaperTypes/' + catid + '/' + sizeid;
-            $.ajax({
-                url: route,
-                type: "POST",
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                },
-                success: function(data) {
-                    var options = '';
-                                            
-                    for (var i = 1; i <= Object.keys(data).length; i++) {
-                        options += ` <option value="${data[i].id}"
-                              >${data[i].name}
-                                </option>`
-                            }
-                            console.log(options)
-                    $('#paper_type').html(options);
-                },
-                error: function() {
-                    console.log("failure From php side!!! ");
-                }
-            });
-        });
-    });
-</script>
+
 @endpush
 @endsection

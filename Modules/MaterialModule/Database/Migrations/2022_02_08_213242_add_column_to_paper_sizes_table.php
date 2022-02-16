@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class RemovePriceColumnFromPaperSizeTable extends Migration
+class AddColumnToPaperSizesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class RemovePriceColumnFromPaperSizeTable extends Migration
     public function up()
     {
         Schema::table('paper_sizes', function (Blueprint $table) {
-            $table->dropColumn('price');
-            $table->renameColumn('quantity_in_quarter', 'divided_by');
+            $table->integer('quantity_in_standard')->after('height')->nullable();
 
         });
     }
@@ -28,8 +27,7 @@ class RemovePriceColumnFromPaperSizeTable extends Migration
     public function down()
     {
         Schema::table('paper_sizes', function (Blueprint $table) {
-            $table->decimal('price', 8, 2);
-            $table->renameColumn('divided_by','quantity_in_quarter');
+            $table->dropColumn('quantity_in_standard');
 
         });
     }
