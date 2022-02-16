@@ -157,25 +157,10 @@
                                 <td>
                                     <select class="form-select" id="selector2" aria-label="Default select example" name="cover_paper_type">
                                         <option selected>اختر</option>
-                                        <option value="150 gm koshai">80 طبع جم</option>
-                                        <option value="200 gm koshai">100 طبع جم</option>
-                                        <option value="250 gm koshai">120 طبع جم</option>
-                                        <option value="300 gm koshai">115 كوشيه عادى جم</option>
-                                        <option value="350 gm koshai">130 كوشيه عادى جم</option>
-                                        <option value="150 gm">150 كوشيه عادى جم</option>
-                                        <option value="150 gm">200 كوشيه عادى جم</option>
-                                        <option value="150 gm">250 كوشيه عادى جم</option>
-                                        <option value="150 gm">300 كوشيه عادى جم</option>
-                                        <option value="150 gm">350 كوشيه عادى جم</option>
-                                        <option value="300 gm koshai">115 كوشيه جاير جم</option>
-                                        <option value="350 gm koshai">130 كوشيه جاير جم</option>
-                                        <option value="150 gm">150 كوشيه جاير جم</option>
-                                        <option value="150 gm">200 كوشيه جاير جم</option>
-                                        <option value="150 gm">250 كوشيه جاير جم</option>
-                                        <option value="150 gm">300 كوشيه جاير جم</option>
-                                        <option value="150 gm">350 كوشيه جاير جم</option>
-
-
+                                        @foreach ($cover_types as $cover_type)
+                                        <option value="{{ $cover_type['id'] }}">{{ $cover_type['name'] }}</option>
+                                        @endforeach
+                                      
                                     </select>
                                 </td>
                             </tr>
@@ -194,7 +179,7 @@
                             <tr>
                                 <td>جهة التقفيل </td>
                                 <td>
-                                    <select class="form-select" aria-label="Default select example" name="finish_direction">
+                                    <select class="form-select" aria-label="Default select example" name="finish_dir">
                                         <option value="" selected>اختر</option>
                                         @foreach ($category->finishDirections as $finish_direction)
                                         <option value="{{ $finish_direction->id }}">{{ $finish_direction->name }}</option>
@@ -205,7 +190,7 @@
                             <tr id="div4">
                                 <td>شكل القص</td>
                                 <td>
-                                    <select class="form-select" aria-label="Default select example" name="cutstyle">
+                                    <select class="form-select" aria-label="Default select example" name="cutStyle">
                                         <option value="" selected>اختر</option>
                                         @foreach ($category->cutStyles as $cut_style)
                                         <option value="{{ $cut_style->id }}">{{ $cut_style->name }}</option>
@@ -324,6 +309,7 @@
 
 <script>
     $(document).ready(function() {
+
         $('#paper_size').on('change', function() {
             var optionSelected = $(this).find("option:selected");
             var sizeid = optionSelected.val();

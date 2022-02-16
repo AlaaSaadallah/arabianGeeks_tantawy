@@ -98,6 +98,14 @@ class OrderUserController extends Controller
         $this->orderService->createEnvelope($request->all());
     }
 
+
+      // copybook
+      public function storeCopybook(Request $request)
+      {
+          $this->orderService->createcopybook($request->all());
+      }
+
+
     // filter dropdown menu
     public function filterPaperTypes($cat_id,$size_id)
     { 

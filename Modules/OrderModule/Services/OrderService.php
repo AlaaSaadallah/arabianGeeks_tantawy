@@ -48,6 +48,13 @@ class OrderService
 
     public function createBrochureOrder($data)
     {
+        $total_sheets_price = 0;
+        $zinkat_price = 0;
+        $traj_price = 0;
+        $rega_price = 0;
+        $cut_style_price = 0;
+        $shipping_fees = 0;
+
         // ***************************************************paper size,count & price***********************************************************************
         $paper_size = $this->paperSizeService->findOne($data['paper_size']); // get chosen size data 
         $total_per_full_sheet =  $paper_size->quantity_in_standard; // العدد الكلي في الفرخ الواحد
@@ -137,19 +144,19 @@ class OrderService
 
         //update order and add order_nu
 
-
-        $arr = [
-            'عدد الافرخ الربع' => $total_number_of_sheets,
-            'سعر الفرخ' => $standard_sheet_price,
-            'سعر الافرخ الربع' => $total_sheets_price,
-            ' عدد الطباعة للفرخ الواحد الربع' => $total_per_print_sheet,
-            'الزنكات' => $zinkat,
-            'التراجات' => $traj,
-            'الشحن' => $shipping_fees,
-            'اجمالي' => $total_order_price,
-
-
-        ];
+        $arr =
+            [
+                'عدد الافرخ الكاملة' => $total_standard_sheets,
+                'عدد الافرخ الربع' => $total_number_of_quarter_sheets,
+                'سعر الفرخ' => $standard_sheet_price,
+                'سعر الافرخ المستخدمة' => $total_sheets_price,
+                'الزنكات' => $zinkat_price,
+                'التراجات' => $traj_price,
+                'ريجة' => $rega_price,
+                'القص' => $cut_style_price,
+                'الشحن' => $shipping_fees,
+                'اجمالي' => $total_order_price,
+            ];
         dd($arr);
     }
 
@@ -295,7 +302,7 @@ class OrderService
                 'عدد الافرخ الكاملة' => $total_standard_sheets,
                 'عدد الافرخ الربع' => $total_number_of_quarter_sheets,
                 'سعر الفرخ' => $standard_sheet_price,
-                'عدد الافرخ المستخدمة' => $total_sheets_price,
+                'سعر الافرخ المستخدمة' => $total_sheets_price,
                 'الزنكات' => $zinkat_price,
                 'التراجات' => $traj_price,
                 'السلوفان' => $cover_price,
@@ -396,7 +403,7 @@ class OrderService
                 'عدد الافرخ الكاملة' => $total_standard_sheets,
                 'عدد الافرخ الربع' => $total_number_of_quarter_sheets,
                 'سعر الفرخ' => $standard_sheet_price,
-                'عدد الافرخ المستخدمة' => $total_sheets_price,
+                'سعر الافرخ المستخدمة' => $total_sheets_price,
                 'الزنكات' => $zinkat_price,
                 'التراجات' => $traj_price,
                 'ريجة' => $rega_price,
@@ -448,7 +455,7 @@ class OrderService
             // dd($pull_nu_sheet . '*' . ($data['frontcolors'] . '+' . $data['backcolors']) . '* 30');
         }
 
-        // ***************************************************rega***********************************************************************
+        // ***************************************************rega & cut style***********************************************************************
         if ($data['cutStyle'] == 2) {
             $rega_nu = ($data['quantity'] / 1000);
             if (is_float($total_number_of_quarter_sheets / 1000) == 'true') {
@@ -494,7 +501,7 @@ class OrderService
                 'عدد الافرخ الكاملة' => $total_standard_sheets,
                 'عدد الافرخ الربع' => $total_number_of_quarter_sheets,
                 'سعر الفرخ' => $standard_sheet_price,
-                'عدد الافرخ المستخدمة' => $total_sheets_price,
+                'سعر الافرخ المستخدمة' => $total_sheets_price,
                 'الزنكات' => $zinkat_price,
                 'التراجات' => $traj_price,
                 // 'ريجة' => $rega_price,
@@ -557,7 +564,7 @@ class OrderService
                 'عدد الافرخ الكاملة' => $total_standard_sheets,
                 'عدد الافرخ الربع' => $total_number_of_quarter_sheets,
                 'سعر الفرخ' => $standard_sheet_price,
-                'عدد الافرخ المستخدمة' => $total_sheets_price,
+                'سعر الافرخ المستخدمة' => $total_sheets_price,
                 'الزنكات' => $zinkat_price,
                 'التراجات' => $traj_price,
                 // 'ريجة' => $rega_price,
@@ -567,11 +574,12 @@ class OrderService
             ];
         dd($arr);
     }
-
+    //لسة
     public function createBlocknote($data)
     {
         $total_sheets_price = 0;
         $total_cover_paper_price = 0;
+        $cut_style_price = 0;
         $zinkat_price = 0;
         $traj_price = 0;
         $shipping_fees = 0;
@@ -588,25 +596,92 @@ class OrderService
         $total_per_full_sheet =  $paper_size->quantity_in_standard; // العدد الكلي في الفرخ الواحد
         $cover_paper_type = $this->paperTypeService->findOne($data['cover_paper_type']); // معرفة نوع الورق
         $standard_sheet_price = $paper_type->price; // تحديد سعر الورقة
-        $total_cover_paper_price =  ($standard_sheet_price) * 1; // حساب ثمن الغلاف
+        $total_used_sheets = ($data['quantity'] * 2) / $total_per_full_sheet;
+        $total_cover_paper_price =  ($standard_sheet_price) * $total_used_sheets; // حساب ثمن الغلاف
 
         // ***************************************************zinkat & traj***********************************************************************
         $total_per_quarter_sheet =  $paper_size->quantity_in_quarter; // العدد الكلي في الربع فرخ الواحد
         $total_number_of_quarter_sheets =  ($data['quantity'] * $data['inner_quantity']) / $total_per_quarter_sheet; // عدد الافرخ الربع المستخدمة
         $pull_nu = $total_number_of_quarter_sheets / 1000;
-
+        if (is_float($pull_nu) == 'true') {
+            $pull_nu_sheet = floor($pull_nu) + 1; // عدد السحبات
+        } else {
+            $pull_nu_sheet = $pull_nu;
+        }
         if ($data['print_option'] == 1) { //  وجه فقط
             $zinkat_price = $data['frontcolors'] * 30; //سعر الزنكات
-            $traj_price = $pull_nu * $data['frontcolors'] * 30; //سعر التراج 
+            $traj_price = $pull_nu_sheet * $data['frontcolors'] * 30; //سعر التراج 
         } elseif ($data['print_option'] == 2) { //  وجه و ضهر
             $zinkat_price = ($data['frontcolors'] + $data['backcolors']) * 30; // سعر الزنكات
-            if (is_float($pull_nu) == 'true') {
-                $pull_nu_sheet = floor($pull_nu) + 1; // عدد السحبات
-            } else {
-                $pull_nu_sheet = $pull_nu;
-            }
+            
             $traj_price = $pull_nu_sheet * ($data['frontcolors'] + $data['backcolors']) * 30; // سعر التراج 
         }
+        // *************************************************** finish option/direction ***********************************************************************
+
+        if ($data['finish_option'] == 1 || $data['finish_option'] == 2) {
+            $finish_price = $data['quantity'] * 1;
+        } else {
+            $finish_direction = $data['finish_dir'];
+            if ($finish_direction == 1 || $finish_direction == 2) {
+                $length = $paper_size->width;
+                $is_length_fraction = $length - floor($length);
+                if ($is_length_fraction > 0 == true) {
+                    $finish_price = floor($length) + 1;
+                } else {
+                    $finish_price = floor($length);
+                }
+            } elseif ($finish_direction == 3 || $finish_direction == 4) {
+                $length = $paper_size->height;
+                $is_length_fraction = $length - floor($length);
+                if ($is_length_fraction > 0 == true) {
+                    $finish_price = floor($length) + 1;
+                } else {
+                    $finish_price = floor($length);
+                }
+            }
+        }
+        // ***************************************************cut style***********************************************************************
+        if ($data['cutStyle'] == 2) {
+            // $rega_nu = ($data['quantity'] / 1000);
+
+            $total_cuts = floor($data['quantity'] / 1000);
+
+            $cut_style_price =  (floor($data['quantity'] / 1000) + 1) * 10;
+            $cut_style_price =  $total_cuts * 10;
+        }
+        // ***************************************************shipping***********************************************************************
+
+        $shipping_fees = 20;
+        if ($total_number_of_quarter_sheets > 1000) {
+            $is_float = $total_number_of_quarter_sheets / 1000;
+            if ($is_float == "true") {
+                $over_1000 = floor($total_number_of_quarter_sheets / 1000) + 1;
+                // dd($over_1000);
+            } else {
+                $over_1000 = floor($total_number_of_quarter_sheets / 1000);
+            }
+            // dd($over_1000);
+            $shipping_fees += 10 * ($over_1000 - 1);
+        }
+
+        // ***************************************************total***********************************************************************
+        $total_order_price =
+            $total_sheets_price + $total_cover_paper_price + $zinkat_price + $traj_price  + $finish_price + $cut_style_price + $shipping_fees;
+        $arr =
+            [
+                'عدد الافرخ الكاملة' => $total_standard_sheets,
+                'عدد الافرخ الربع' => $total_number_of_quarter_sheets,
+                'سعر الفرخ' => $standard_sheet_price,
+                'سعر الافرخ المستخدمة' => $total_sheets_price,
+                'سعر الغلاف'=> $total_cover_paper_price,
+                'الزنكات' => $zinkat_price,
+                'التراجات' => $traj_price,
+                'التقفيل' => $finish_price,
+                'القص' => $cut_style_price,
+                'الشحن' => $shipping_fees,
+                'اجمالي' => $total_order_price,
+            ];
+        dd($arr);
     }
 
     public function createPrescription($data)
@@ -678,7 +753,7 @@ class OrderService
                 'عدد الافرخ الكاملة' => $total_standard_sheets,
                 'عدد الافرخ الربع' => $total_number_of_quarter_sheets,
                 'سعر الفرخ' => $standard_sheet_price,
-                'عدد الافرخ المستخدمة' => $total_sheets_price,
+                'سعر الافرخ المستخدمة' => $total_sheets_price,
                 'الزنكات' => $zinkat_price,
                 'التراجات' => $traj_price,
                 'الشرشرة' => $zigzag_price,
@@ -689,7 +764,7 @@ class OrderService
         dd($arr);
     }
 
-    public function createEnvelope($data)
+    public function createEnvelope($data) // حساب الزنكات و التراجات
     {
         $total_sheets_price = 0;
         $zinkat_price = 0;
@@ -726,23 +801,139 @@ class OrderService
             // dd($over_1000);
             $shipping_fees += 10 * ($over_1000 - 1);
         }
-         // ***************************************************total***********************************************************************
+        // ***************************************************total***********************************************************************
 
-         $total_order_price =
-         $total_sheets_price + $zinkat_price + $traj_price + $shipping_fees;
-     $arr =
-         [
-            //  'عدد الافرخ الكاملة' => $total_standard_sheets,
-            //  'عدد الافرخ الربع' => $total_number_of_quarter_sheets,
-             'سعر الفرخ' => $standard_sheet_price,
-             'عدد الافرخ المستخدمة' => $total_sheets_price,
-             'الزنكات' => $zinkat_price,
-             'التراجات' => $traj_price,
-            //  'الشرشرة' => $zigzag_price,
-            //  'التقفيل' => $finish_price,
-             'الشحن' => $shipping_fees,
-             'اجمالي' => $total_order_price,
-         ];
-     dd($arr);
+        $total_order_price =
+            $total_sheets_price + $zinkat_price + $traj_price + $shipping_fees;
+        $arr =
+            [
+                //  'عدد الافرخ الكاملة' => $total_standard_sheets,
+                //  'عدد الافرخ الربع' => $total_number_of_quarter_sheets,
+                'سعر الفرخ' => $standard_sheet_price,
+                'سعر الافرخ المستخدمة' => $total_sheets_price,
+                'الزنكات' => $zinkat_price,
+                'التراجات' => $traj_price,
+                //  'الشرشرة' => $zigzag_price,
+                //  'التقفيل' => $finish_price,
+                'الشحن' => $shipping_fees,
+                'اجمالي' => $total_order_price,
+            ];
+        dd($arr);
+    }
+
+    public function createCopybook($data)
+    {
+        $total_sheets_price = 0;
+        $zinkat_price = 0;
+        $traj_price = 0;
+        $rega_price = 0;
+        $cut_style_price = 0;
+        $finish_price = 0;
+        $zigzag_price = 0;
+        $shipping_fees = 0;
+
+
+        // ***************************************************paper size,count & price***********************************************************************
+        $paper_size = $this->paperSizeService->findOne($data['paper_size']); // get chosen size data 
+        $total_per_full_sheet =  $paper_size->quantity_in_standard; // العدد الكلي في الفرخ الواحد
+        $total_standard_sheets = $data['quantity'] / $total_per_full_sheet; // عدد الافرخ الكاملة المستخدمة
+        $paper_type = $this->paperTypeService->findOne($data['paper_type']); // معرفة نوع الورق
+        $standard_sheet_price = $paper_type->price; // تحديد سعر الورقة
+        $total_sheets_price =  ($standard_sheet_price) * $total_standard_sheets; // حساب ثمن الورق كله
+
+
+        // ***************************************************zinkat & traj***********************************************************************
+        $total_per_quarter_sheet =  $paper_size->quantity_in_quarter; // العدد الكلي في الربع فرخ الواحد
+        $total_number_of_quarter_sheets =  $data['quantity'] / $total_per_quarter_sheet; // عدد الافرخ الربع المستخدمة
+        $pull_nu = $total_number_of_quarter_sheets / 1000;
+        if (is_float($pull_nu) == 'true') {
+            $pull_nu_sheet = floor($pull_nu) + 1; // عدد السحبات
+        } else {
+            $pull_nu_sheet = $pull_nu;
+        }
+        if ($data['print_option'] == 1) { //  وجه فقط
+            $zinkat_price = $data['frontcolors'] * 30; //سعر الزنكات
+            $traj_price = $pull_nu_sheet * $data['frontcolors'] * 30; //سعر التراج 
+            // dd($pull_nu_sheet .'*'. $data['frontcolors'] .'*'. 30);
+        } elseif ($data['print_option'] == 2) { //  وجه و ضهر
+            $zinkat_price = ($data['frontcolors'] + $data['backcolors']) * 30; // سعر الزنكات
+            // dd($pull_nu);
+
+            // dd($pull_nu_sheet);
+            $traj_price = $pull_nu_sheet * ($data['frontcolors'] + $data['backcolors']) * 30; // سعر التراج 
+            // dd($pull_nu_sheet . '*' . ($data['frontcolors'] . '+' . $data['backcolors']) . '* 30');
+        }
+
+        // ***************************************************zigzag***********************************************************************
+        if ($data['zigzag'] == 1) {
+            if (is_float($data['quantity'] / 1000) == 'true') {
+                $rega_nu = floor($data['quantity'] / 1000) + 1; // عدد الريجة المستخدمة لكل 1000 من العدد
+            } else {
+                $rega_nu = $data['quantity'] / 1000;
+            }
+            $zigzag_price = $rega_nu * 25; // عدد الريجة لكل 1000 * عدد الريجات المختارة * السعر
+        }
+
+        // *************************************************** finish option/direction ***********************************************************************
+        if ($data['zigzag'] == 1) {
+            //    دبوس/غراء
+            $finish_price = $data['quantity'] * 1;
+        } else {
+            if ($data['finish_option'] == 1 || $data['finish_option'] == 2) {
+                $finish_price = $data['quantity'] * 1;
+            } else {
+                $finish_direction = $data['finish_dir'];
+                if ($finish_direction == 1 || $finish_direction == 2) {
+                    $length = $paper_size->width;
+                    $is_length_fraction = $length - floor($length);
+                    if ($is_length_fraction > 0 == true) {
+                        $finish_price = floor($length) + 1;
+                    } else {
+                        $finish_price = floor($length);
+                    }
+                } elseif ($finish_direction == 3 || $finish_direction == 4) {
+                    $length = $paper_size->height;
+                    $is_length_fraction = $length - floor($length);
+                    if ($is_length_fraction > 0 == true) {
+                        $finish_price = floor($length) + 1;
+                    } else {
+                        $finish_price = floor($length);
+                    }
+                }
+            }
+            // ***************************************************shipping***********************************************************************
+
+            $shipping_fees = 20;
+            if ($total_number_of_quarter_sheets > 1000) {
+                $is_float = $total_number_of_quarter_sheets / 1000;
+                if ($is_float == "true") {
+                    $over_1000 = floor($total_number_of_quarter_sheets / 1000) + 1;
+                    // dd($over_1000);
+                } else {
+                    $over_1000 = floor($total_number_of_quarter_sheets / 1000);
+                }
+                // dd($over_1000);
+                $shipping_fees += 10 * ($over_1000 - 1);
+            }
+
+            // ***************************************************total***********************************************************************
+
+            $total_order_price =
+                $total_sheets_price + $zinkat_price + $traj_price  + $zigzag_price + $finish_price  + $shipping_fees;
+            $arr =
+                [
+                    'عدد الافرخ الكاملة' => $total_standard_sheets,
+                    'عدد الافرخ الربع' => $total_number_of_quarter_sheets,
+                    'سعر الفرخ' => $standard_sheet_price,
+                    'سعر الافرخ المستخدمة' => $total_sheets_price,
+                    'الزنكات' => $zinkat_price,
+                    'التراجات' => $traj_price,
+                    'الشرشرة' => $zigzag_price,
+                    'التقفيل' => $finish_price,
+                    'الشحن' => $shipping_fees,
+                    'اجمالي' => $total_order_price,
+                ];
+            dd($arr);
+        }
     }
 }

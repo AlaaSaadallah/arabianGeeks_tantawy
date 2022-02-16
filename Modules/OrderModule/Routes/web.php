@@ -26,6 +26,7 @@ Route::group(['prefix' => 'order', 'namespace' => 'User'], function () {
     Route::post('storeBlocknote', 'OrderUserController@storeBlocknote')->name('user.order.storeBlocknote'); // add new orderaction
     Route::post('storePrescription', 'OrderUserController@storePrescription')->name('user.order.storePrescription'); // add new orderaction
     Route::post('storeEnvelope', 'OrderUserController@storeEnvelope')->name('user.order.storeEnvelope'); // add new orderaction
+    Route::post('storeCopybook', 'OrderUserController@storeCopybook')->name('user.order.storeCopybook'); // add new orderaction
 
     Route::post('filterPaperTypes/{cat_id}/{size_id}', 'OrderUserController@filterPaperTypes')->name('user.order.filterPaperTypes'); // add new orderaction
 });

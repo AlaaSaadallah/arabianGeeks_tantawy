@@ -2027,7 +2027,7 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'print_option_id' => "1",
         ]);
         CategoryPrintOption::create([
-            'category_id' => "14",
+            'category_id' => "13",
             'print_option_id' => "2",
         ]);
         // copybooks
@@ -2261,7 +2261,11 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'category_id' => "14",
             'finish_option_id' => "2",
         ]);
-       
+        CategoryFinishOption::create([
+            'category_id' => "14",
+            'finish_option_id' => "3",
+        ]);
+
         // magazine
         CategoryFinishOption::create([
             'category_id' => "4",

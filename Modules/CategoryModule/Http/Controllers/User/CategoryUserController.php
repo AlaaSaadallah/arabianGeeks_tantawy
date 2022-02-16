@@ -7,20 +7,40 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\CategoryModule\Entities\Category;
 use Modules\CategoryModule\Services\CategoryService;
+use Modules\MaterialModule\Entities\PaperTypePaperSize;
+use Modules\MaterialModule\Services\PaperSizePaperTypeService;
+use Modules\MaterialModule\Services\PaperTypeService;
 
 class CategoryUserController extends Controller
 {
 
     private $categoryService;
-    public function __construct(CategoryService $categoryService)
+    public function __construct(CategoryService $categoryService, PaperTypeService $paperTypeService, PaperSizePaperTypeService $paperSizePaperTypeService)
     {
         $this->categoryService = $categoryService;
+        $this->paperTypeService = $paperTypeService;
+        $this->paperSizePaperTypeService = $paperSizePaperTypeService;
     }
 
     public function createBlocknote()
     {
         $category = Category::firstWhere('id', 6);
-        return view('ordermodule::user.create_blocknote', compact('category'));
+        $selected_size = $this->paperSizePaperTypeService->findWhere(['paper_size_id' => 22, 'category_id' => 4])->toArray();
+        $filtered_types = [];
+        foreach ($selected_size as $size) {
+            $hide = [67, 2, 9, 5, 6, 7, 8, 14, 15, 16];
+            if (in_array($size['paper_type_id'], $hide)) {
+                continue;
+            }
+            $filtered_types[$size['id']]['type_id'] =  $size['paper_type_id'];
+        }
+        $cover_types = [];
+        $i = 1;
+        foreach ($filtered_types as $type) {
+            $cover_types[$i] = $this->paperTypeService->findWhere(['id' => $type['type_id']])->first()->toArray();
+            $i++;
+        }
+        return view('ordermodule::user.create_blocknote', compact('category', 'cover_types'));
     }
 
     public function createBook()
