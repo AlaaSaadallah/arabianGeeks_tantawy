@@ -4,6 +4,7 @@
     "LayoutModule": true,
     "OrderModule": true,
     "CustomerModule": true,
+    "CartModule": true,
     "MaterialModule": true,
     "LocationModule": true
 }

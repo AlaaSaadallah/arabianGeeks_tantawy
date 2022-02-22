@@ -23,7 +23,6 @@ class OrderUserController extends Controller
         $this->paperSizeService = $paperSizeService;
         $this->paperTypeService = $paperTypeService;
         $this->paperSizePaperTypeService = $paperSizePaperTypeService;
-
     }
     /**
      * Display a listing of the resource.
@@ -99,33 +98,32 @@ class OrderUserController extends Controller
     }
 
 
-      // copybook
-      public function storeCopybook(Request $request)
-      {
-          $this->orderService->createcopybook($request->all());
-      }
+    // copybook
+    public function storeCopybook(Request $request)
+    {
+        $this->orderService->createcopybook($request->all());
+    }
 
 
     // filter dropdown menu
-    public function filterPaperTypes($cat_id,$size_id)
-    { 
-    //    dd($cat_id);
+    public function filterPaperTypes($cat_id, $size_id)
+    {
+        //    dd($cat_id);
         // dd('55');
-        $selected_size = $this->paperSizePaperTypeService->findWhere(['paper_size_id'=>$size_id, 'category_id'=>$cat_id])->toArray();
+        $selected_size = $this->paperSizePaperTypeService->findWhere(['paper_size_id' => $size_id, 'category_id' => $cat_id])->toArray();
         // dd($selected_size->toArray());
-        $filtered_types =[];
-        foreach($selected_size as $size){
-            // dd($size['paper_type_id']);
+        $filtered_types = [];
+        foreach ($selected_size as $size) {
             $filtered_types[$size['id']]['type_id'] =  $size['paper_type_id'];
         }
-        $types=[];
-        $i =1;
-        foreach($filtered_types as $type){
+        $types = [];
+        $i = 1;
+        foreach ($filtered_types as $type) {
             // dd(( $this->paperTypeService->findWhere(['id'=>$type['type_id']])->first()->toArray()));
-            $types[$i]= $this->paperTypeService->findWhere(['id'=>$type['type_id']])->first()->toArray();
-            $i ++;
+            $types[$i] = $this->paperTypeService->findWhere(['id' => $type['type_id']])->first()->toArray();
+            $i++;
         }
-// dd($types);
+        // dd($types);
         // $selected_size->paperTypesForSize->toArray();
         // dd(($filtered_types));
         return $types;

@@ -40,77 +40,77 @@ class CategoryUserController extends Controller
             $cover_types[$i] = $this->paperTypeService->findWhere(['id' => $type['type_id']])->first()->toArray();
             $i++;
         }
-        return view('ordermodule::user.create_blocknote', compact('category', 'cover_types'));
+        return view('categorymodule::user.create_blocknote', compact('category', 'cover_types'));
     }
 
     public function createBook()
     {
         $category = Category::firstWhere('id', 5);
-        return view('ordermodule::user.create_book', compact('category'));
+        return view('categorymodule::user.create_book', compact('category'));
     }
 
     public function createBrochure()
     {
         $category = Category::firstWhere('id', 2);
-        return view('ordermodule::user.create_brochure', compact('category'));
+        return view('categorymodule::user.create_brochure', compact('category'));
     }
 
     public function createCalender()
     {
         $category = Category::firstWhere('id', 16);
-        return view('ordermodule::user.create_calender', compact('category'));
+        return view('categorymodule::user.create_calender', compact('category'));
     }
 
     public function createCopybook()
     {
         $category = Category::firstWhere('id', 14);
-        return view('ordermodule::user.create_copybook', compact('category'));
+        return view('categorymodule::user.create_copybook', compact('category'));
     }
 
     public function createEnvelope()
     {
         $category = Category::firstWhere('id', 9);
-        return view('ordermodule::user.create_envelope', compact('category'));
+        return view('categorymodule::user.create_envelope', compact('category'));
     }
     public function createFlyer()
     {
         $category = Category::firstWhere('id', 3);
-        return view('ordermodule::user.create_flyer', compact('category'));
+        return view('categorymodule::user.create_flyer', compact('category'));
     }
     public function createLargeFolder()
     {
         $category = Category::firstWhere('id', 12);
-        return view('ordermodule::user.create_large_folder', compact('category'));
+        return view('categorymodule::user.create_large_folder', compact('category'));
     }
     public function createLetterhead()
     {
         $category = Category::firstWhere('id', 7);
-        return view('ordermodule::user.create_letterhead', compact('category'));
+        return view('categorymodule::user.create_letterhead', compact('category'));
     }
     public function createMagazine()
     {
         $category = Category::firstWhere('id', 4);
-        return view('ordermodule::user.create_magazine', compact('category'));
+        return view('categorymodule::user.create_magazine', compact('category'));
     }
     public function createPrescription()
     {
         $category = Category::firstWhere('id', 13);
-        return view('ordermodule::user.create_prescription', compact('category'));
+        return view('categorymodule::user.create_prescription', compact('category'));
     }
     public function createRamadan()
     {
         $category = Category::firstWhere('id', 15);
-        return view('ordermodule::user.create_ramadan', compact('category'));
+        return view('categorymodule::user.create_ramadan', compact('category'));
     }
     public function createSmallFolder()
     {
         $category = Category::firstWhere('id', 11);
-        return view('ordermodule::user.create_small_folder', compact('category'));
+        return view('categorymodule::user.create_small_folder', compact('category'));
     }
 
     public function createSticker()
     {
         $category = Category::firstWhere('id', 10);
-        return view('ordermodule::user.create_sticker', compact('category'));
+        return view('categorymodule::user.create_sticker', compact('category'));
     }
 }

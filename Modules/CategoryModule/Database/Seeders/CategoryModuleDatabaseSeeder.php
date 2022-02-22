@@ -236,6 +236,10 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'category_id' => "7",
             'paper_size_id' => "17",
         ]);
+        CategoryPaperSize::create([
+            'category_id' => "7",
+            'paper_size_id' => "35",
+        ]);
        
         // envelope
         CategoryPaperSize::create([
@@ -2044,10 +2048,7 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'category_id' => "7",
             'print_option_id' => "1",
         ]);
-        CategoryPrintOption::create([
-            'category_id' => "7",
-            'print_option_id' => "2",
-        ]);
+      
         // envelope
         CategoryPrintOption::create([
             'category_id' => "9",
