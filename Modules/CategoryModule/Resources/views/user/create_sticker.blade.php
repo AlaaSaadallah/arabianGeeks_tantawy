@@ -112,6 +112,15 @@
 									</div>
 								</td>
 							</tr>
+							<tr>
+								<td>القص : </td>
+								<td>
+									<div class="form-group mx-sm-3 mb-2">
+										<label for="quantity" class="sr-only">القص</label>
+										<input type="number" class="form-control" name="cut_number" id="cut_number" placeholder="">
+									</div>
+								</td>
+							</tr>
 							<!-- <tr id="div4" style="display: none;">
 								<td>شكل القص</td>
 								<td>
