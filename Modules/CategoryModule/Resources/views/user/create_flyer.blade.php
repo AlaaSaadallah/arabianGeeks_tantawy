@@ -270,79 +270,76 @@
 @push('scripts')
 <script type="text/javascript">
     $(document).ready(function() {
-                $(window).load(function() {
-                    $('.flexslider').flexslider({
-                        animation: "slide",
-                        controlNav: "thumbnails"
-                    });
-                    $(".form")[0].reset();
-                });
-                $('#paper_size').on('change', function() {
-                    var optionSelected = $(this).find("option:selected");
-                    var sizeid = optionSelected.val();
-                    if (sizeid == '') {
-                        $('#paper_type').html(`<option value=""
+        $(window).load(function() {
+            $('.flexslider').flexslider({
+                animation: "slide",
+                controlNav: "thumbnails"
+            });
+            $(".form")[0].reset();
+        });
+        $('#paper_size').on('change', function() {
+            var optionSelected = $(this).find("option:selected");
+            var sizeid = optionSelected.val();
+            if (sizeid == '') {
+                $('#paper_type').html(`<option value=""
                               >اختر</option>`);
-                    }
-                    var catid = $('#cat_id').val();
-                    if (sizeid == '') {
-                        $('#paper_type').html(`<option value=""
+            }
+            var catid = $('#cat_id').val();
+            if (sizeid == '') {
+                $('#paper_type').html(`<option value=""
                               >اختر</option>`);
-                    }
-                    var route = '/order/filterPaperTypes/' + catid + '/' + sizeid;
-                    $.ajax({
-                        url: route,
-                        type: "POST",
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                        },
-                        success: function(data) {
-                            var options = '';
+            }
+            var route = '/order/filterPaperTypes/' + catid + '/' + sizeid;
+            $.ajax({
+                url: route,
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                },
+                success: function(data) {
+                    var options = '';
 
-                            for (var i = 1; i <= Object.keys(data).length; i++) {
-                                options += ` <option value="${data[i].id}"
+                    for (var i = 1; i <= Object.keys(data).length; i++) {
+                        options += ` <option value="${data[i].id}"
                               >${data[i].name}
                                 </option>`
-                            }
-                            $('#paper_type').html(options);
-                        },
-                        error: function() {
-                            console.log("failure From php side!!! ");
-                        }
-                    });
-                });
-
-
-                var defaults = {
-                    containerID: 'toTop', // fading element id
-                    containerHoverID: 'toTopHover', // fading element hover id
-                    scrollSpeed: 1200,
-                    easingType: 'linear'
-                };
-
-                $().UItoTop({
-                    easingType: 'easeOutQuart'
-                });
-
-                $('#paper_type').on('change', function() {
-                    
-                    var x = parseInt(document.getElementById("paper_type").value);
-                    var arr = [2, 9, 4, 5, 7,12, 13, 14, 15, 16, 67];
-                    // alert(jQuery.inArray(16,arr) >-1)
-                    console.log(typeof(x))
-                    console.log(arr.includes(x))
-                    if (arr.includes(x)) {
-                        console.log(x +" in array " + arr)
-                        document.getElementById('div10').style.display = 'none';
-                    } else {
-                        console.log(x +" not in array " + arr)
-                        document.getElementById('div10').style.display = 'block';
-                     
                     }
+                    $('#paper_type').html(options);
+                },
+                error: function() {
+                    console.log("failure From php side!!! ");
+                }
+            });
+        });
 
 
-                });
-                });
+        var defaults = {
+            containerID: 'toTop', // fading element id
+            containerHoverID: 'toTopHover', // fading element hover id
+            scrollSpeed: 1200,
+            easingType: 'linear'
+        };
+
+        $().UItoTop({
+            easingType: 'easeOutQuart'
+        });
+
+        $('#paper_type').on('change', function() {
+
+            var x = parseInt(document.getElementById("paper_type").value);
+            var arr = [2, 9, 4, 5, 7, 12, 13, 14, 15, 16, 67];
+            // alert(jQuery.inArray(16,arr) >-1)
+            console.log(typeof(x))
+            console.log(arr.includes(x))
+            if (arr.includes(x)) {
+                console.log(x + " in array " + arr)
+                document.getElementById('div10').style.display = 'none';
+            } else {
+                console.log(x + " not in array " + arr)
+                document.getElementById('div10').style.display = 'block';
+            }
+        });
+    });
 </script>
 <script>
     function show1() {

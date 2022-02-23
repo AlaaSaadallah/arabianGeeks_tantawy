@@ -123,6 +123,7 @@
 								<td>
 									<select class="form-select" aria-label="Default select example" name="covers">
 										<option selected>اختر</option>
+										<option value="0">بدون</option>
 										@foreach ($category->covers as $cover)
 										<option value="{{ $cover->id }}">{{ $cover->name }}</option>
 										@endforeach
@@ -169,12 +170,12 @@
 										<option disable>اختر</option>
 										<option value="1">1</option>
 										<option value="2">2</option>
-										<option value="3">3</option>
+										<!-- <option value="3">3</option>
 										<option value="4">4</option>
 										<option value="5">5</option>
 										<option value="6">6</option>
 										<option value="7">7</option>
-										<option value="8">8</option>
+										<option value="8">8</option> -->
 
 									</select>
 								</td>
@@ -189,6 +190,18 @@
 										@foreach ($category->cutStyles as $style)
 										<option value="{{ $style->id }}">{{ $style->name }}</option>
 										@endforeach
+									</select>
+								</td>
+							</tr>
+
+							<tr id="div7" style="display: none;">
+								<td> لزق جيب خارجي</td>
+								<td>
+									<select class="form-select" aria-label="Default select example" name="outer_pocket_glue">
+										<option selected>اختر</option>
+										<option id="1">مع</option>
+										<option id="0">بدون</option>
+
 									</select>
 								</td>
 							</tr>
@@ -308,6 +321,8 @@
 		document.getElementById('div2').style.display = 'block';
 		document.getElementById('div3').style.display = 'none';
 		document.getElementById('div4').style.display = 'block';
+		document.getElementById('div7').style.display = 'block';
+
 	}
 
 	function show3() {

@@ -154,14 +154,7 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'category_id' => "11",
             'paper_size_id' => "4",
         ]);
-        CategoryPaperSize::create([
-            'category_id' => "11",
-            'paper_size_id' => "35",
-        ]);
-        CategoryPaperSize::create([
-            'category_id' => "11",
-            'paper_size_id' => "36",
-        ]);
+   
         // medical prescription
         CategoryPaperSize::create([
             'category_id' => "13",
@@ -2134,18 +2127,18 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'category_id' => "11",
             'fold_pocket_id' => "1",
         ]);
-        CategoryFoldPocket::create([
-            'category_id' => "11",
-            'fold_pocket_id' => "2",
-        ]);
+        // CategoryFoldPocket::create([
+        //     'category_id' => "11",
+        //     'fold_pocket_id' => "2",
+        // ]);
         CategoryFoldPocket::create([
             'category_id' => "11",
             'fold_pocket_id' => "3",
         ]);
-        CategoryFoldPocket::create([
-            'category_id' => "11",
-            'fold_pocket_id' => "4",
-        ]);
+        // CategoryFoldPocket::create([
+        //     'category_id' => "11",
+        //     'fold_pocket_id' => "4",
+        // ]);
         // large folder
         CategoryFoldPocket::create([
             'category_id' => "12",
@@ -2186,10 +2179,10 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'category_id' => "11",
             'glue_id' => "1",
         ]);
-        CategoryGlue::create([
-            'category_id' => "11",
-            'glue_id' => "2",
-        ]);
+        // CategoryGlue::create([
+        //     'category_id' => "11",
+        //     'glue_id' => "2",
+        // ]);
         // large folder
         CategoryGlue::create([
             'category_id' => "12",

@@ -34,6 +34,7 @@ class CartService
         $traj_price = 0;
         $rega_price = 0;
         $cut_style_price = 0;
+        $cover_price = 0;
         $shipping_fees = 0;
 
         // ***************************************************paper size,count & price***********************************************************************
@@ -52,15 +53,11 @@ class CartService
             $zinkat = $data['colors'] * 30;
             $traj =  1 * $data['colors'] * 30; // التراج 
             if ($total_number_of_quarter_sheets > 1000) {
-                // $is_float= is_float($total_number_of_sheets / 1000);
-                // if($is_float){
-
-                //     $pull_nu = floor($total_number_of_sheets / 1000) + 1;
-                // }
                 $pull_nu_sheet = floor($total_number_of_quarter_sheets / 1000);
                 $pull_nu_quantity = $data['quantity'] / 1000;
                 // dd($pull_nu_quantity);
                 $traj =  $pull_nu_sheet * $data['colors'] * 30; // التراج 
+
                 if (is_float($pull_nu_quantity) == 'true') {
                     $rega = (floor($pull_nu_quantity) + 1) * 25;
                     // dd($rega);
@@ -88,6 +85,23 @@ class CartService
             }
         }
 
+        // ***************************************************cover(solovan)***********************************************************************
+        // بحسب عدد الافرخ الربع و اضربه في السعر على 4
+
+        if (is_float($total_standard_sheets) == 'true') {
+            if ($data['covers'] == 2) {
+                $cover_price =  (floor($total_standard_sheets) + 1) * 1.36 * 2;
+            } else {
+                $cover_price = (floor($total_standard_sheets) + 1) * 1.36;
+            }
+        } else {
+            if ($data['covers'] == 2) {
+                $cover_price = ($total_standard_sheets) * 1.36 * 2;
+            } else {
+                $cover_price = ($total_standard_sheets) * 1.36;
+            }
+        }
+
         // الشحن
         $shipping_fees = 20;
         if ($total_number_of_quarter_sheets > 1000) {
@@ -103,7 +117,7 @@ class CartService
         }
 
         // اجمالي الطلب
-        $total_order_price = $total_sheets_price + $zinkat + $traj + $shipping_fees;
+        $total_order_price = $total_sheets_price + $zinkat + $traj + $cover_price + $shipping_fees;
 
         // create order
 
@@ -119,6 +133,7 @@ class CartService
                 'الزنكات' => $zinkat_price,
                 'التراجات' => $traj_price,
                 'ريجة' => $rega_price,
+                'السوليفان' => $cover_price,
                 'القص' => $cut_style_price,
                 'الشحن' => $shipping_fees,
                 'اجمالي' => $total_order_price,
@@ -185,14 +200,18 @@ class CartService
         if (is_float($total_standard_sheets) == 'true') {
             if ($data['covers'] == 2) {
                 $cover_price =  (floor($total_standard_sheets) + 1) * 1.36 * 2;
-            } else {
+            } else if ($data['covers'] == 1) {
                 $cover_price = (floor($total_standard_sheets) + 1) * 1.36;
+            } else {
+                $cover_price = 0;
             }
         } else {
             if ($data['covers'] == 2) {
                 $cover_price = ($total_standard_sheets) * 1.36 * 2;
-            } else {
+            } else if ($data['covers'] == 1) {
                 $cover_price = ($total_standard_sheets) * 1.36;
+            } else {
+                $cover_price = 0;
             }
         }
         // dd($cover_price);
@@ -219,6 +238,12 @@ class CartService
                 $cut_style_price =  (floor($data['quantity'] / 1000) + 1) * 10;
                 $cut_style_price =  $rega_nu * 10;
                 // dd($cut_style_price);
+            }
+
+            if ($data['outer_pocket_glue']) {
+                $outer_pocket_glue = $data['quantity'] * 45;
+            } else {
+                $outer_pocket_glue = 0;
             }
         }
 
@@ -262,7 +287,7 @@ class CartService
         // ***************************************************total***********************************************************************
 
         $total_order_price =
-            $total_sheets_price + $zinkat_price + $traj_price + $cover_price + $rega_price + $fold_traj_price + $cut_style_price + $glue_price + $shipping_fees;
+            $total_sheets_price + $zinkat_price + $traj_price + $cover_price + $rega_price + $fold_traj_price + $cut_style_price + $glue_price + $outer_pocket_glue + $shipping_fees;
         $arr =
             [
                 'عدد الافرخ الكاملة' => $total_standard_sheets,
@@ -274,6 +299,7 @@ class CartService
                 'السلوفان' => $cover_price,
                 'ريجة' => $rega_price,
                 'القص' => $cut_style_price,
+                'لزق جيب خارجي' => $outer_pocket_glue,
                 'التكسير' => $fold_traj_price,
                 'اللزق' => $glue_price,
                 'الشحن' => $shipping_fees,
@@ -288,6 +314,7 @@ class CartService
         $zinkat_price = 0;
         $traj_price = 0;
         $rega_price = 0;
+        $cover_price = 0;
         $cut_style_price = 0;
         $shipping_fees = 0;
 
@@ -344,11 +371,26 @@ class CartService
         //         $rega_nu = $data['quantity'] / 1000;
         //     }
         //     $rega_price = $rega_nu * $data['rega'] * 25; // عدد الريجة لكل 1000 * عدد الريجات المختارة * السعر
+        // ***************************************************cover(solovan)***********************************************************************
+        // بحسب عدد الافرخ الربع و اضربه في السعر على 4
 
+        if (is_float($total_standard_sheets) == 'true') {
+            if ($data['covers'] == 2) {
+                $cover_price =  (floor($total_standard_sheets) + 1) * 1.36 * 2;
+            } else {
+                $cover_price = (floor($total_standard_sheets) + 1) * 1.36;
+            }
+        } else {
+            if ($data['covers'] == 2) {
+                $cover_price = ($total_standard_sheets) * 1.36 * 2;
+            } else {
+                $cover_price = ($total_standard_sheets) * 1.36;
+            }
+        }
         // ***************************************************shipping***********************************************************************
 
         $shipping_fees = 20;
-        if ($total_number_of_quarter_sheets > 1000) {
+        if ($total_number_of_quarter_sheets > 1200) {
             $is_float = $total_number_of_quarter_sheets / 1000;
             if ($is_float == "true") {
                 $over_1000 = floor($total_number_of_quarter_sheets / 1000) + 1;
@@ -363,7 +405,7 @@ class CartService
         // ***************************************************total***********************************************************************
 
         $total_order_price =
-            $total_sheets_price + $zinkat_price + $traj_price  + $cut_style_price  + $shipping_fees;
+            $total_sheets_price + $zinkat_price + $traj_price  + $cut_style_price  + $cover_price + $shipping_fees;
         $arr =
             [
                 'عدد الافرخ الكاملة' => $total_standard_sheets,
@@ -372,6 +414,7 @@ class CartService
                 'سعر الافرخ المستخدمة' => $total_sheets_price,
                 'الزنكات' => $zinkat_price,
                 'التراجات' => $traj_price,
+                'السوليفان' => $cover_price,
                 'ريجة' => $rega_price,
                 'القص' => $cut_style_price,
                 'الشحن' => $shipping_fees,
@@ -434,7 +477,7 @@ class CartService
                 $over_1000 = floor($total_number_of_quarter_sheets / 1000);
             }
             // dd($total_number_of_quarter_sheets/1000);
-            $shipping_fees += 10 * ($over_1000 -1 );
+            $shipping_fees += 10 * ($over_1000 - 1);
         }
 
         // ***************************************************total***********************************************************************

@@ -64,7 +64,7 @@
                                         <option value="" selected>اختر</option>
                                         @foreach ($category->paperSizes as $size)
                                         <option class="size_option" value="{{ $size->id }}">
-                                        @if($size->id == 8 || $size->id == 9 || $size->id == 7)
+                                            @if($size->id == 8 || $size->id == 9 || $size->id == 7)
                                             {{$size->width}} * {{$size->height}}
                                             @else
                                             {{ $size->name }}({{$size->width}} * {{$size->height}} )
@@ -79,12 +79,12 @@
                             <tr>
                                 <td>شكل الطباعة :</td>
                                 <td>
-                                <select class="form-select" id="selector" aria-label="Default select example" name="print_option" onchange="show4();">
-										<option selected>اختر</option>
-										@foreach ($category->printOptions as $option)
-										<option value="{{ $option->id }}">{{ $option->name }}</option>
-										@endforeach
-									</select>
+                                    <select class="form-select" id="selector" aria-label="Default select example" name="print_option" onchange="show4();">
+                                        <option selected>اختر</option>
+                                        @foreach ($category->printOptions as $option)
+                                        <option value="{{ $option->id }}">{{ $option->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </td>
                             </tr>
                             <tr style="display: none;" id="div5">
@@ -114,11 +114,11 @@
                                 <td>
                                     <select class="form-select" aria-label="Default select example" name="paper_type" id="paper_type">
                                         <option disabled>اختر</option>
-                                       
+
                                     </select>
                                 </td>
                             </tr>
-                            <tr id="div2">
+                            <tr id="div2" style="display: none;">
 
                                 <td>ريجه :</td>
                                 <td>
@@ -127,11 +127,11 @@
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
-                                        <option value="4">4</option>
+                                        <!-- <option value="4">4</option>
                                         <option value="5">5</option>
                                         <option value="6">6</option>
                                         <option value="7">7</option>
-                                        <option value="8">8</option>
+                                        <option value="8">8</option> -->
 
                                     </select>
                                 </td>
@@ -160,7 +160,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            
+
                             <!-- <tr>
                                 <td>جهة التقفيل </td>
                                 <td>
@@ -310,19 +310,37 @@
                 },
                 success: function(data) {
                     var options = '';
-                                            
+
                     for (var i = 1; i <= Object.keys(data).length; i++) {
                         options += ` <option value="${data[i].id}"
                               >${data[i].name}
                                 </option>`
-                            }
-                            console.log(options)
+                    }
+                    console.log(options)
                     $('#paper_type').html(options);
                 },
                 error: function() {
                     console.log("failure From php side!!! ");
                 }
             });
+        });
+
+        $('#paper_type').on('change', function() {
+
+            var x = parseInt(document.getElementById("paper_type").value);
+            var arr = [2, 9, 4, 5, 7, 12, 13, 14, 15, 16, 67];
+            // alert(jQuery.inArray(16,arr) >-1)
+            console.log(typeof(x))
+            console.log(arr.includes(x))
+            if (arr.includes(x)) {
+                console.log(x + " in array " + arr)
+                document.getElementById('div10').style.display = 'none';
+                document.getElementById('div2').style.display = 'none';
+            } else {
+                console.log(x + " not in array " + arr)
+                document.getElementById('div10').style.display = 'block';
+                document.getElementById('div2').style.display = 'block';
+            }
         });
     });
 </script>
