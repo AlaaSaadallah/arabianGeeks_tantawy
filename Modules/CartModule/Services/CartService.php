@@ -774,18 +774,18 @@ class CartService
         // ***************************************************zinkat & traj***********************************************************************
         // $total_per_quarter_sheet =  $paper_size->quantity_in_quarter; // العدد الكلي في الربع فرخ الواحد
         // $total_number_of_quarter_sheets =  $data['quantity'] / $total_per_quarter_sheet; // عدد الافرخ الربع المستخدمة
-        $pull_nu = $data['quantity'] / 1000;
+        $pull_nu = $data['quantity']/1000 ;
 
         if ($data['print_option'] == 1) { //  وجه فقط
             $zinkat_price = $data['frontcolors'] * 30; //سعر الزنكات
-            $traj_price = $pull_nu * $data['frontcolors'] * 30; //سعر التراج 
+            $traj_price = $pull_nu * $data['frontcolors'] * 40; //سعر التراج 
         }
         // ***************************************************shipping***********************************************************************
 
         $shipping_fees = 20;
         if ($data['quantity']  > 1000) {
             // $is_float = $data['quantity']  / 1000;
-            $over_1000 = floor($data['quantity']  / 1000);
+            $over_1000 = floor($data['quantity'] /1000);
             // dd($over_1000);
             $shipping_fees += 10 * ($over_1000 - 1);
         }
