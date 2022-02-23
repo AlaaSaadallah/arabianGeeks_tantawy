@@ -42,8 +42,8 @@
 				<h3>روشتات</h3>
 
 				<h6 class="item_price">ارفع التصميم</h6><br>
-                <form action="{{route('user.cart.addPrescription')}}" method="POST" enctype="multipart/form-data" class="form">
-                    @csrf
+				<form action="{{route('user.cart.addPrescription')}}" method="POST" enctype="multipart/form-data" class="form">
+					@csrf
 					<input type="hidden" name="" id="cat_id" value="{{$category->id}}">
 
 					<input type="file" id="myFile" name="filename">
@@ -63,11 +63,11 @@
 										<option selected>اختر</option>
 										@foreach ($category->paperSizes as $size)
 										<option value="{{ $size->id }}">
-										@if($size->id == 8 || $size->id == 9)
-                                            {{$size->width}} * {{$size->height}}
-                                            @else
-                                            {{ $size->name }}({{$size->width}} * {{$size->height}} )
-                                            @endif
+											@if($size->id == 8 || $size->id == 9)
+											{{$size->width}} * {{$size->height}}
+											@else
+											{{ $size->name }}({{$size->width}} * {{$size->height}} )
+											@endif
 										</option>
 										@endforeach
 
@@ -119,7 +119,7 @@
 								<td>
 									<select class="form-select" aria-label="Default select example" name="paper_type" id="paper_type">
 										<option selected>اختر</option>
-																		</select>
+									</select>
 								</td>
 							</tr>
 
@@ -146,8 +146,8 @@
 								<td>
 									<select class="form-select" aria-label="Default select example" name="inner_quantity">
 										<option selected>اختر</option>
+										<option value="50">50 ورقه</option>
 										<option value="100">100 ورقه</option>
-										<option value="150">150 ورقه</option>
 
 									</select>
 								</td>
@@ -298,12 +298,15 @@
 	$('#paper_size').on('change', function() {
             var optionSelected = $(this).find("option:selected");
             var sizeid = optionSelected.val();
-			if (sizeid == '') {
+            if (sizeid == '') {
                 $('#paper_type').html(`<option value=""
                               >اختر</option>`);
             }
-
             var catid = $('#cat_id').val();
+            if (sizeid == '') {
+                $('#paper_type').html(`<option value=""
+                              >اختر</option>`);
+            }
             var route = '/order/filterPaperTypes/' + catid + '/' + sizeid;
             $.ajax({
                 url: route,
@@ -313,13 +316,12 @@
                 },
                 success: function(data) {
                     var options = '';
-                                            
+
                     for (var i = 1; i <= Object.keys(data).length; i++) {
                         options += ` <option value="${data[i].id}"
                               >${data[i].name}
                                 </option>`
-                            }
-                            console.log(options)
+                    }
                     $('#paper_type').html(options);
                 },
                 error: function() {
@@ -330,78 +332,68 @@
 </script>
 
 <script>
-			function show4() {
-				var x = document.getElementById("selector").value;
-				if (x == '2') {
-					document.getElementById('div5').style.display = 'block';
-					document.getElementById('div6').style.display = 'block';
+	function show4() {
+		var x = document.getElementById("selector").value;
+		if (x == '2') {
+			document.getElementById('div5').style.display = 'block';
+			document.getElementById('div6').style.display = 'block';
 
-				}
-				else if (x == '1') {
-					document.getElementById('div5').style.display = 'block';
-					document.getElementById('div6').style.display = 'none';
-				}
+		} else if (x == '1') {
+			document.getElementById('div5').style.display = 'block';
+			document.getElementById('div6').style.display = 'none';
+		} else {
+			document.getElementById('div5').style.display = 'none';
+			document.getElementById('div6').style.display = 'none';
+		}
 
-				else {
-					document.getElementById('div5').style.display = 'none';
-					document.getElementById('div6').style.display = 'none';
-				}
+	}
 
-			}
+	function show5() {
+		var x = document.getElementById("selector1").value;
+		if (x == 'A') {
+			document.getElementById('div10').style.display = 'block';
+			document.getElementById('div11').style.display = 'none';
+			document.getElementById('div12').style.display = 'none';
 
-			function show5() {
-				var x = document.getElementById("selector1").value;
-				if (x == 'A') {
-					document.getElementById('div10').style.display = 'block';
-					document.getElementById('div11').style.display = 'none';
-					document.getElementById('div12').style.display = 'none';
+		} else if (x == 'B') {
+			document.getElementById('div11').style.display = 'block';
+			document.getElementById('div10').style.display = 'none';
+			document.getElementById('div12').style.display = 'none';
+		} else if (x == '19') {
+			document.getElementById('div12').style.display = 'block';
+			document.getElementById('div10').style.display = 'none';
+			document.getElementById('div11').style.display = 'none';
+		}
 
-				}
+	}
 
-				else if (x == 'B') {
-					document.getElementById('div11').style.display = 'block';
-					document.getElementById('div10').style.display = 'none';
-					document.getElementById('div12').style.display = 'none';
-				}
-				else if (x == '19') {
-					document.getElementById('div12').style.display = 'block';
-					document.getElementById('div10').style.display = 'none';
-					document.getElementById('div11').style.display = 'none';
-				}
-
-			}
-
-			function show6() {
-				var x = document.getElementById("selector3").value;
-				if (x == 'without') {
-					document.getElementById('div13').style.display = 'none';
+	function show6() {
+		var x = document.getElementById("selector3").value;
+		if (x == 'without') {
+			document.getElementById('div13').style.display = 'none';
 
 
-				}
+		} else {
 
-				else {
-
-					document.getElementById('div13').style.display = 'block';
-				}
+			document.getElementById('div13').style.display = 'block';
+		}
 
 
-			}
+	}
 
-			function show7() {
-				var x = document.getElementById("selector7").value;
-				if (x == 'with') {
-					document.getElementById('div7').style.display = 'block';
-
-
-				}
-
-				else {
-
-					document.getElementById('div7').style.display = 'none';
-				}
+	function show7() {
+		var x = document.getElementById("selector7").value;
+		if (x == 'with') {
+			document.getElementById('div7').style.display = 'block';
 
 
-			}
-		</script>
+		} else {
+
+			document.getElementById('div7').style.display = 'none';
+		}
+
+
+	}
+</script>
 @endpush
 @endsection

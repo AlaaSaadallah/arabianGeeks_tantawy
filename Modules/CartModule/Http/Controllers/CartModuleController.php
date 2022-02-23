@@ -63,6 +63,11 @@ class CartModuleController extends Controller
         $this->cartService->createcopybook($request->all());
     }
 
+    public function addBlocknoteToCart(Request $request)
+    {
+        $this->cartService->createBlocknote($request->all());
+    }
+
     public function filterPaperTypes($cat_id, $size_id)
     {
         //    dd($cat_id);

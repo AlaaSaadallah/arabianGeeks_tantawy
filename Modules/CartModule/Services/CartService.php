@@ -622,18 +622,20 @@ class CartService
             if ($finish_direction == 1 || $finish_direction == 2) {
                 $length = $paper_size->width;
                 $is_length_fraction = $length - floor($length);
+                // dd($is_length_fraction);
                 if ($is_length_fraction > 0 == true) {
-                    $finish_price = floor($length) + 1;
+                    $finish_price = $data['quantity'] *(floor($length) + 1);
                 } else {
-                    $finish_price = floor($length);
+                    $finish_price = $data['quantity'] * floor($length);
                 }
+                dd($finish_price);
             } elseif ($finish_direction == 3 || $finish_direction == 4) {
                 $length = $paper_size->height;
                 $is_length_fraction = $length - floor($length);
                 if ($is_length_fraction > 0 == true) {
-                    $finish_price = floor($length) + 1;
+                    $finish_price = $data['quantity'] * (floor($length) + 1);
                 } else {
-                    $finish_price = floor($length);
+                    $finish_price = $data['quantity'] * floor($length);
                 }
             }
         }
@@ -705,7 +707,7 @@ class CartService
 
         // ***************************************************zinkat & traj***********************************************************************
         $total_per_quarter_sheet =  $paper_size->quantity_in_quarter; // العدد الكلي في الربع فرخ الواحد
-        $total_number_of_quarter_sheets =  $data['quantity'] / $total_per_quarter_sheet; // عدد الافرخ الربع المستخدمة
+        $total_number_of_quarter_sheets =  ($data['quantity'] * $data['inner_quantity'])  / $total_per_quarter_sheet; // عدد الافرخ الربع المستخدمة
         $pull_nu = $total_number_of_quarter_sheets / 1000;
 
         if ($data['print_option'] == 1) { //  وجه فقط
