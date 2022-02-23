@@ -628,7 +628,7 @@ class CartService
                 } else {
                     $finish_price = $data['quantity'] * floor($length);
                 }
-                dd($finish_price);
+                // dd($finish_price);
             } elseif ($finish_direction == 3 || $finish_direction == 4) {
                 $length = $paper_size->height;
                 $is_length_fraction = $length - floor($length);
@@ -651,13 +651,13 @@ class CartService
         // ***************************************************shipping***********************************************************************
 
         $shipping_fees = 20;
-        if ($total_number_of_quarter_sheets > 1000) {
-            $is_float = $total_number_of_quarter_sheets / 1000;
+        if (($total_number_of_quarter_sheets + (2*$data['quantity'])) > 1000) {
+            $is_float = ($total_number_of_quarter_sheets + (2*$data['quantity'])) / 1000;
             if ($is_float == "true") {
-                $over_1000 = floor($total_number_of_quarter_sheets / 1000) + 1;
+                $over_1000 = floor(($total_number_of_quarter_sheets + (2*$data['quantity']))/ 1000) + 1;
                 // dd($over_1000);
             } else {
-                $over_1000 = floor($total_number_of_quarter_sheets / 1000);
+                $over_1000 = floor(($total_number_of_quarter_sheets + (2*$data['quantity'])) / 1000);
             }
             // dd($over_1000);
             $shipping_fees += 10 * ($over_1000 - 1);
