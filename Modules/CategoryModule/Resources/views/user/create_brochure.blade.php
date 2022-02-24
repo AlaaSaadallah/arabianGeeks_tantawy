@@ -141,11 +141,11 @@
                                 <td>
                                     <select class="form-select" aria-label="Default select example" name="covers">
                                         <option value="" selected>اختر</option>
-                                        <option value="bright one side">لامع وجه واحد </option>
-                                        <option value="bright two sides">لامع وجهين </option>
-                                        <option value="matt one side">مط وجه واحد </option>
-                                        <option value="matt two sides">مط وجهين </option>
-                                        <option value="none">بدون </option>
+                                        <option value="1">لامع وجه واحد </option>
+                                        <option value="2">لامع وجهين </option>
+                                        <option value="1">مط وجه واحد </option>
+                                        <option value="2">مط وجهين </option>
+                                        <option value="0">بدون </option>
 
 
                                     </select>
