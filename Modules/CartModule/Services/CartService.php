@@ -85,8 +85,8 @@ class CartService
             }
         }
         // ***************************************************rega***********************************************************************
-       
-        if ( $data['rega'] != null) { //if user choose "rega"
+
+        if ($data['rega'] != null) { //if user choose "rega"
             if (is_float($total_number_of_quarter_sheets / 1000) == 'true') {
                 $rega_nu = floor($data['quantity'] / 1000) + 1; // عدد الريجة المستخدمة لكل 1000 من العدد
                 if ($data['cutStyle'] == 2) {
@@ -101,20 +101,20 @@ class CartService
         // ***************************************************cover(solovan)***********************************************************************
         // بحسب عدد الافرخ الربع و اضربه في السعر على 4
         if ($data['covers'] != null) {
-        if (is_float($total_standard_sheets) == 'true') {
-            if ($data['covers'] == 2) {
-                $cover_price =  (floor($total_standard_sheets) + 1) * 1.36 * 2;
+            if (is_float($total_standard_sheets) == 'true') {
+                if ($data['covers'] == 2) {
+                    $cover_price =  (floor($total_standard_sheets) + 1) * 1.36 * 2;
+                } else {
+                    $cover_price = (floor($total_standard_sheets) + 1) * 1.36;
+                }
             } else {
-                $cover_price = (floor($total_standard_sheets) + 1) * 1.36;
-            }
-        } else {
-            if ($data['covers'] == 2) {
-                $cover_price = ($total_standard_sheets) * 1.36 * 2;
-            } else {
-                $cover_price = ($total_standard_sheets) * 1.36;
+                if ($data['covers'] == 2) {
+                    $cover_price = ($total_standard_sheets) * 1.36 * 2;
+                } else {
+                    $cover_price = ($total_standard_sheets) * 1.36;
+                }
             }
         }
-    }
         // ***************************************************shipping***********************************************************************
         $shipping_fees = 20;
         if ($total_number_of_quarter_sheets > 1000) {
@@ -729,7 +729,7 @@ class CartService
         $total_per_quarter_sheet =  $paper_size->quantity_in_quarter; // العدد الكلي في الربع فرخ الواحد
         $total_number_of_quarter_sheets =  ($data['quantity'] * $data['inner_quantity'])  / $total_per_quarter_sheet; // عدد الافرخ الربع المستخدمة
         $pull_nu = $total_number_of_quarter_sheets / 1000;
-
+// dd($pull_nu);
         if ($data['print_option'] == 1) { //  وجه فقط
             $zinkat_price = $data['frontcolors'] * 30; //سعر الزنكات
             $traj_price = $pull_nu * $data['frontcolors'] * 30; //سعر التراج 
@@ -740,11 +740,12 @@ class CartService
         $finish_price = $data['quantity'] * 1;
 
         // ***************************************************zigzag***********************************************************************
+    //    dd($data['inner_quantity']);
         if ($data['zigzag'] == 1) {
-            if (is_float($data['quantity'] / 1000) == 'true') {
-                $rega_nu = floor($data['quantity'] / 1000) + 1; // عدد الريجة المستخدمة لكل 1000 من العدد
+            if (is_float(($data['quantity']*$data['inner_quantity']) / 1000) == 'true') {
+                $rega_nu = floor(($data['quantity']*$data['inner_quantity']) / 1000) + 1; // عدد الريجة المستخدمة لكل 1000 من العدد
             } else {
-                $rega_nu = $data['quantity'] / 1000;
+                $rega_nu = ($data['quantity']*$data['inner_quantity']) / 1000;
             }
             $zigzag_price = $rega_nu * 25; // عدد الريجة لكل 1000 * عدد الريجات المختارة * السعر
         }
