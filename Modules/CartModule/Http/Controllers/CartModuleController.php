@@ -68,6 +68,12 @@ class CartModuleController extends Controller
         $this->cartService->createBlocknote($request->all());
     }
 
+    public function addMagazineToCart(Request $request)
+    {
+        $this->cartService->createMagazine($request->all());
+    }
+
+
     public function filterPaperTypes($cat_id, $size_id)
     {
         //    dd($cat_id);

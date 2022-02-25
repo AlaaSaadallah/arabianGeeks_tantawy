@@ -123,7 +123,7 @@
                                 <td>ريجه :</td>
                                 <td>
                                     <select class="form-select" aria-label="Default select example" name="rega">
-                                        <option disable>اختر</option>
+                                        <option value="" disable>اختر</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -133,6 +133,21 @@
                                         <option value="7">7</option>
                                         <option value="8">8</option> -->
 
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr id="div4">
+                                <td>شكل القص</td>
+                                <td>
+                                    <select class="form-select" aria-label="Default select example" name="cutStyle">
+                                        <option value="" selected>اختر</option>
+                                        <option value="1" >عادي</option>
+
+                                        <option value="2" >كيرف</option>
+
+                                        <!-- @foreach ($category->cutStyles as $cut_style)
+                                        <option value="{{ $cut_style->id }}">{{ $cut_style->name }}</option>
+                                        @endforeach -->
                                     </select>
                                 </td>
                             </tr>

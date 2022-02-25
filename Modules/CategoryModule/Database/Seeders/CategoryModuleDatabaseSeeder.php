@@ -122,8 +122,8 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'category_id' => "2",
             'paper_size_id' => "7",
         ]);
-        
-     
+
+
         // large folder
         CategoryPaperSize::create([
             'category_id' => "12",
@@ -154,7 +154,7 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'category_id' => "11",
             'paper_size_id' => "4",
         ]);
-   
+
         // medical prescription
         CategoryPaperSize::create([
             'category_id' => "13",
@@ -188,7 +188,7 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'category_id' => "13",
             'paper_size_id' => "8",
         ]);
-    
+
         // copybooks(دفاتر)
         CategoryPaperSize::create([
             'category_id' => "14",
@@ -222,7 +222,7 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'category_id' => "14",
             'paper_size_id' => "8",
         ]);
-    
+
 
         // letter head
         CategoryPaperSize::create([
@@ -233,7 +233,7 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'category_id' => "7",
             'paper_size_id' => "35",
         ]);
-       
+
         // envelope
         CategoryPaperSize::create([
             'category_id' => "9",
@@ -310,7 +310,7 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'category_id' => "6",
             'paper_size_id' => "8",
         ]);
-      
+
         // flyer
         CategoryPaperSize::create([
             'category_id' => "3",
@@ -344,7 +344,7 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'category_id' => "3",
             'paper_size_id' => "8",
         ]);
-       
+
         // stickers
         CategoryPaperSize::create([
             'category_id' => "10",
@@ -390,7 +390,7 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'category_id' => "10",
             'paper_size_id' => "10",
         ]);
-      
+
         // books
         CategoryPaperSize::create([
             'category_id' => "5",
@@ -2041,7 +2041,7 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'category_id' => "7",
             'print_option_id' => "1",
         ]);
-      
+
         // envelope
         CategoryPrintOption::create([
             'category_id' => "9",
@@ -2070,8 +2070,8 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'category_id' => "5",
             'print_option_id' => "2",
         ]);
-         // magazine
-         CategoryPrintOption::create([
+        // magazine
+        CategoryPrintOption::create([
             'category_id' => "4",
             'print_option_id' => "1",
         ]);
@@ -2196,8 +2196,8 @@ class CategoryModuleDatabaseSeeder extends Seeder
         // *************************************************cut style***********************************************************
 
         DB::table('category_cut_style')->truncate();
-         // letter head
-         CategoryCutStyle::create([
+        // letter head
+        CategoryCutStyle::create([
             'category_id' => "7",
             'cut_style_id' => "1",
         ]);
@@ -2232,8 +2232,8 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'category_id' => "6",
             'cut_style_id' => "2",
         ]);
-           // flyer
-           CategoryCutStyle::create([
+        // flyer
+        CategoryCutStyle::create([
             'category_id' => "3",
             'cut_style_id' => "1",
         ]);
@@ -2241,7 +2241,15 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'category_id' => "3",
             'cut_style_id' => "2",
         ]);
-
+        // magazine
+        CategoryCutStyle::create([
+            'category_id' => "4",
+            'cut_style_id' => "1",
+        ]);
+        CategoryCutStyle::create([
+            'category_id' => "4",
+            'cut_style_id' => "2",
+        ]);
         // *************************************************finish option***********************************************************
 
         DB::table('category_finish_option')->truncate();
@@ -2278,7 +2286,7 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'category_id' => "13",
             'finish_option_id' => "2",
         ]);
-       
+
         CategoryFinishOption::create([
             'category_id' => "12",
             'finish_option_id' => "3",
@@ -2296,7 +2304,7 @@ class CategoryModuleDatabaseSeeder extends Seeder
             'category_id' => "6",
             'finish_option_id' => "3",
         ]);
-       
+
 
         // *************************************************finish direction***********************************************************
 
