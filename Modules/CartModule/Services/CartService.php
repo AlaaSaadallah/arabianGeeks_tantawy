@@ -2,29 +2,44 @@
 
 namespace Modules\CartModule\Services;
 
+use App\Helpers\UploaderHelper;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use Modules\CartModule\Repository\CartItemRepository;
 use Modules\CartModule\Repository\CartRepository;
+use Modules\CategoryModule\Services\CategoryService;
+use Modules\MaterialModule\Entities\PrintOption;
+use Modules\MaterialModule\Services\CoverService;
+use Modules\MaterialModule\Services\CutStyleService;
 use Modules\MaterialModule\Services\PaperSizeService;
 use Modules\MaterialModule\Services\PaperTypeService;
+use Modules\MaterialModule\Services\PrintOptionService;
 use Modules\ProductModule\Repository\ProductRepository;
 
 class CartService
 {
 
     private $cartRepository;
-
+    use UploaderHelper;
 
     public function __construct(
         CartRepository $cartRepository,
         PaperSizeService $paperSizeService,
-        PaperTypeService $paperTypeService
+        PaperTypeService $paperTypeService,
+        CategoryService $categoryService,
+        PrintOptionService $printOptionService,
+        CutStyleService $cutStyleService,
+        CoverService $coverService
     ) {
         $this->cartRepository = $cartRepository;
         $this->paperSizeService = $paperSizeService;
         $this->paperTypeService = $paperTypeService;
+        $this->categoryService = $categoryService;
+        $this->printOptionService = $printOptionService;
+        $this->cutStyleService = $cutStyleService;
+        $this->coverService = $coverService;
     }
 
     public function createBrochureOrder($data) //done
@@ -37,7 +52,16 @@ class CartService
         $cut_style_price = 0;
         $cover_price = 0;
         $shipping_fees = 0;
+        
+        $category = $this->categoryService->findOne($data['cat_id']);
+        // ***************************************************Image***********************************************************************
+        $imgName = null;
+        ///////Upload Image////////
+        if ($data->hasFile('image')) {
+            $imgName = $this->uploadImage($data->file('image'), 'cart', 'brochure');
+        }
 
+        $data = $data->all();
         // ***************************************************paper size,count & price***********************************************************************
         $paper_size = $this->paperSizeService->findOne($data['paper_size']); // get chosen size data 
         $total_per_full_sheet =  $paper_size->quantity_in_standard; // العدد الكلي في الفرخ الواحد
@@ -53,20 +77,17 @@ class CartService
         if (is_float($total_number_of_quarter_sheets / 1000)) {
             $total_number_of_quarter_sheets = 1000 * (floor($total_number_of_quarter_sheets / 1000) + 1);
         }
+
+        $print_option = $this->printOptionService->findOne($data['print_option']);
         if ($data['print_option'] == 1) { // وجه 
             $zinkat_price = $data['frontcolors'] * 30;
             $traj_price =  1 * $data['frontcolors'] * 30; // التراج 
+            // dd($total_number_of_quarter_sheets);
             if ($total_number_of_quarter_sheets > 1000) {
                 $pull_nu_sheet = floor($total_number_of_quarter_sheets / 1000);
                 $pull_nu_quantity = $data['quantity'] / 1000;
                 // dd($pull_nu_quantity);
-                $traj_price =  $pull_nu_sheet * $data['colors'] * 30; // التراج 
-
-                // if (is_float($pull_nu_quantity) == 'true') {
-                //     // $rega_price = (floor($pull_nu_quantity) + 1) * 25;
-                //     // dd($rega);
-                // }
-                // $rega_price =  $pull_nu_quantity * 25;
+                $traj_price =  $pull_nu_sheet * $data['frontcolors'] * 30; // التراج 
             }
         } elseif ($data['print_option'] == 2) { //  وجه و ضهر
             $zinkat_price = ($data['frontcolors'] + $data['backcolors']) * 30;
@@ -91,10 +112,11 @@ class CartService
         }
         // ***************************************************rega***********************************************************************
 
+        $cutStyle = $this->cutStyleService->findOne($data['cutStyle']);
         if ($data['rega'] != null) { //if user choose "rega"
             // if (is_float($total_number_of_quarter_sheets / 1000) == 'true') {
-            $rega_nu = $data['quantity'] / 1000;
-            // $rega_nu = floor($data['quantity'] / 1000) + 1; // عدد الريجة المستخدمة لكل 1000 من العدد
+                $rega_nu = $data['quantity'] / 1000;
+                // $rega_nu = floor($data['quantity'] / 1000) + 1; // عدد الريجة المستخدمة لكل 1000 من العدد
             if ($data['cutStyle'] == 2) {
                 $cut_style_price =  (floor($data['quantity'] / 1000) + 1) * 10;
                 $cut_style_price =  $rega_nu * 10;
@@ -110,7 +132,9 @@ class CartService
         }
         // ***************************************************cover(solovan)***********************************************************************
         // بحسب عدد الافرخ الربع و اضربه في السعر على 4
+
         if ($data['covers'] != null) {
+            $solovan = $this->coverService->findOne($data['covers']);
             if (is_float($total_standard_sheets) == 'true') {
                 if ($data['covers'] == 2) {
                     $cover_price =  (floor($total_standard_sheets) + 1) * 1.36 * 2;
@@ -126,6 +150,7 @@ class CartService
             }
         }
         // ***************************************************shipping***********************************************************************
+        // dd('p');
         $shipping_fees = 20;
         if ($total_number_of_quarter_sheets > 1000) {
             $is_float = $total_number_of_quarter_sheets / 1000;
@@ -144,7 +169,7 @@ class CartService
 
         // create order
 
-
+        // dd('5');
         //update order and add order_nu
 
         $arr =
@@ -161,7 +186,33 @@ class CartService
                 'الشحن' => $shipping_fees,
                 'اجمالي' => $total_order_price,
             ];
-        dd($arr);
+        // dd($arr);
+
+        $cart_data = [
+            'user_id' => 1,
+            'image'=>$imgName,
+            'category' => (key_exists('cat_id', $data) && !empty($data['cat_id'])) ? $category->name : null,
+            'paper_type' => (key_exists('paper_type', $data) && !empty($data['paper_type'])) ? $paper_type->name : null,
+            'paper_size' => (key_exists('paper_size', $data) && !empty($data['paper_size'])) ? $paper_size->name : null,
+            'quantity' => (key_exists('quantity', $data) && !empty($data['quantity'])) ? $data['quantity'] : null,
+            'inner_quantity' => (key_exists('inner_quantity', $data) && !empty($data['inner_quantity'])) ? $data['inner_quantity'] : null,
+            'print_option' => (key_exists('print_option', $data) && !empty($data['print_option'])) ? $print_option->name : null,
+            'front_color' => (key_exists('frontcolors', $data) && !empty($data['frontcolors'])) ? $data['frontcolors'] : null,
+            'back_color' => (key_exists('backcolors', $data) && !empty($data['backcolors'])) ? $data['backcolors'] : null,
+            'cut_style' => (key_exists('cutStyle', $data) && !empty($data['cutStyle'])) ? $cutStyle->name : null,
+            'rega' => (key_exists('rega', $data) && !empty($data['rega'])) ? $data['rega'] : null,
+            'solovan' => (key_exists('covers', $data) && !empty($data['covers'])) ? $solovan->name : null,
+            'cover_paper_type' => (key_exists('cover_paper_type', $data) && !empty($data['cover_paper_type'])) ? $data['cover_paper_type'] : null,
+            'finish_option' => (key_exists('finish_option', $data) && !empty($data['finish_option'])) ? $data['finish_option'] : null,
+            'finish_direction' => (key_exists('finish_dir', $data) && !empty($data['finish_dir'])) ? $data['finish_dir'] : null,
+            'notes' => (key_exists('notes', $data) && !empty($data['notes'])) ? $data['notes'] : null,
+            'shipping' => $shipping_fees,
+            'total_price' => $total_order_price
+        ];
+        // dd($cart_data);
+
+         return $this->cartRepository->create($cart_data);
+       
     }
 
     public function createLargeFolder($data) //done
@@ -1137,76 +1188,8 @@ class CartService
 
 
 
-
-    public function addItem($item_arr)
-    {
-        $customer = Auth::guard('customer')->user();
-        ///if user logged in
-        if ($customer != null) {
-            //init cart if not found
-            if ($customer->cart == null) {
-                $customer->cart = $this->cartRepository->create(['customer_id' => $customer->id]);
-            }
-
-            /////////
-
-            ////Add/Update item to cart
-            $this->cartItemRepository->updateOrCreate(
-                [
-                    'cart_id' => $customer->cart->id,
-                    'item_id' => $item_arr['id'],
-                ],
-                [
-                    'qty' => $item_arr['quantity'],
-                ]
-            );
-            ////////
-        } else {
-            $cart_products = [];
-            $str_cart = Session::get('CART');
-            if ($str_cart != '') {
-                $arr_cart = json_decode($str_cart, true);
-                $cart_products = $arr_cart['products'];
-            }
-            $cart_products[$item_arr['id']] = [
-                'name' => $item_arr['name'],
-                'img' => $item_arr['img'],
-                'price' => $item_arr['price'],
-                'offer_price' => $item_arr['offer_price'],
-                'quantity' => $item_arr['quantity'],
-            ];
-
-            $arr_cart['products'] = $cart_products;
-
-            Session::put('CART', json_encode($arr_cart));
-            Session::save();
-        }
-    }
-
-
-
-    public function removeItem($item_id)
-    {
-        $customer = Auth::guard('customer')->user();
-        ///if user logged in
-        if ($customer != null) {
-            $this->cartItemRepository->deleteWhere(['item_id' => $item_id, 'cart_id' => $customer->cart->id]);
-        } else {
-            $cart_products = [];
-            $str_cart = Session::get('CART');
-            if ($str_cart != '') {
-                $arr_cart = json_decode($str_cart, true);
-                //$cart_products = $arr_cart['products'];
-                unset($arr_cart['products'][$item_id]);
-
-                Session::put('CART', json_encode($arr_cart));
-                Session::save();
-            }
-        }
-    }
-    public function collectCartItemsToClient($customer_id)
-    {
-        $cart = $this->cartRepository->findWhere(['customer_id' => $customer_id])->first();
-        return $this->cartItemRepository->findWhere(['cart_id' => $cart->id]);
-    }
+public function findWhere($arr)
+{
+   return $this->cartRepository->findWhere($arr);
+}
 }

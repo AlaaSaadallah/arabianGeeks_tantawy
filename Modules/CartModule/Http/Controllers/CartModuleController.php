@@ -22,10 +22,16 @@ class CartModuleController extends Controller
         $this->paperTypeService = $paperTypeService;
         $this->paperSizePaperTypeService = $paperSizePaperTypeService;
     }
+public function index()
+{
+    $cart_items = $this->cartService->findWhere(['user_id'=>1]);
+   return view('cartmodule::index',compact('cart_items'));
+}
 
     public function addBrochureToCart(Request $request)
     {
-        $this->cartService->createBrochureOrder($request->all());
+      $brochure=  $this->cartService->createBrochureOrder($request);
+        return redirect()->route('user.cart');
     }
 
     public function addLargeFolderToCart(Request $request)

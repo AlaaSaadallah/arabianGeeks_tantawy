@@ -24,5 +24,6 @@ Route::group(['prefix' => 'cart'], function () {
     Route::post('addCopybookToCart', 'CartModuleController@addCopybookToCart')->name('user.cart.addCopybook'); // add new cartaction
     Route::post('addMagazineToCart', 'CartModuleController@addMagazineToCart')->name('user.cart.addMagazine'); // add new cartaction
 
+    Route::get('/','CartModuleController@index')->name('user.cart');
     Route::post('filterPaperTypes/{cat_id}/{size_id}', 'CartModuleController@filterPaperTypes')->name('user.cart.filterPaperTypes'); // add new cartaction
 });
