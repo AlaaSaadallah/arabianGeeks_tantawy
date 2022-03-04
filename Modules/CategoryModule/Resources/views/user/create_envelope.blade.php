@@ -42,6 +42,8 @@
                 <form action="{{route('user.cart.addEnvelope')}}" method="POST" enctype="multipart/form-data" class="form">
                     @csrf
 					<input type="file" id="myFile" name="filename">
+					<input type="hidden" name="" id="cat_id" value="{{$category->id}}">
+
 				<p>
 					الظروف :
 					سواء كنت تبحث عن الاستخدام الشخصي أو التجاري ، اجعل الأظرف المخصصة جزءًا مهمًا من علامتك
@@ -53,7 +55,7 @@
 					<tbody>
 						<tr>
 							<td> المقاس : </td>
-							<td><select class="form-select" aria-label="Default select example" name="paper_size">
+							<td><select class="form-select" aria-label="Default select example" name="paper_size" id="paper_size">
 									<option selected>اختر</option>
 									@foreach ($category->paperSizes as $size)
 									<option value="{{ $size->id }}">{{ $size->name }}({{$size->width}} * {{$size->height}} )</option>
@@ -73,26 +75,6 @@
 							</td>
 						</tr>
 						<tr>
-							<td>نوع الورق :</td>
-							<td>
-								<select class="form-select" aria-label="Default select example" name="paper_type">
-									<option selected>اختر</option>
-									@foreach ($category->paperTypes as $type)
-                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
-                                        @endforeach
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td>الكمية : </td>
-							<td>
-								<div class="form-group mx-sm-3 mb-2">
-									<label for="quantity" class="sr-only">الكمية</label>
-									<input type="text" class="form-control" name="quantity" id="quantity" placeholder="ادخل الكمية 1000 ومضاعفاتها">
-								</div>
-							</td>
-						</tr>
-						<tr>
 							<td>عدد الألوان</td>
 							<td>
 								<select class="form-select" aria-label="Default select example" name="frontcolors">
@@ -105,6 +87,25 @@
 								</select>
 							</td>
 						</tr>
+						<tr>
+						<td>نوع المظروف :</td>
+							<td>
+								<select class="form-select" aria-label="Default select example" name="paper_type" id="paper_type">
+									<option selected>اختر</option>
+									
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>الكمية : </td>
+							<td>
+								<div class="form-group mx-sm-3 mb-2">
+									<label for="quantity" class="sr-only">الكمية</label>
+									<input type="text" class="form-control" name="quantity" id="quantity" placeholder="ادخل الكمية 1000 ومضاعفاتها">
+								</div>
+							</td>
+						</tr>
+				
 
 
 
@@ -218,6 +219,40 @@
 </script>
 
 <script>
+	 $('#paper_size').on('change', function() {
+            var optionSelected = $(this).find("option:selected");
+            var sizeid = optionSelected.val();
+            if (sizeid == '') {
+                $('#paper_type').html(`<option value=""
+                              >اختر</option>`);
+            }
+            var catid = $('#cat_id').val();
+            if (sizeid == '') {
+                $('#paper_type').html(`<option value=""
+                              >اختر</option>`);
+            }
+            var route = '/order/filterPaperTypes/' + catid + '/' + sizeid;
+            $.ajax({
+                url: route,
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                },
+                success: function(data) {
+                    var options = '';
+
+                    for (var i = 1; i <= Object.keys(data).length; i++) {
+                        options += ` <option value="${data[i].id}"
+                              >${data[i].name}
+                                </option>`
+                    }
+                    $('#paper_type').html(options);
+                },
+                error: function() {
+                    console.log("failure From php side!!! ");
+                }
+            });
+        });
 	function show1() {
 		document.getElementById('div2').style.display = 'none';
 		document.getElementById('div1').style.display = 'block';

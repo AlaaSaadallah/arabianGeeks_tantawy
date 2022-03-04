@@ -125,6 +125,7 @@
 								<td>
 									<select class="form-select" aria-label="Default select example" name="covers">
 										<option selected>اختر</option>
+										<option value="0">بدون</option>
 										@foreach ($category->covers as $cover)
 										<option value="{{ $cover->id }}">{{ $cover->name }}</option>
 										@endforeach
@@ -134,7 +135,7 @@
 
 							<tr>
 								<td>
-									<input type="radio" class="flat" name="option" value='fold'  id="genderM"  onclick="show1();"> تكسير
+									<span id="fold"><input type="radio" class="flat" name="option" value='fold'  	  onclick="show1();"> تكسير</span>
 									<input type="radio" class="flat" name="option" value='rega' id="genderM"  onclick="show2();"> ريجة
 									<input type="radio" class="flat" name="option" value='none' id="genderF"  onclick="show3();" /> بدون
 
@@ -157,12 +158,26 @@
 									<select class="form-select" aria-label="Default select example" name="glue">
 										<option selected>اختر</option>
 										@foreach ($category->glues as $glue)
+										@if($glue->id == 2)
+										continue
+										@else
 										<option value="{{ $glue->id }}">{{ $glue->name }}</option>
+										@endif
 										@endforeach
 									</select>
 								</td>
 							</tr>
+							<tr id="div7" style="display: none;">
+								<td> لزق جيب خارجي</td>
+								<td>
+									<select class="form-select" aria-label="Default select example" name="outer_pocket_glue">
+										<option selected>اختر</option>
+										<option id="1">مع</option>
+										<option id="0">بدون</option>
 
+									</select>
+								</td>
+							</tr>
 							<tr id="div2" style="display: none;">
 
 								<td>ريجه :</td>
@@ -191,6 +206,17 @@
 										@foreach ($category->cutStyles as $style)
 										<option value="{{ $style->id }}">{{ $style->name }}</option>
 										@endforeach
+									</select>
+								</td>
+							</tr>
+							<tr id="div8" style="display: none;">
+								<td> لزق جيب خارجي</td>
+								<td>
+									<select class="form-select" aria-label="Default select example" name="outer_pocket_glue">
+										<option selected>اختر</option>
+										<option id="1">مع</option>
+										<option id="0">بدون</option>
+
 									</select>
 								</td>
 							</tr>
@@ -302,6 +328,8 @@
 		document.getElementById('div2').style.display = 'none';
 		document.getElementById('div1').style.display = 'block';
 		document.getElementById('div3').style.display = 'block';
+		document.getElementById('div7').style.display = 'block';
+		document.getElementById('div8').style.display = 'none';
 		document.getElementById('div4').style.display = 'none';
 	}
 
@@ -310,6 +338,9 @@
 		document.getElementById('div2').style.display = 'block';
 		document.getElementById('div3').style.display = 'none';
 		document.getElementById('div4').style.display = 'block';
+		document.getElementById('div8').style.display = 'block';
+		document.getElementById('div7').style.display = 'none';
+
 	}
 
 	function show3() {
@@ -317,6 +348,9 @@
 		document.getElementById('div2').style.display = 'none';
 		document.getElementById('div3').style.display = 'none';
 		document.getElementById('div4').style.display = 'none';
+		document.getElementById('div7').style.display = 'none';
+		document.getElementById('div8').style.display = 'none';
+
 
 	}
 
@@ -335,6 +369,22 @@
 		}
 
 	}
+
+	$('select[name="print_option"]').on('change', function() {
+            var optionSelected = $(this).find("option:selected").val();
+			if(optionSelected == 1){
+				$('select[name="covers"]').find('option[value=2]').hide();
+				$('select[name="covers"]').find('option[value=4]').hide();
+				$('select[name="covers"]').find('option[value=1]').show();
+				$('select[name="covers"]').find('option[value=3]').show();
+			}else{
+				$('select[name="covers"]').find('option[value=1]').hide();
+				$('select[name="covers"]').find('option[value=3]').hide();
+				$('select[name="covers"]').find('option[value=2]').show();
+				$('select[name="covers"]').find('option[value=4]').show();
+			}
+
+		});
 </script>
 <script>
     $(document).ready(function() {
@@ -346,6 +396,9 @@
                               >اختر</option>`);
             }
 
+			if(sizeid != 22){
+				$('#fold').hide();
+			}
             var catid = $('#cat_id').val();
             var route = '/order/filterPaperTypes/' + catid + '/' + sizeid;
             $.ajax({

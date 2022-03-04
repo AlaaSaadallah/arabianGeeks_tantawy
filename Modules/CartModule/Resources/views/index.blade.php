@@ -93,7 +93,7 @@
     </div>
 </div>
 <!--//breadcrumbs-->
-<!--cart-items-->
+
 <div class="cart-items">
     <div class="container">
         <h3 class="wow fadeInUp animated" data-wow-delay=".5s">My Shopping Cart({{$cart_items->count()}})</h3>
@@ -121,12 +121,9 @@
                     </div>
                 </div>
                 @endforeach
-                <!-- <div class="clearfix"></div> -->
                 <hr>
             </div>
         </div>
-       
-
     </div>
 </div>
 @endsection

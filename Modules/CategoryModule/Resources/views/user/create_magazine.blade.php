@@ -364,6 +364,22 @@
             document.getElementById('div6').style.display = 'none';
         }
     }
+
+    $('select[name="print_option"]').on('change', function() {
+            var optionSelected = $(this).find("option:selected").val();
+			if(optionSelected == 1){
+				$('select[name="covers"]').find('option[value=2]').hide();
+				$('select[name="covers"]').find('option[value=4]').hide();
+				$('select[name="covers"]').find('option[value=1]').show();
+				$('select[name="covers"]').find('option[value=3]').show();
+			}else{
+				$('select[name="covers"]').find('option[value=1]').hide();
+				$('select[name="covers"]').find('option[value=3]').hide();
+				$('select[name="covers"]').find('option[value=2]').show();
+				$('select[name="covers"]').find('option[value=4]').show();
+			}
+
+		});
 </script>
 @endpush
 @endsection

@@ -133,12 +133,14 @@
 
 							<tr>
 								<td>
-									<input type="radio" class="flat" name="option" value='fold'  id="genderM"  onclick="show1();"> تكسير
+									<!-- <input type="radio" class="flat" name="option" value='fold'  id="genderM"  onclick="show1();"> تكسير -->
 									<input type="radio" class="flat" name="option" value='rega' id="genderM"  onclick="show2();"> ريجة
 									<input type="radio" class="flat" name="option" value='none' id="genderF"  onclick="show3();" /> بدون
 
 								</td>
 							</tr>
+
+							{{--
 							<tr id="div1" style="display: none;">
 								<td>تكسير</td>
 								<td>
@@ -150,6 +152,7 @@
 									</select>
 								</td>
 							</tr>
+							--}}
 							<tr id="div3" style="display: none;">
 								<td>لزق</td>
 								<td>
@@ -309,15 +312,15 @@
 </script>
 
 <script>
-	function show1() {
-		document.getElementById('div2').style.display = 'none';
-		document.getElementById('div1').style.display = 'block';
-		document.getElementById('div3').style.display = 'block';
-		document.getElementById('div4').style.display = 'none';
-	}
+	// function show1() {
+	// 	document.getElementById('div2').style.display = 'none';
+	// 	document.getElementById('div1').style.display = 'block';
+	// 	document.getElementById('div3').style.display = 'block';
+	// 	document.getElementById('div4').style.display = 'none';
+	// }
 
 	function show2() {
-		document.getElementById('div1').style.display = 'none';
+		// document.getElementById('div1').style.display = 'none';
 		document.getElementById('div2').style.display = 'block';
 		document.getElementById('div3').style.display = 'none';
 		document.getElementById('div4').style.display = 'block';
@@ -326,7 +329,7 @@
 	}
 
 	function show3() {
-		document.getElementById('div1').style.display = 'none';
+		// document.getElementById('div1').style.display = 'none';
 		document.getElementById('div2').style.display = 'none';
 		document.getElementById('div3').style.display = 'none';
 		document.getElementById('div4').style.display = 'none';

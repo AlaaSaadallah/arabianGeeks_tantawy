@@ -733,8 +733,6 @@ class MaterialModuleDatabaseSeeder extends Seeder
         ]);
         PaperType::create([
             'name' => "مكربن وسط",
-
-
             'price' => '1.68',
         ]);
         PaperType::create([
@@ -745,9 +743,25 @@ class MaterialModuleDatabaseSeeder extends Seeder
         ]);
         PaperType::create([
             'name' => "ورق زبده",
-
-
             'price' => '0.85',
+        ]);
+        PaperType::create([
+            'name' => "مظروف A3",
+            'width' => '32.4',
+            'height' => '45.7',
+            'price' => '1.60',
+        ]);
+        PaperType::create([
+            'name' => "مظروف A4 لزق ذاتي",
+            'width' => '22.9',
+            'height' => '32.4',
+            'price' => '0.84',
+        ]);
+        PaperType::create([
+            'name' => "مظروف A5",
+            'width' => '16.2',
+            'height' => '22.9',
+            'price' => '0.22',
         ]);
         // *************************************************paper size->paper type***********************************************************
 
@@ -1313,11 +1327,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "25",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "3",
-            'paper_size_id' => "25",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "3",
+        //     'paper_size_id' => "25",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "3",
             'paper_size_id' => "25",
@@ -1455,11 +1469,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "9",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "3",
-            'paper_size_id' => "9",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "3",
+        //     'paper_size_id' => "9",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "3",
             'paper_size_id' => "9",
@@ -1597,11 +1611,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "8",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "3",
-            'paper_size_id' => "8",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "3",
+        //     'paper_size_id' => "8",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "3",
             'paper_size_id' => "8",
@@ -2000,11 +2014,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "23",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "6",
-            'paper_size_id' => "23",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "6",
+        //     'paper_size_id' => "23",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "6",
             'paper_size_id' => "23",
@@ -2142,11 +2156,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "24",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "6",
-            'paper_size_id' => "24",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "6",
+        //     'paper_size_id' => "24",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "6",
             'paper_size_id' => "24",
@@ -2284,11 +2298,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "25",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "6",
-            'paper_size_id' => "25",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "6",
+        //     'paper_size_id' => "25",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "6",
             'paper_size_id' => "25",
@@ -2426,11 +2440,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "9",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "6",
-            'paper_size_id' => "9",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "6",
+        //     'paper_size_id' => "9",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "6",
             'paper_size_id' => "9",
@@ -2568,11 +2582,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "8",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "6",
-            'paper_size_id' => "8",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "6",
+        //     'paper_size_id' => "8",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "6",
             'paper_size_id' => "8",
@@ -2971,11 +2985,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "23",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "14",
-            'paper_size_id' => "23",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "14",
+        //     'paper_size_id' => "23",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "14",
             'paper_size_id' => "23",
@@ -3113,11 +3127,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "24",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "14",
-            'paper_size_id' => "24",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "14",
+        //     'paper_size_id' => "24",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "14",
             'paper_size_id' => "24",
@@ -3255,11 +3269,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "25",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "14",
-            'paper_size_id' => "25",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "14",
+        //     'paper_size_id' => "25",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "14",
             'paper_size_id' => "25",
@@ -3397,11 +3411,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "9",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "14",
-            'paper_size_id' => "9",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "14",
+        //     'paper_size_id' => "9",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "14",
             'paper_size_id' => "9",
@@ -3539,11 +3553,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "8",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "14",
-            'paper_size_id' => "8",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "14",
+        //     'paper_size_id' => "8",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "14",
             'paper_size_id' => "8",
@@ -3942,11 +3956,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "23",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "13",
-            'paper_size_id' => "23",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "13",
+        //     'paper_size_id' => "23",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "13",
             'paper_size_id' => "23",
@@ -4084,11 +4098,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "24",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "13",
-            'paper_size_id' => "24",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "13",
+        //     'paper_size_id' => "24",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "13",
             'paper_size_id' => "24",
@@ -4226,11 +4240,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "25",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "13",
-            'paper_size_id' => "25",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "13",
+        //     'paper_size_id' => "25",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "13",
             'paper_size_id' => "25",
@@ -4368,11 +4382,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "9",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "13",
-            'paper_size_id' => "9",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "13",
+        //     'paper_size_id' => "9",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "13",
             'paper_size_id' => "9",
@@ -4510,11 +4524,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "8",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "13",
-            'paper_size_id' => "8",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "13",
+        //     'paper_size_id' => "8",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "13",
             'paper_size_id' => "8",
@@ -4913,11 +4927,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "23",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "14",
-            'paper_size_id' => "23",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "14",
+        //     'paper_size_id' => "23",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "14",
             'paper_size_id' => "23",
@@ -5055,11 +5069,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "24",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "14",
-            'paper_size_id' => "24",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "14",
+        //     'paper_size_id' => "24",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "14",
             'paper_size_id' => "24",
@@ -5197,11 +5211,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "25",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "14",
-            'paper_size_id' => "25",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "14",
+        //     'paper_size_id' => "25",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "14",
             'paper_size_id' => "25",
@@ -5339,11 +5353,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "9",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "14",
-            'paper_size_id' => "9",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "14",
+        //     'paper_size_id' => "9",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "14",
             'paper_size_id' => "9",
@@ -5481,11 +5495,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "8",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "14",
-            'paper_size_id' => "8",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "14",
+        //     'paper_size_id' => "8",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "14",
             'paper_size_id' => "8",
@@ -5884,11 +5898,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "23",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "5",
-            'paper_size_id' => "23",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "5",
+        //     'paper_size_id' => "23",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "5",
             'paper_size_id' => "23",
@@ -6026,11 +6040,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "24",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "5",
-            'paper_size_id' => "24",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "5",
+        //     'paper_size_id' => "24",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "5",
             'paper_size_id' => "24",
@@ -6168,11 +6182,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "25",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "5",
-            'paper_size_id' => "25",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "5",
+        //     'paper_size_id' => "25",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "5",
             'paper_size_id' => "25",
@@ -6398,11 +6412,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "23",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "4",
-            'paper_size_id' => "23",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "4",
+        //     'paper_size_id' => "23",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "4",
             'paper_size_id' => "23",
@@ -6540,11 +6554,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "24",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "4",
-            'paper_size_id' => "24",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "4",
+        //     'paper_size_id' => "24",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "4",
             'paper_size_id' => "24",
@@ -6682,11 +6696,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "22",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "4",
-            'paper_size_id' => "22",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "4",
+        //     'paper_size_id' => "22",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "4",
             'paper_size_id' => "22",
@@ -6824,11 +6838,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "9",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "4",
-            'paper_size_id' => "9",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "4",
+        //     'paper_size_id' => "9",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "4",
             'paper_size_id' => "9",
@@ -6966,11 +6980,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "8",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "4",
-            'paper_size_id' => "8",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "4",
+        //     'paper_size_id' => "8",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "4",
             'paper_size_id' => "8",
@@ -7108,11 +7122,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "32",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "4",
-            'paper_size_id' => "32",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "4",
+        //     'paper_size_id' => "32",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "4",
             'paper_size_id' => "32",
@@ -7937,11 +7951,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "9",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "2",
-            'paper_size_id' => "9",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "2",
+        //     'paper_size_id' => "9",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "2",
             'paper_size_id' => "9",
@@ -8079,11 +8093,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "8",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "2",
-            'paper_size_id' => "8",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "2",
+        //     'paper_size_id' => "8",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "2",
             'paper_size_id' => "8",
@@ -8221,11 +8235,11 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "7",
             'paper_type_id' => "9",
         ]);
-        PaperTypePaperSize::create([
-            'category_id' => "2",
-            'paper_size_id' => "7",
-            'paper_type_id' => "5",
-        ]);
+        // PaperTypePaperSize::create([
+        //     'category_id' => "2",
+        //     'paper_size_id' => "7",
+        //     'paper_type_id' => "5",
+        // ]);
         PaperTypePaperSize::create([
             'category_id' => "2",
             'paper_size_id' => "7",
@@ -8359,7 +8373,7 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "16",
             'paper_type_id' => "68",
         ]);
-   
+
         // sticker => A4
         PaperTypePaperSize::create([
             'category_id' => "10",
@@ -8371,8 +8385,8 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'paper_size_id' => "17",
             'paper_type_id' => "68",
         ]);
-     
-         // sticker => A5
+
+        // sticker => A5
         PaperTypePaperSize::create([
             'category_id' => "10",
             'paper_size_id' => "18",
@@ -8477,6 +8491,48 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'category_id' => "10",
             'paper_size_id' => "10",
             'paper_type_id' => "69",
+        ]);
+
+        // sticker => 1/6 (31.5*33.5)
+        PaperTypePaperSize::create([
+            'category_id' => "10",
+            'paper_size_id' => "32",
+            'paper_type_id' => "68",
+        ]);
+        PaperTypePaperSize::create([
+            'category_id' => "10",
+            'paper_size_id' => "32",
+            'paper_type_id' => "69",
+        ]);
+
+        // envelop(dl)
+        PaperTypePaperSize::create([
+            'category_id' => "9",
+            'paper_size_id' => "26",
+            'paper_type_id' => "72",
+        ]);
+        PaperTypePaperSize::create([
+            'category_id' => "9",
+            'paper_size_id' => "26",
+            'paper_type_id' => "73",
+        ]);
+          // envelop(c3)
+        PaperTypePaperSize::create([
+            'category_id' => "9",
+            'paper_size_id' => "27",
+            'paper_type_id' => "78",
+        ]);
+           // envelop(c4)
+        PaperTypePaperSize::create([
+            'category_id' => "9",
+            'paper_size_id' => "28",
+            'paper_type_id' => "79",
+        ]);
+           // envelop(c5)
+        PaperTypePaperSize::create([
+            'category_id' => "9",
+            'paper_size_id' => "29",
+            'paper_type_id' => "80",
         ]);
 
         // small folder => A4

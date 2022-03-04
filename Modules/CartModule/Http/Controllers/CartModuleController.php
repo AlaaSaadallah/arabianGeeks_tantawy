@@ -41,42 +41,42 @@ public function index()
 
     public function addFlyerToCart(Request $request)
     {
-        $this->cartService->createFlyer($request->all());
+        $this->cartService->createFlyer($request);
     }
 
     public function addLetterheadToCart(Request $request)
     {
-        $this->cartService->createLetterhead($request->all());
+        $this->cartService->createLetterhead($request);
     }
 
     public function addStickerToCart(Request $request)
     {
-        $this->cartService->createSticker($request->all());
+        $this->cartService->createSticker($request);
     }
 
     public function addPrescriptionToCart(Request $request)
     {
-        $this->cartService->createPrescription($request->all());
+        $this->cartService->createPrescription($request);
     }
 
     public function addEnvelopeToCart(Request $request)
     {
-        $this->cartService->createEnvelope($request->all());
+        $this->cartService->createEnvelope($request);
     }
 
     public function addCopybookToCart(Request $request)
     {
-        $this->cartService->createcopybook($request->all());
+        $this->cartService->createcopybook($request);
     }
 
     public function addBlocknoteToCart(Request $request)
     {
-        $this->cartService->createBlocknote($request->all());
+        $this->cartService->createBlocknote($request);
     }
 
     public function addMagazineToCart(Request $request)
     {
-        $this->cartService->createMagazine($request->all());
+        $this->cartService->createMagazine($request);
     }
 
 

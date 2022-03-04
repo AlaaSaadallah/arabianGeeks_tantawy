@@ -27,6 +27,7 @@ class CreateCartsTable extends Migration
             $table->string('back_color')->nullable();
             $table->string('cut_style')->nullable();
             $table->string('rega')->nullable();
+            $table->string('f')->nullable();
             $table->string('solovan')->nullable();
             $table->string('cover_paper_type')->nullable();
             $table->string('finish_option')->nullable();

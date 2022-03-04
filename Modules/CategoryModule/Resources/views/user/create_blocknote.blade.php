@@ -164,6 +164,58 @@
                                     </select>
                                 </td>
                             </tr>
+                           
+                            <tr>
+                                <td>شكل الطباعة :</td>
+                                <td>
+                                    <select class="form-select" id="cover_selector" aria-label="Default select example" name="cover_print_option" onchange="show3();">
+                                        <option selected>اختر</option>
+                                        @foreach ($category->printOptions as $option)
+                                        <option value="{{ $option->id }}">{{ $option->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr style="display: none;" id="cover_div5">
+                                <td>عدد ألوان الوجه</td>
+                                <td>
+                                    <select class="form-select" aria-label="Default select example" name="cover_frontcolors">
+                                    <option value="" selected>اختر</option>
+                                        <option value="1">1 لون</option>
+                                        <option value="2">2 لون</option>
+                                        <option value="3">3 لون</option>
+                                        <option value="4">4 لون</option>
+                                    </select>
+                                </td>
+
+                            </tr>
+                            <tr style="display: none;" id="cover_div6">
+                                <td>عدد ألوان الظهر</td>
+                                <td>
+                                    <select class="form-select" aria-label="Default select example" name="cover_backcolors">
+                                    <option value="" selected>اختر</option>
+                                        <option value="1">1 لون</option>
+                                        <option value="2">2 لون</option>
+                                        <option value="3">3 لون</option>
+                                        <option value="4">4 لون</option>
+                                    </select>
+                                </td>
+                            </tr>
+                             <tr id="div10" >
+                                <td>سلوفان :</td>
+                                <td>
+                                    <select class="form-select" aria-label="Default select example" name="covers">
+                                        <option value="" selected>اختر</option>
+                                        <option value="1">لامع وجه واحد </option>
+                                        <option value="2">لامع وجهين </option>
+                                        <option value="1">مط وجه واحد </option>
+                                        <option value="2">مط وجهين </option>
+                                        <option value="0">بدون </option>
+
+
+                                    </select>
+                                </td>
+                            </tr>
                             <tr>
                                 <td>التقفيل</td>
                                 <td>
@@ -344,6 +396,7 @@
     });
 </script>
 <script>
+   
     function show4() {
         var x = document.getElementById("selector").value;
         if (x == 2) {
@@ -359,6 +412,40 @@
         }
 
     }
+
+    function show3() {
+        var x = document.getElementById("cover_selector").value;
+        if (x == 2) {
+            document.getElementById('cover_div5').style.display = 'block';
+            document.getElementById('cover_div6').style.display = 'block';
+
+        } else if (x == 1) {
+            document.getElementById('cover_div5').style.display = 'block';
+            document.getElementById('cover_div6').style.display = 'none';
+        } else {
+            document.getElementById('cover_div5').style.display = 'none';
+            document.getElementById('cover_div6').style.display = 'none';
+        }
+
+    }
+
+    $('select[name="cover_print_option"]').on('change', function() {
+            var optionSelected = $(this).find("option:selected").val();
+			if(optionSelected == 1){
+				$('select[name="covers"]').find('option[value=2]').hide();
+				$('select[name="covers"]').find('option[value=4]').hide();
+				$('select[name="covers"]').find('option[value=1]').show();
+				$('select[name="covers"]').find('option[value=3]').show();
+			}else{
+				$('select[name="covers"]').find('option[value=1]').hide();
+				$('select[name="covers"]').find('option[value=3]').hide();
+				$('select[name="covers"]').find('option[value=2]').show();
+				$('select[name="covers"]').find('option[value=4]').show();
+			}
+
+		});
+       
 </script>
+
 @endpush
 @endsection

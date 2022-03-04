@@ -113,6 +113,18 @@
 								</td>
 							</tr>
 							<tr>
+							<td>سوفان</td>
+							<td>
+								<select class="form-select" aria-label="Default select example" name="covers">
+									<option selected>اختر</option>
+									
+									<option value="1">مع</option>
+									<option value="0"> بدون </option>
+								
+								  </select>
+							</td>
+						  </tr>
+							<tr>
 								<td>القص : </td>
 								<td>
 									<div class="form-group mx-sm-3 mb-2">
@@ -306,6 +318,22 @@
 		}
 
 	}
+
+	$('select[name="print_option"]').on('change', function() {
+            var optionSelected = $(this).find("option:selected").val();
+			if(optionSelected == 1){
+				$('select[name="covers"]').find('option[value=2]').hide();
+				$('select[name="covers"]').find('option[value=4]').hide();
+				$('select[name="covers"]').find('option[value=1]').show();
+				$('select[name="covers"]').find('option[value=3]').show();
+			}else{
+				$('select[name="covers"]').find('option[value=1]').hide();
+				$('select[name="covers"]').find('option[value=3]').hide();
+				$('select[name="covers"]').find('option[value=2]').show();
+				$('select[name="covers"]').find('option[value=4]').show();
+			}
+
+		});
 </script>
 
 @endpush
