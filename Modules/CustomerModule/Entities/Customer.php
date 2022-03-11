@@ -7,12 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Customer extends Model
 {
-    use HasFactory;
+   
 
-    protected $fillable = [];
+    protected $guarder = [];
     
-    protected static function newFactory()
-    {
-        return \Modules\CustomerModule\Database\factories\CustomerFactory::new();
-    }
+   
 }

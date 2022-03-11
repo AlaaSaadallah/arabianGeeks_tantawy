@@ -12,7 +12,6 @@ class MaterialAdminController extends Controller
 {
     public function __construct(
         PaperTypeService $paperTypeService
-
     ) {
         $this->paperTypeService = $paperTypeService;
     }

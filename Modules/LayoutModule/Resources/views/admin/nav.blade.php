@@ -51,7 +51,7 @@
               
                   </ul>
                 </li>
-                <li><a href="clients.html"><i class="fa fa-desktop"></i> عملاءنا</a>
+                <li><a href="{{route('admin.customers')}}"><i class="fa fa-desktop"></i> عملاءنا</a>
                  
                 </li>
                 <li><a href="form_upload.html"><i class="fa fa-table"></i> قائمة التسعير </a>

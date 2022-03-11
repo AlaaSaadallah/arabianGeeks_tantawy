@@ -12,5 +12,13 @@
 */
 
 // Route::prefix('customermodule')->group(function() {
-//     Route::get('/', 'CustomerModuleController@index');
-// });
+
+use Illuminate\Support\Facades\Route;
+Route::group(['prefix' => 'admin/customers', 
+// 'middleware' => ['auth:admin'],
+ 'namespace' => 'Admin'], function () {
+    Route::get('/', 'CustomerAdminController@index')->name('admin.customers');
+    Route::get('/index', 'CustomerAdminController@indexCustomers')->name('admin.customers.index');
+    Route::get('/create', 'CustomerAdminController@create')->name('admin.customers.create');
+
+});
