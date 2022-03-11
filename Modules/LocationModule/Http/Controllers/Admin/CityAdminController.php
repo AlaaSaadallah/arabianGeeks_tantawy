@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Modules\LocationModule\Services\CityService;
 use Modules\CustomerModule\Services\CustomerService;
 use Yajra\DataTables\Facades\DataTables;
+
 class CityAdminController extends Controller
 {
 
@@ -36,6 +37,18 @@ class CityAdminController extends Controller
         }
         // dd($cities);
         $table = DataTables::of($cities);
+
+        $table->addColumn(
+            'action',
+            function ($cities) {
+                $button = null;
+                $button = '<a class="btn btn-info btn-sm" href="' . route('admin.cities.edit', $cities->id) . '" role="button"><i class="fa fa-pencil"></i>
+            &nbsp;تعديل</a>';
+
+                return $button;
+            }
+        );
+        $table->rawColumns(['action']);
         return $table->make(true);
     }
     /**
@@ -54,7 +67,12 @@ class CityAdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cities = $this->cityService->create($request->all());
+        if ($cities) {
+            return redirect()->route('admin.cities');
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**
@@ -74,7 +92,9 @@ class CityAdminController extends Controller
      */
     public function edit($id)
     {
-        return view('locationmodule::edit');
+        $city = $this->cityService->findOne($id);
+
+        return view('locationmodule::admin.edit',compact('city'));
     }
 
     /**
@@ -83,9 +103,14 @@ class CityAdminController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $city = $this->cityService->update($request->all());
+        if ($city) {
+            return redirect()->route('admin.cities');
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**

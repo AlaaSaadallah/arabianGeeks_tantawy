@@ -16,7 +16,8 @@
             <div class="x_content">
 
                 <!-- start project list -->
-                <form class="form-horizontal form-label-left" dir="rtl" lang="ar" action="{{--route('')--}}">
+                <form class="form-horizontal form-label-left" dir="rtl" lang="ar" method="post" action="{{route('admin.cities.store')}}">
+                    @csrf
                     <div class="form-group row ">
                         <label class="control-label col-md-3 col-sm-3" style="float: right;">الاسم</label>
                         <div class="col-md-7 col-sm-7 ">
