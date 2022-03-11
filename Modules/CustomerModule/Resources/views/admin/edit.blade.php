@@ -3,7 +3,7 @@
 @section('content')
 <div class="page-title">
     <div class="title_left">
-        <h3>اضافة عميل جديد</h3>
+        <h3>تعديل عميل </h3>
     </div>
 
 
@@ -16,12 +16,13 @@
             <div class="x_content">
 
                 <!-- start project list -->
-                <form class="form-horizontal form-label-left" dir="rtl" lang="ar" method="post" action="{{route('admin.customers.store')}}">
+                <form class="form-horizontal form-label-left" dir="rtl" lang="ar" method="post" action="{{route('admin.customers.update')}}">
                 @csrf  
                 <div class="form-group row ">
                         <label class="control-label col-md-3 col-sm-3" style="float: right;">اسم العميل</label>
                         <div class="col-md-7 col-sm-7 ">
-                            <input type="text" class="form-control" name="name" required="required" placeholder="اسم العميل">
+                            <input type="hidden" name="id" value="{{$customer->id}}">
+                            <input type="text" class="form-control" name="name" value="{{$customer->name }}" required="required" placeholder="اسم العميل">
                         </div>
 
                     </div>
@@ -42,21 +43,21 @@
                     <div class="form-group row ">
                         <label class="control-label col-md-3 col-sm-3" style="float: right;"> العنوان </label>
                         <div class="col-md-7 col-sm-7 ">
-                            <input type="text" class="form-control" name="address" required="required" placeholder="العنوان">
+                            <input type="text" class="form-control" name="address" value="{{$customer->address}}" required="required" placeholder="العنوان">
                         </div>
 
                     </div>
                     <div class="form-group row ">
                         <label class="control-label col-md-3 col-sm-3" style="float: right;"> رقم التليفون</label>
                         <div class="col-md-7 col-sm-7 ">
-                            <input type="text" class="form-control" name="phone" required="required" placeholder="رقم التليفون ">
+                            <input type="text" class="form-control" name="phone" value="{{$customer->phone}}" required="required" placeholder="رقم التليفون ">
                         </div>
 
                     </div>
                     <div class="form-group row ">
                         <label class="control-label col-md-3 col-sm-3" style="float: right;">اسم الدخول</label>
                         <div class="col-md-7 col-sm-7 ">
-                            <input type="text" class="form-control" name="email" required="required" placeholder="اسم الدخول">
+                            <input type="text" class="form-control" name="email" value="{{$customer->email}}" required="required" placeholder="اسم الدخول">
                         </div>
 
                     </div>
@@ -72,8 +73,7 @@
                     <div class="item form-group">
                         <div class="col-md-6 col-sm-6 offset-md-3">
 
-                            <button class="btn btn-primary" type="reset">إعادة تعيين</button>
-                            <button type="submit" class="btn btn-success">اضافة</button>
+                            <button type="submit" class="btn btn-success">تعديل</button>
                         </div>
                     </div>
 

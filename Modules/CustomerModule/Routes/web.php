@@ -20,5 +20,8 @@ Route::group(['prefix' => 'admin/customers',
     Route::get('/', 'CustomerAdminController@index')->name('admin.customers');
     Route::get('/index', 'CustomerAdminController@indexCustomers')->name('admin.customers.index');
     Route::get('/create', 'CustomerAdminController@create')->name('admin.customers.create');
+    Route::post('/store', 'CustomerAdminController@store')->name('admin.customers.store');
+    Route::get('/edit/{id}', 'CustomerAdminController@edit')->name('admin.customers.edit');
+    Route::post('/update', 'CustomerAdminController@update')->name('admin.customers.update');
 
 });

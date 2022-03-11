@@ -6,15 +6,18 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\CustomerModule\Services\CustomerService;
+use Modules\LocationModule\Services\CityService;
 use Yajra\DataTables\Facades\DataTables;
 
 
 class CustomerAdminController extends Controller
 {
     public function __construct(
-        CustomerService $customerService
+        CustomerService $customerService,
+        CityService $cityService
     ) {
         $this->customerService = $customerService;
+        $this->cityService = $cityService;
     }
 
     /**
@@ -33,6 +36,22 @@ class CustomerAdminController extends Controller
 
         }
         $table = DataTables::of($customers);
+
+        $table->addColumn(
+            'action',
+            function ($customers) {
+                $button = null;
+                $button = '<a class="btn btn-info btn-sm" href="' . route('admin.customers.edit', $customers->id) . '" role="button"><i class="fa fa-pencil"></i>
+            &nbsp;تعديل</a>';
+
+                //     $button .= '<a class="btn btn-danger btn-sm" href="' .  '" role="button"><i class="fa fa-trash-o"></i>
+                // &nbsp;حذف</a>';
+
+                return $button;
+            }
+        );
+        $table->rawColumns(['action']);
+
         return $table->make(true);
     }
     /**
@@ -41,7 +60,8 @@ class CustomerAdminController extends Controller
      */
     public function create()
     {
-        return view('customermodule::admin.create');
+        $cities = $this->cityService->findAll();
+        return view('customermodule::admin.create', compact('cities'));
     }
 
     /**
@@ -51,7 +71,12 @@ class CustomerAdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $customer = $this->customerService->create($request->all());
+        if ($customer) {
+            return redirect()->route('admin.customers');
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**
@@ -71,7 +96,9 @@ class CustomerAdminController extends Controller
      */
     public function edit($id)
     {
-        return view('customermodule::edit');
+        $customer= $this->customerService->findOne($id);
+        $cities = $this->cityService->findAll();
+        return view('customermodule::admin.edit',compact('customer','cities'));
     }
 
     /**
@@ -80,9 +107,14 @@ class CustomerAdminController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+       $customer= $this->customerService->update($request->all(),$request->id);
+       if($customer){
+           return redirect()->route('admin.customers');
+       }else{
+           return redirect()->back();
+       }
     }
 
     /**

@@ -9,7 +9,7 @@ class Customer extends Model
 {
    
 
-    protected $guarder = [];
+    protected $guarded = [];
     
    
 }

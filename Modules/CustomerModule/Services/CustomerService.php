@@ -24,16 +24,9 @@ class CustomerService
         return $this->customerRepository->find($id);
     }
 
-    public function create($requests)
+    public function create($customer_data)
     {
 
-        $customer_data = [
-            'name' => $requests['name'],
-            'email' => $requests['email'],
-            'password' => bcrypt($requests['password']),
-            'first_password' => $requests['first_password'],
-
-        ];
 
         return $this->customerRepository->create($customer_data);
     }
