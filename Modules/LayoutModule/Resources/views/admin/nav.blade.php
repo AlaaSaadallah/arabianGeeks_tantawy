@@ -57,7 +57,7 @@
                 <li><a href="form_upload.html"><i class="fa fa-table"></i> قائمة التسعير </a>
                  
                 </li>
-                <li><a href="#"><i class="fa fa-windows"></i> الشحن </a>
+                <li><a href="{{route('admin.cities')}}"><i class="fa fa-windows"></i> المحافظات </a>
                   
                 </li>
 

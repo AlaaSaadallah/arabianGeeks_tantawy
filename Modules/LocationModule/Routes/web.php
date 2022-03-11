@@ -11,6 +11,12 @@
 |
 */
 
-// Route::prefix('locationmodule')->group(function() {
-//     Route::get('/', 'LocationModuleController@index');
-// });
+use Illuminate\Support\Facades\Route;
+Route::group(['prefix' => 'admin/cities', 
+// 'middleware' => ['auth:admin'],
+ 'namespace' => 'Admin'], function () {
+    Route::get('/', 'CityAdminController@index')->name('admin.cities');
+    Route::get('/index', 'CityAdminController@indexCities')->name('admin.cities.index');
+    Route::get('/create', 'CityAdminController@create')->name('admin.cities.create');
+
+});
