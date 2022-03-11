@@ -28,6 +28,9 @@ class PaperTypeService
         return $this->paperTypeRepository->findWhere($arr);
     }
     
- 
+ public function update($data)
+ {
+     return $this->paperTypeRepository->update($data,$data['id']);
+ }
 
 }

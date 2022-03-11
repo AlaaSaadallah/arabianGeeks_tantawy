@@ -11,6 +11,8 @@
 |
 */
 
-Route::prefix('adminmodule')->group(function() {
-    Route::get('/', 'AdminModuleController@index');
-});
+use Illuminate\Support\Facades\Route;
+
+Route::get('/admin', 'AdminModuleController@index');
+// Route::prefix('adminmodule')->group(function() {
+// });

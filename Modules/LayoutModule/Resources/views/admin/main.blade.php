@@ -13,10 +13,11 @@
 
     <!-- Bootstrap -->
     <link href="{{asset('assets/admin/css/bootstrap.min.css')}}" rel="stylesheet">
-	
+    <link href="{{asset('assets/admin/vendors/datatables.net-bs/css/dataTables..bootstrap.min.css')}}" rel="stylesheet">
+
     <!-- Font Awesome -->
     <link href="{{asset('assets/admin/vendors/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
-    
+
     <!-- NProgress -->
     <link href="{{asset('assets/admin/css/nprogress.css')}}" rel="stylesheet">
     <!-- iCheck -->
@@ -32,7 +33,7 @@
 	@include ('layoutmodule::admin.nav')
 
         <!-- page content -->
-        <div class="right_col" role="main">
+        <div class="right_col" role="main" style="min-height: 2000px;">
           <div class="">
 		  @yield('content')
           </div>
@@ -46,20 +47,26 @@
 
 	
 
-	<script src="{{asset('assets/admin/js/jquery.min.js')}}"></script>
+	<script src="{{asset('assets/admin/vendors/jquery/dist/jquery.min.js')}}"></script>
+   
+
     <!-- Bootstrap -->
-   <script src="{{asset('assets/admin/js/bootstrap.bundle.min.js')}}"></script>
+   <script src="{{asset('assets/admin/vendors/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
     <!-- FastClick -->
-    <script src="{{asset('assets/admin/js/fastclick.js')}}"></script>
+    <script src="{{asset('assets/admin/vendors/fastclick/lib/fastclick.js')}}"></script>
     <!-- NProgress -->
-    <script src="{{asset('assets/admin/js/nprogress.js')}}"></script>
+    <script src="{{asset('assets/admin/vendors/nprogress/nprogress.js')}}"></script>
     <!-- bootstrap-progressbar -->
-    <script src="{{asset('assets/admin/js/bootstrap-progressbar.min.js')}}"></script>
+    <script src="{{asset('assets/admin/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js')}}"></script>
     
-    <!-- Custom Theme Scripts -->
-    <script src="{{asset('assets/admin/js/custom.min.js')}}"></script>
+    <script src="{{asset('assets/admin/vendors/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+
+
+    <script src="{{asset('assets/admin/build/js/custom.min.js')}}"></script>
+
 	@stack('scripts')
 
 </body>
+
 
 </html>

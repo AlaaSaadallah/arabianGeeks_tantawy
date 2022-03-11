@@ -37,7 +37,7 @@
                   <ul class="nav child_menu">
                     <li><a href="size.html">المقاس</a></li>
                     <li><a href="print_shape.html">شكل الطباغة</a></li>
-                    <li><a href="#">نوع الورق</a></li>
+                    <li><a href="{{route('admin.material.paperType')}}">نوع الورق</a></li>
                     <li><a href="#"> الكمية</a></li>
                     <li><a href="#">عدد الألوان</a></li>
                     <li><a href="#">التقفيل </a></li>
