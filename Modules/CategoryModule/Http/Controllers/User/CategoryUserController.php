@@ -90,7 +90,22 @@ class CategoryUserController extends Controller
     public function createMagazine()
     {
         $category = Category::firstWhere('id', 4);
-        return view('categorymodule::user.create_magazine', compact('category'));
+        $selected_size = $this->paperSizePaperTypeService->findWhere(['paper_size_id' => 22, 'category_id' => 4])->toArray();
+        $filtered_types = [];
+        foreach ($selected_size as $size) {
+            $hide = [67, 2, 9, 5, 6, 7, 8, 14, 15, 16];
+            if (in_array($size['paper_type_id'], $hide)) {
+                continue;
+            }
+            $filtered_types[$size['id']]['type_id'] =  $size['paper_type_id'];
+        }
+        $cover_types = [];
+        $i = 1;
+        foreach ($filtered_types as $type) {
+            $cover_types[$i] = $this->paperTypeService->findWhere(['id' => $type['type_id']])->first()->toArray();
+            $i++;
+        }
+        return view('categorymodule::user.create_magazine', compact('category','cover_types'));
     }
     public function createPrescription()
     {

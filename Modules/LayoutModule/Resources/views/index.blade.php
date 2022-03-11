@@ -1,4 +1,4 @@
-@extends('layoutmodule::layouts.master')
+@extends('layoutmodule::admin.main')
 
 @section('content')
     <h1>Hello World</h1>

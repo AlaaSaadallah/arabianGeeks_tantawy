@@ -729,7 +729,7 @@ class CartService
         dd($arr);
     }
 
-    public function createBlocknote($data) // done  ->need to add solovan equation & cover equations as brochure (fixed)
+    public function createBlocknote($data) // done  8/3
     {
         $total_sheets_price = 0;
         $total_cover_paper_price = 0;
@@ -741,7 +741,7 @@ class CartService
         // ***************************************************paper size,count & price***********************************************************************
         $paper_size = $this->paperSizeService->findOne($data['paper_size']); // get chosen size data 
         $total_per_full_sheet =  $paper_size->quantity_in_standard; // العدد الكلي في الفرخ الواحد
-        $total_standard_sheets = ($data['quantity'] * $data['inner_quantity']) / $total_per_full_sheet; // عدد الافرخ الكاملة المستخدمة
+        $total_standard_sheets = (($data['quantity'] * $data['inner_quantity']) / $total_per_full_sheet) + 25; // عدد الافرخ الكاملة المستخدمة
         $paper_type = $this->paperTypeService->findOne($data['paper_type']); // معرفة نوع الورق
         $standard_sheet_price = $paper_type->price; // تحديد سعر الورقة
         $total_sheets_price =  ($standard_sheet_price) * $total_standard_sheets; // حساب ثمن الورق كله
@@ -790,32 +790,14 @@ class CartService
                 }
             }
         }
-        // ***************************************************cut style***********************************************************************
 
-        if ($data['cutStyle'] == 2) {
-            if ($total_number_of_quarter_sheets > 1000) {
-                $is_float = $total_number_of_quarter_sheets / 1000;
-                if (is_float($is_float) == "true") {
-                    $cut_number = floor($total_number_of_quarter_sheets / 1000) + 1;
-                    // dd($over_1000);
-                } else {
-                    $cut_number = floor($total_number_of_quarter_sheets / 1000);
-                }
-                $cut_style_price = $cut_number *  $total_per_quarter_sheet  * 10; //سعر التراج 
-                // dd($pull_nu_sheet .'*'. $data['frontcolors'] .'*'. 30);
-            } else {
-
-                $cut_style_price = ($total_number_of_quarter_sheets / 1000) *  $total_per_quarter_sheet  * 10; //سعر التراج 
-
-            }
-        }
 
         // ***************************************************cover للغلاف***********************************************************************
         // **********************cover paper price********************
         $total_per_full_sheet =  $paper_size->quantity_in_standard; // العدد الكلي في الفرخ الواحد
         $cover_paper_type = $this->paperTypeService->findOne($data['cover_paper_type']); // معرفة نوع الورق
-        $standard_sheet_price = $paper_type->price; // تحديد سعر الورقة
-        $total_used_sheets = ($data['quantity'] * 2) / $total_per_full_sheet;
+        $standard_sheet_cover_price = $cover_paper_type->price; // تحديد سعر الورقة
+        $total_used_sheets = (($data['quantity'] * 2) / $total_per_full_sheet) + 18;
         $total_cover_paper_price =  $total_used_sheets * $cover_paper_type->price; // حساب ثمن الغلاف
 
         // ***********************solovan**********************************
@@ -857,13 +839,38 @@ class CartService
 
             $traj_price_cover = $pull_nu_sheet_cover * ($data['cover_frontcolors'] + $data['cover_backcolors']) * 30; // سعر التراج 
         }
+
+        // ***************************************************cut style***********************************************************************
+
+        if ($data['cutStyle'] == 2) {
+
+
+            $total_cuts = ($data['quantity'] * $data['inner_quantity']) / 1000;
+
+            if (is_float($data['quantity'] / 1000)) {
+                $cover_cuts = floor($data['quantity'] / 1000) + 1;
+            } else {
+                $cover_cuts = $data['quantity'] / 1000;
+            }
+            // dd($cover_cuts);
+            $cut_style_price =  ($total_cuts * 10) + (($cover_cuts) * 10);
+            // }
+
+        }
         // ***************************************************shipping***********************************************************************
 
         $shipping_fees = 20;
+
+
         if (($total_number_of_quarter_sheets + $total_number_of_quarter_sheets_cover) > 1000) {
-            $is_float = ($total_number_of_quarter_sheets + $total_number_of_quarter_sheets_cover) / 1000;
-            if (is_float($is_float) == "true") {
-                $over_1000 = floor(($total_number_of_quarter_sheets + $total_number_of_quarter_sheets_cover) / 1000) + 1;
+            $is_float_inner = ($total_number_of_quarter_sheets) / 1000;
+            $is_float_cover = ($total_number_of_quarter_sheets_cover) / 1000;
+
+            if (is_float($is_float_inner) == "true") {
+                $over_1000 = floor(($total_number_of_quarter_sheets) / 1000) + 1;
+                if (is_float($is_float_cover) == "true") {
+                    $over_1000 += floor(($total_number_of_quarter_sheets_cover) / 1000) + 1;
+                }
                 // dd($over_1000);
             } else {
                 $over_1000 = floor(($total_number_of_quarter_sheets + $total_number_of_quarter_sheets_cover) / 1000);
@@ -875,12 +882,14 @@ class CartService
         // ***************************************************total***********************************************************************
         $total_order_price =
             $total_sheets_price + $total_cover_paper_price + $zinkat_price + $zinkat_price_cover + $traj_price_cover + $traj_price  + $finish_price + $cut_style_price + $cover_price + $shipping_fees;
+        // dd('test');
         $arr =
             [
                 'عدد الافرخ الكاملة' => $total_standard_sheets,
                 'عدد الافرخ الربع' => $total_number_of_quarter_sheets,
                 'سعر الفرخ' => $standard_sheet_price,
-                '-الورق سعر الافرخ المستخدمة' => $total_sheets_price,
+                'الورق سعر الافرخ المستخدمة' => $total_sheets_price,
+                'سعر فرخ الغلاف' => $standard_sheet_cover_price,
                 'سعر الغلاف' => $total_cover_paper_price,
                 'سوليفان' => $cover_price,
                 'الزنكات' => $zinkat_price,
@@ -1052,6 +1061,7 @@ class CartService
 
     public function createCopybook($data)
     {
+        // dd('f');
         $total_sheets_price = 0;
         $zinkat_price = 0;
         $traj_price = 0;
@@ -1135,7 +1145,7 @@ class CartService
             $shipping_fees = 20;
             if ($total_number_of_quarter_sheets > 1000) {
                 $is_float = $total_number_of_quarter_sheets / 1000;
-                if ($is_float == "true") {
+                if (is_float($is_float) == "true") {
                     $over_1000 = floor($total_number_of_quarter_sheets / 1000) + 1;
                     // dd($over_1000);
                 } else {
@@ -1166,7 +1176,7 @@ class CartService
         }
     }
 
-    public function createMagazine($data) //done
+    public function createMagazine($data) //done 9/3
     {
         // dd($data);
         $total_sheets_price = 0;
@@ -1183,8 +1193,7 @@ class CartService
         $total_standard_sheets = ($data['quantity'] * $data['inner_quantity']) / $total_per_full_sheet; // عدد الافرخ الكاملة المستخدمة
         $paper_type = $this->paperTypeService->findOne($data['paper_type']); // معرفة نوع الورق
         $standard_sheet_price = $paper_type->price; // تحديد سعر الورقة
-        $total_sheets_price =  ($standard_sheet_price) * $total_standard_sheets; // حساب ثمن الورق كله
-
+        // dd($standard_sheet_price);
         // ***************************************************zinkat & traj***********************************************************************
         $total_per_quarter_sheet =  $paper_size->quantity_in_quarter; // العدد الكلي في الربع فرخ الواحد
         $total_number_of_quarter_sheets =  ($data['quantity'] * $data['inner_quantity']) / $total_per_quarter_sheet; // عدد الافرخ الربع المستخدمة
@@ -1199,25 +1208,23 @@ class CartService
             $pull_nu = $total_number_of_quarter_sheets / 1000;
         }
 
-        // $paper_size = $this->paperSizeService->findOne($data['paper_size']); // get chosen size data 
-        // $total_per_full_sheet =  $paper_size->quantity_in_standard; // العدد الكلي في الفرخ الواحد
-        // if ($data['with_cover'] == 1) {
-        //     $total_standard_sheets = ($data['quantity'] * ($data['inner_quantity'] + 2)) / $total_per_full_sheet; // عدد الافرخ الكاملة المستخدمة
-        // } else {
-        //     $total_standard_sheets = ($data['quantity'] * $data['inner_quantity']) / $total_per_full_sheet; // عدد الافرخ الكاملة المستخدمة
-        // }
-        // $paper_type = $this->paperTypeService->findOne($data['paper_type']); // معرفة نوع الورق
-        // $standard_sheet_price = $paper_type->price; // تحديد سعر الورقة
-        // $total_sheets_price =  ($standard_sheet_price) * $total_standard_sheets; // حساب ثمن الورق كله
-
-        // // ***************************************************zinkat & traj***********************************************************************
-        // $total_per_quarter_sheet =  $paper_size->quantity_in_quarter; // العدد الكلي في الربع فرخ الواحد
-        // $total_number_of_quarter_sheets =  $total_standard_sheets / $total_per_quarter_sheet; // عدد الافرخ الربع المستخدمة
-        // dd($total_standard_sheets .'/ '.$total_per_quarter_sheet);
-        // $pull_nu = $total_number_of_quarter_sheets / 1000;
-
 
         $number_of_zinkat = $data['inner_quantity'] / $total_per_quarter_sheet;
+        if($data['print_option'] == 1){
+            $used_zinkat = $number_of_zinkat;
+            // dd($number_of_zinkat);
+        }else{
+            $used_zinkat = 2*$number_of_zinkat;
+        }
+        // dd($used_zinkat);
+        for ($i =1;$i<= $used_zinkat;$i++){
+
+                $total_number_of_quarter_sheets += 50;
+                $total_standard_sheets = $total_number_of_quarter_sheets/4;
+                $total_sheets_price =  ($standard_sheet_price) * $total_standard_sheets; // حساب ثمن الورق كله
+
+
+        }
         if (is_float($pull_nu)) {
             $pull_nu_sheet = floor($pull_nu) + 1; // عدد السحبات
         } else {
@@ -1239,14 +1246,17 @@ class CartService
             $traj_price = $pull_nu_sheet * ($data['frontcolors'] + $data['backcolors']) * 30; // سعر التراج 
             // dd($pull_nu_sheet);
         }
+        // $total_sheets_price =  ($standard_sheet_price/4) * $total_number_of_quarter_sheets; // حساب ثمن الورق كله
 
         // ***************************************************cut style***********************************************************************
         if ($data['cutStyle'] == 2) {
 
             if (is_float($data['quantity'] / 1000)) {
                 $quantity = floor($data['quantity'] / 1000) + 1;
+            } else {
+                $quantity = $data['quantity'];
             }
-            $total_cuts = ($quantity * $data['inner_quantity']);
+            $total_cuts = ($quantity * $data['inner_quantity']) / 1000;
             //   dd($total_cuts);
             // if(is_float($total_cuts)){
             //     // dd(floor($total_cuts));
@@ -1267,26 +1277,104 @@ class CartService
         $finish_price = $data['quantity'] * $price_of_pins;
         //    dd($inner_pages_price + 0.20 );
 
+
+        // ***************************************************cover للغلاف***********************************************************************
+        if ($data['with_cover'] == 1) {
+            // **********************cover paper price********************
+
+            $total_per_full_sheet =  $paper_size->quantity_in_standard; // العدد الكلي في الفرخ الواحد
+            $cover_paper_type = $this->paperTypeService->findOne($data['cover_paper_type']); // معرفة نوع الورق
+            $standard_sheet_cover_price = $cover_paper_type->price; // تحديد سعر الورقة
+            $total_used_sheets = (($data['quantity']) / $total_per_full_sheet)+18;
+            $total_cover_paper_price =  $total_used_sheets * $cover_paper_type->price; // حساب ثمن الغلاف
+            $total_number_of_quarter_sheets_cover =  ($data['quantity'] * 2) / $total_per_quarter_sheet; // عدد الافرخ الربع المستخدمة
+
+            // ***********************solovan**********************************
+            if ($data['covers'] != null) {
+                $solovan = $this->coverService->findOne($data['covers']);
+                if (is_float($total_used_sheets) == 'true') {
+                    if ($data['covers'] == 2) {
+                        $cover_price =  (floor($total_used_sheets) + 1) * 1.36 * 2;
+                    } else if ($data['covers'] == 1) {
+                        $cover_price = (floor($total_used_sheets) + 1) * 1.36;
+                    } else {
+                        $cover_price = 0;
+                    }
+                } else {
+                    if ($data['covers'] == 2) {
+                        $cover_price = ($total_used_sheets) * 1.36 * 2;
+                    } else if ($data['covers'] == 1) {
+                        $cover_price = ($total_used_sheets) * 1.36;
+                    } else {
+                        $cover_price = 0;
+                    }
+                }
+            }
+
+            // *************************zinkat & traj************************************************
+            $total_number_of_quarter_sheets_cover =  ($data['quantity']) / $total_per_quarter_sheet; // عدد الافرخ الربع المستخدمة
+            $pull_nu_cover = $total_number_of_quarter_sheets_cover / 1000;
+            if (is_float($pull_nu_cover) == 'true') {
+                $pull_nu_sheet_cover = floor($pull_nu_cover) + 1; // عدد السحبات
+            } else {
+                $pull_nu_sheet_cover = $pull_nu_cover;
+            }
+            // dd($pull_nu_sheet);
+            if ($data['cover_print_option'] == 1) { //  وجه فقط
+                $zinkat_price_cover = $data['cover_frontcolors'] * 30; //سعر الزنكات
+                $traj_price_cover = $pull_nu_sheet_cover * $data['cover_frontcolors'] * 30; //سعر التراج 
+            } elseif ($data['print_option'] == 2) { //  وجه و ضهر
+                $zinkat_price_cover = ($data['cover_frontcolors'] + $data['cover_backcolors']) * 30; // سعر الزنكات
+
+                $traj_price_cover = $pull_nu_sheet_cover * ($data['cover_frontcolors'] + $data['cover_backcolors']) * 30; // سعر التراج 
+            }
+            // **************************************rega************************************************
+
+            $cutStyle = $this->cutStyleService->findOne($data['cutStyle']);
+            if ($data['cover_rega'] != null) { //if user choose "rega"
+                $rega_nu = ($data['quantity']) / 1000;
+                if (is_float(($data['quantity']) / 1000)) {
+                    $rega_nu = (floor($data['quantity']) + 1) / 1000;
+                }
+
+                $rega_cover_price = $rega_nu * $data['cover_rega'] * 25; // عدد الريجة لكل 1000 * عدد الريجات المختارة * السعر
+                // dd($data['rega']);
+            }
+        } else {
+            $total_number_of_quarter_sheets_cover=0;
+            $total_used_sheets = 0;
+            $standard_sheet_cover_price = 0;
+            $cover_price = 0;
+            $zinkat_price_cover = 0;
+            $traj_price_cover = 0;
+            $rega_cover_price = 0;
+            $total_cover_paper_price = 0;
+        }
         // ***************************************************shipping***********************************************************************
 
         $shipping_fees = 20;
-        if ($total_number_of_quarter_sheets > 1000) {
-            $is_float = $total_number_of_quarter_sheets / 1000;
-            // dd($is_float);
-            if (is_float($is_float) == "true") {
-                $over_1000 = floor($total_number_of_quarter_sheets / 1000) + 1;
+        if (($total_number_of_quarter_sheets + $total_number_of_quarter_sheets_cover) > 1000) {
+            $is_float_inner = ($total_number_of_quarter_sheets) / 1000;
+            $is_float_cover = ($total_number_of_quarter_sheets_cover) / 1000;
+
+            if (is_float($is_float_inner) == "true") {
+                $over_1000 = floor(($total_number_of_quarter_sheets) / 1000) + 1;
+                if (is_float($is_float_cover) == "true") {
+                    $over_1000 += floor(($total_number_of_quarter_sheets_cover) / 1000) + 1;
+                }
                 // dd($over_1000);
             } else {
-                $over_1000 = floor($total_number_of_quarter_sheets / 1000);
+                $over_1000 = floor(($total_number_of_quarter_sheets + $total_number_of_quarter_sheets_cover) / 1000);
             }
             // dd($over_1000);
-            $shipping_fees += 10 * ($over_1000 - 1);
+            $shipping_fees += 10 * ($over_1000 -1);
         }
 
         // ***************************************************total***********************************************************************
-
+        // $standard_sheet_price=10;
         $total_order_price =
-            $total_sheets_price + $zinkat_price + $traj_price + $finish_price + $cut_style_price +  $shipping_fees;
+            $total_sheets_price + $total_cover_paper_price + $zinkat_price + $traj_price + $finish_price + $cut_style_price + $cover_price +
+            $zinkat_price_cover + $traj_price_cover + $rega_cover_price + $shipping_fees;
         $arr =
             [
                 'عدد الافرخ الكاملة' => $total_standard_sheets,
@@ -1297,9 +1385,19 @@ class CartService
                 'التراجات' => $traj_price,
                 'التقفيل' => $finish_price,
                 'القص' => $cut_style_price,
+                'عدد افرخ الغلاف' => $total_used_sheets,
+                ' الغلاف سعر الفرخ' => $standard_sheet_cover_price,
+                'الغلاف عدد الافرخ الربع' => $total_number_of_quarter_sheets_cover,
+
+                'سعر افرخ الغلاف' => $total_cover_paper_price,
+                'سولفان' => $cover_price,
+                'زنكات الغلاف' => $zinkat_price_cover,
+                'تراجات الغلاف' => $traj_price_cover,
+                'سعر ريجة الغلاف' => $rega_cover_price,
                 'الشحن' => $shipping_fees,
                 'اجمالي' => $total_order_price,
             ];
+        // dd($standard_sheet_price);
         dd($arr);
     }
 
