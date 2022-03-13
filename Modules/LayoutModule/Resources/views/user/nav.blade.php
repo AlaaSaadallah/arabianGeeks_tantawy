@@ -1,10 +1,18 @@
 	<!--header-->
+	
 	<div class="header" dir="rtl" lang="ar">
 		<div class="top-header navbar navbar-default">
 			<!--header-one-->
 			<div class="container">
 				<div class="nav navbar-nav wow fadeInLeft animated" data-wow-delay=".5s">
-					<p>مرحبا بكم فى مطابع طنطاوى <a href="signin.html">تسجيل دخول </a></p>
+					<p>مرحبا بكم فى مطابع طنطاوى
+						@if(auth()->guard('customer')->user())
+						{{auth()->guard('customer')->user()->name}}
+						<a href="{{route('customer.logout')}}">تسجيل خروج </a>
+						@else
+						<a href="{{url('/')}}">تسجيل دخول </a>
+						@endif
+						</p>
 				</div>
 				<div class="nav navbar-nav navbar-right social-icons wow fadeInRight animated" data-wow-delay=".5s">
 					<ul>
@@ -37,12 +45,19 @@
 						<a href="contact.html"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> تواصل معانا</a>
 					</div>
 					<div class="header-right cart">
-						<a href="#"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
-						<h4><a href="checkout.html">
-								<span class="simpleCart_total"> $0.00 </span> (<span id="simpleCart_quantity" class="simpleCart_quantity"> 0 </span>)
+						<a href="{{route('user.cart')}}"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+						<h4><a href="{{route('user.cart')}}">
+								<span class=""> 
+								@if(auth()->guard('customer')->user()->cartItems())	
+								({{auth()->guard('customer')->user()->cartItems->count()}})
+								{{auth()->guard('customer')->user()->cartItems->sum('total_price')}} LE  
+							@else
+						
+						@endif
+					 </span>
 							</a></h4>
 						<div class="cart-box">
-							<p><a href="javascript:;" class="simpleCart_empty">تفريغ السلة </a></p>
+							<!-- <p><a href="javascript:;" class="simpleCart_empty">تفريغ السلة </a></p> -->
 							<div class="clearfix"> </div>
 						</div>
 					</div>

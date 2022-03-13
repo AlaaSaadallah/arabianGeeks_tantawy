@@ -42,10 +42,10 @@
 				<h3>{{ $category->name }}</h3>
 				<form action="{{route('user.cart.addSticker')}}" method="POST" enctype="multipart/form-data" class="form">
 					@csrf
-					<input type="hidden" name="" id="cat_id" value="{{$category->id}}">
+					<input type="hidden" name="cat_id" id="cat_id" value="{{$category->id}}">
 
 					<h6 class="item_price">ارفع التصميم</h6><br>
-					<input type="file" id="myFile" name="filename">
+					<input type="file" id="myFile" name="image">
 
 					<p>
 						الملصقات :

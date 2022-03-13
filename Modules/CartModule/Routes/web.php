@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 //     Route::get('cart/myCart', 'CartModuleController@showCart')->name('cart.show');
 // });
 
-Route::group(['prefix' => 'cart'], function () {
+Route::group(['prefix' => 'cart','middleware'=>['auth:customer']], function () {
 
     /*************************views route ************************************** */
     Route::post('addBrouchureToCart', 'CartModuleController@addBrochureToCart')->name('user.cart.addBrochure'); // add new cartaction
@@ -26,4 +26,15 @@ Route::group(['prefix' => 'cart'], function () {
 
     Route::get('/','CartModuleController@index')->name('user.cart');
     Route::post('filterPaperTypes/{cat_id}/{size_id}', 'CartModuleController@filterPaperTypes')->name('user.cart.filterPaperTypes'); // add new cartaction
+
+    Route::delete('remove/{id}','CartModuleController@removeFromCart')->name('user.cart.remove');
+});
+
+Route::group(['prefix' => 'admin/carts', 
+// 'middleware' => ['auth:admin'],
+ 'namespace' => 'Admin'], function () {
+    Route::get('/', 'CartAdminController@index')->name('admin.carts');
+    Route::get('/index', 'CartAdminController@indexCarts')->name('admin.carts.index');
+    Route::get('/show/{id}', 'CartAdminController@show')->name('admin.carts.show');
+
 });

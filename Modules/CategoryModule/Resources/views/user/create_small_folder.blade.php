@@ -42,7 +42,8 @@
 				<form action="{{route('user.cart.addFolder')}}" method="POST" enctype="multipart/form-data" class="form">
 					@csrf
 					<h6 class="item_price">ارفع التصميم</h6><br>
-					<input type="hidden" name="category_id" id="cat_id" value="{{$category->id}}">
+					<input type="hidden" name="cat_id" id="cat_id" value="{{$category->id}}">
+					
 					<input type="file" id="myFile" name="image">
 					<p>
 						كرت شخصي :الكروت الشخصية افضل و أول وسيلة تواصل بينك وبين عملائك المستقلبيين وزملائك في العمل وافضل وسيله جذب العملاء المحتملين وزيادة التعريف بعلامتك التجارية احرص على اقتنائها دائما ودعنا نقدم لك ليتر هيد بافضل جودة واسعار رائعة عبر عدة اختيارات تلبي جميع رغباتك.
@@ -122,7 +123,7 @@
 								<td>سلوفان :</td>
 								<td>
 									<select class="form-select" aria-label="Default select example" name="covers">
-										<option selected>اختر</option>
+										<option value="" selected>اختر</option>
 										<option value="0">بدون</option>
 										@foreach ($category->covers as $cover)
 										<option value="{{ $cover->id }}">{{ $cover->name }}</option>
@@ -145,7 +146,7 @@
 								<td>تكسير</td>
 								<td>
 									<select class="form-select" aria-label="Default select example" name='foldPockets'>
-										<option selected>اختر</option>
+										<option value="" selected>اختر</option>
 										@foreach ($category->foldPockets as $fold)
 										<option value="{{ $fold->id }}">{{ $fold->name }}</option>
 										@endforeach
@@ -157,7 +158,7 @@
 								<td>لزق</td>
 								<td>
 									<select class="form-select" aria-label="Default select example" name="glue">
-										<option selected>اختر</option>
+										<option value="" selected>اختر</option>
 										@foreach ($category->glues as $glue)
 										<option value="{{ $glue->id }}">{{ $glue->name }}</option>
 										@endforeach
@@ -170,7 +171,7 @@
 								<td>ريجه :</td>
 								<td>
 									<select class="form-select" aria-label="Default select example" name="rega">
-										<option disable>اختر</option>
+										<option value="" selected>اختر</option>
 										<option value="1">1</option>
 										<option value="2">2</option>
 										<!-- <option value="3">3</option>
@@ -189,7 +190,7 @@
 								<td>شكل القص</td>
 								<td>
 									<select class="form-select" aria-label="Default select example" name="cutStyle">
-										<option selected>اختر</option>
+										<option value="" selected>اختر</option>
 										@foreach ($category->cutStyles as $style)
 										<option value="{{ $style->id }}">{{ $style->name }}</option>
 										@endforeach
@@ -201,7 +202,7 @@
 								<td> لزق جيب خارجي</td>
 								<td>
 									<select class="form-select" aria-label="Default select example" name="outer_pocket_glue">
-										<option selected>اختر</option>
+										<option value="" selected>اختر</option>
 										<option id="1">مع</option>
 										<option id="0">بدون</option>
 

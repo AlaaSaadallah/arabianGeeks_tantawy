@@ -14,16 +14,15 @@ class Cart extends Model
 
     function customer()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class,'user_id');
     }
 
-    // function items()
-    // {
-    //     return $this->hasMany(CartItem::class);
-    // }
-
-    // function promo_code()
-    // {
-    //     return $this->belongsTo(PaymentMethod::class);
-    // }
+    public function getImagePathAttribute()
+    {
+      
+         
+                return asset('public/uploads/carts/' . $this->attributes['image']);
+            
+        
+    }
 }

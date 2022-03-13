@@ -1,5 +1,7 @@
 @extends('layoutmodule::user.main')
 @section('content')
+
+{{auth()->guard('customer')->user()->city->name}}
 <div class="breadcrumbs" dir="rtl" lang="ar">
     <div class="container">
         <ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
@@ -44,14 +46,14 @@
                 <!-- <form action="/action_page.php"> -->
                 <form action="{{route('user.cart.addFlyer')}}" method="POST" enctype="multipart/form-data" class="form">
                     @csrf
-                    <input type="file" id="myFile" name="filename">
+                    <input type="file" id="myFile" name="image">
 
 
                     <p>
                         الفلاير :
                         هي الواجهة الاولى لتعاملاتك مع الجهات الخارجية والداخلية، فمن خلالها يمكنك إنجاز الكثير من الأعمال الهامة والحيوية .نقدم لك فلاير بافضل جودة واسعار رائعة عبر عدة اختيارات تلبي جميع رغباتك. </p>
                     <table class="table">
-                        <input type="hidden" name="" id="cat_id" value="{{$category->id}}">
+                        <input type="hidden" name="cat_id" id="cat_id" value="{{$category->id}}">
                         <tbody>
                             <tr>
                                 <td> المقاس : </td>

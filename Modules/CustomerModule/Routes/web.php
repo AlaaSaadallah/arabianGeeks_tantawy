@@ -25,3 +25,15 @@ Route::group(['prefix' => 'admin/customers',
     Route::post('/update', 'CustomerAdminController@update')->name('admin.customers.update');
 
 });
+
+Route::group(['prefix' => 'customer'], function () {
+    Route::get('/', 'CustomerModuleController@index')->name('customer.login'); //login view
+    Route::get('login', 'CustomerModuleController@login')->name('customer.loginpost'); //login action
+});
+
+Route::group(['prefix' => 'customer','middleware' => ['auth:customer'],
+], function () {
+    Route::get('/', 'CustomerModuleController@home')->name('customer.home'); //login view
+    Route::get('/logout', 'CustomerModuleController@logout')->name('customer.logout'); //login view
+
+});

@@ -97,33 +97,45 @@
 <div class="cart-items">
     <div class="container">
         <h3 class="wow fadeInUp animated" data-wow-delay=".5s">My Shopping Cart({{$cart_items->count()}})</h3>
+        @foreach($cart_items as $item)
         <div class="cart-header wow fadeInUp animated" data-wow-delay=".5s">
-            <div class="alert-close"> </div>
+            <!-- <div class="alert-close"> </div> -->
             <div class="cart-sec simpleCart_shelfItem">
-                @foreach($cart_items as $item)
                 <div class="cart-item cyc">
-                    <a href="single.html"><img src="{{url('uploads/cart/'.$item->image)}}" class="img-responsive" alt=""></a>
+                    <img src="{{url('uploads/cart/'.$item->image)}}" class="img-responsive" alt="">
                 </div>
                 <div class="cart-item-info">
-                    <h4><a href="single.html">{{$item->category}} </a><span>Pickup time :</span></h4>
+                    <h4>{{$item->category}}
+                        <!-- <span>Pickup time :</span> -->
+                    </h4>
                     <ul class="qty">
                         <li>
                             <p>Total Order : {{$item->total_price}} LE</p>
                         </li>
+                        <br>
+                        <br>
                         <li>
                             <p>Shipping value : {{$item->shipping}} LE</p>
                         </li>
+                        <li>
+                            <form action="{{route('user.cart.remove', $item->id)}}" method="post">
+                                @method('DELETE')
+                                @csrf
+                                <button>ازالة من السلة</button>
+
+                            </form>
+                        </li>
                     </ul>
-                    <div class="delivery">
+                    <!-- <div class="delivery">
                         <p>Service Charges : $10.00</p>
                         <span>Delivered in 1-1:30 hours</span>
                         <div class="clearfix"></div>
-                    </div>
+                    </div> -->
                 </div>
-                @endforeach
                 <hr>
             </div>
         </div>
+        @endforeach
     </div>
 </div>
 @endsection

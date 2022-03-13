@@ -42,11 +42,11 @@ return [
         ],
         'admin' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'admins',
         ],
         'customer' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'customers',
         ],
 
         'api' => [
@@ -79,6 +79,14 @@ return [
             'model' => App\User::class,
         ],
 
+        'customers' => [
+            'driver' => 'eloquent',
+            'model' => \Modules\CustomerModule\Entities\Customer::class,
+        ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => \Modules\AdminModule\Entities\Admin::class,
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

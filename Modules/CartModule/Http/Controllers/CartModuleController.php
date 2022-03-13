@@ -24,61 +24,103 @@ class CartModuleController extends Controller
     }
 public function index()
 {
-    $cart_items = $this->cartService->findWhere(['user_id'=>1]);
+    // dd(auth()->guard('customer')->user()->all());
+    $cart_items = $this->cartService->findWhere(['user_id'=>auth()->guard('customer')->user()->id]);
    return view('cartmodule::index',compact('cart_items'));
 }
 
     public function addBrochureToCart(Request $request)
     {
+        if (auth()->guard('customer')->user()) {
       $brochure=  $this->cartService->createBrochureOrder($request);
         return redirect()->route('user.cart');
+        }
     }
 
     public function addLargeFolderToCart(Request $request)
     {
-        $this->cartService->createLargeFolder($request->all());
+        if (auth()->guard('customer')->user()) {
+
+        $this->cartService->createLargeFolder($request);
+        return redirect()->route('user.cart');
+        }
     }
 
     public function addFlyerToCart(Request $request)
     {
+        if (auth()->guard('customer')->user()) {
+
         $this->cartService->createFlyer($request);
+        return redirect()->route('user.cart');
+        }
     }
 
     public function addLetterheadToCart(Request $request)
     {
+        if (auth()->guard('customer')->user()) {
+
         $this->cartService->createLetterhead($request);
+        return redirect()->route('user.cart');
+        }
     }
 
     public function addStickerToCart(Request $request)
     {
+        if (auth()->guard('customer')->user()) {
+
         $this->cartService->createSticker($request);
+        return redirect()->route('user.cart');
+        }
     }
 
     public function addPrescriptionToCart(Request $request)
     {
+        if (auth()->guard('customer')->user()) {
+
         $this->cartService->createPrescription($request);
+        return redirect()->route('user.cart');
+        }
     }
 
     public function addEnvelopeToCart(Request $request)
     {
+        if (auth()->guard('customer')->user()) {
+
         $this->cartService->createEnvelope($request);
+        return redirect()->route('user.cart');
+        }
     }
 
     public function addCopybookToCart(Request $request)
     {
+        if (auth()->guard('customer')->user()) {
+
         $this->cartService->createcopybook($request);
+        }
     }
 
     public function addBlocknoteToCart(Request $request)
     {
+        if (auth()->guard('customer')->user()) {
+
         $this->cartService->createBlocknote($request);
+        return redirect()->route('user.cart');
+        }
     }
 
     public function addMagazineToCart(Request $request)
     {
-        $this->cartService->createMagazine($request);
-    }
+        if (auth()->guard('customer')->user()) {
 
+        $this->cartService->createMagazine($request);
+        return redirect()->route('user.cart');
+        }
+    }
+ public function removeFromCart($id)
+ {
+    $delete = $this->cartService->delete($id);
+    return redirect()->route('user.cart');
+ }
 
     public function filterPaperTypes($cat_id, $size_id)
     {

@@ -44,9 +44,9 @@
                 <form action="{{route('user.cart.addLetterhead')}}" method="POST" enctype="multipart/form-data" class="form">
 
                     @csrf
-                    <input type="hidden" name="" id="cat_id" value="{{$category->id}}">
+                    <input type="hidden" name="cat_id" id="cat_id" value="{{$category->id}}">
 
-                    <input type="file" id="myFile" name="filename">
+                    <input type="file" id="myFile" name="image">
 
                     <p>
                         ليتر هيد :

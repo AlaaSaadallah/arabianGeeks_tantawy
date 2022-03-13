@@ -44,9 +44,9 @@
                 <!-- <form action="/action_page.php"> -->
                 <form action="{{route('user.cart.addMagazine')}}" method="POST" enctype="multipart/form-data" class="form">
                     @csrf
-                    <input type="hidden" name="" id="cat_id" value="{{$category->id}}">
+                    <input type="hidden" name="cat_id" id="cat_id" value="{{$category->id}}">
 
-                    <input type="file" id="myFile" name="filename">
+                    <input type="file" id="myFile" name="image">
 
                     <p>
                         المجلات :
@@ -193,7 +193,7 @@
                                 <td> الغلاف</td>
                                 <td>
                                     <select class="form-select" aria-label="Default select example" name="with_cover" id="with_cover" onchange="show7();">
-                                        <option value="" selected>اختر</option>
+                                        <option selected>اختر</option>
                                         <option value="1"> مع</option>
                                         <option value="0"> بدون</option>
                                     </select>
@@ -208,7 +208,7 @@
                                 <td>نوع الغلاف :</td>
                                 <td>
                                     <select class="form-select" id="selector2" aria-label="Default select example" name="cover_paper_type">
-                                        <option selected>اختر</option>
+                                        <option value="" selected>اختر</option>
                                         @foreach ($cover_types as $cover_type)
                                         <option value="{{ $cover_type['id'] }}">{{ $cover_type['name'] }}</option>
                                         @endforeach

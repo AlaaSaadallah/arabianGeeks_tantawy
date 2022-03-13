@@ -43,7 +43,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		@include ('layoutmodule::user.nav',['cat' => $cat = Modules\CategoryModule\Entities\Category::all()])
 
 		<section class="section">
-		
+			
 			@yield('content')
 		</section>
 

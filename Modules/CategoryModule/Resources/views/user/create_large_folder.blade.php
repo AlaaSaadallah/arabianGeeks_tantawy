@@ -41,7 +41,7 @@
 				<h3>{{ $category->name }}</h3>
 				<form action="{{route('user.cart.addFolder')}}" method="POST" enctype="multipart/form-data" class="form">
 					@csrf
-					<input type="hidden" name="" id="cat_id" value="{{$category->id}}">
+					<input type="hidden" name="cat_id" id="cat_id" value="{{$category->id}}">
 
 					<h6 class="item_price">ارفع التصميم</h6><br>
 					<input type="file" id="myFile" name="image">
@@ -202,7 +202,7 @@
 								<td>شكل القص</td>
 								<td>
 									<select class="form-select" aria-label="Default select example" name="cutStyle">
-										<option selected>اختر</option>
+										<option value="" selected>اختر</option>
 										@foreach ($category->cutStyles as $style)
 										<option value="{{ $style->id }}">{{ $style->name }}</option>
 										@endforeach

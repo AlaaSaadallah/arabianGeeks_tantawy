@@ -42,6 +42,20 @@ class CartService
         $this->coverService = $coverService;
     }
 
+    public function delete($id)
+    {
+        return $this->cartRepository->delete($id);
+    }
+
+    public function findAll()
+    {
+        return $this->cartRepository->all();
+    }
+
+    public function findOne($id)
+    {
+        return $this->cartRepository->find($id);
+    }
     public function createBrochureOrder($data) //done
     {
         // dd($data);
@@ -150,7 +164,7 @@ class CartService
             }
         }
         // ***************************************************shipping***********************************************************************
-        $shipping_fees = 20;
+        $shipping_fees = auth()->guard('customer')->user()->city->shipping_price;
         if ($total_number_of_quarter_sheets > 1000) {
             $is_float = $total_number_of_quarter_sheets / 1000;
             if ($is_float == "true") {
@@ -188,7 +202,7 @@ class CartService
         // dd($arr);
 
         $cart_data = [
-            'user_id' => 1,
+            'user_id' =>  auth()->guard('customer')->user()->id,
             'image' => $imgName,
             'category' => (key_exists('cat_id', $data) && !empty($data['cat_id'])) ? $category->name : null,
             'paper_type' => (key_exists('paper_type', $data) && !empty($data['paper_type'])) ? $paper_type->name : null,
@@ -226,15 +240,17 @@ class CartService
         $shipping_fees = 0;
         $outer_pocket_glue = 0;
 
-        // $category = $this->categoryService->findOne($data['cat_id']);
+        $category = $this->categoryService->findOne($data['cat_id']);
+        $print_option = $this->printOptionService->findOne($data['print_option']);
         // ***************************************************Image***********************************************************************
-        // $imgName = null;
-        // ///////Upload Image////////
-        // if ($data->hasFile('image')) {
-        //     $imgName = $this->uploadImage($data->file('image'), 'cart', 'brochure');
-        // }
+        $imgName = null;
+        ///////Upload Image////////
+        if ($data->hasFile('image')) {
+            $imgName = $this->uploadImage($data->file('image'), 'cart', 'folder');
+        }
 
-        // $data = $data->all();
+
+        $data = $data->all();
         // ***************************************************paper size,count & price***********************************************************************
         $paper_size = $this->paperSizeService->findOne($data['paper_size']); // get chosen size data 
         $total_per_full_sheet =  $paper_size->quantity_in_standard; // العدد الكلي في الفرخ الواحد
@@ -247,7 +263,6 @@ class CartService
         $total_per_quarter_sheet =  $paper_size->quantity_in_quarter; // العدد الكلي في الربع فرخ الواحد
         $total_number_of_quarter_sheets =  $data['quantity'] / $total_per_quarter_sheet; // عدد الافرخ الربع المستخدمة
         $pull_nu = $total_number_of_quarter_sheets / 1000;
-
         // dd($pull_nu);
         if ($data['print_option'] == 1) { //  وجه فقط
             // dd('5');
@@ -283,30 +298,34 @@ class CartService
 
         // ***************************************************cover(solovan)***********************************************************************
         // بحسب عدد الافرخ الربع و اضربه في السعر على 4
+        // dd($data['covers']);
+        if ($data['covers'] != null) {
+            if ($data['covers'] != 0) {
 
-        if (is_float($total_standard_sheets) == 'true') {
-            // $solovan = $this->coverService->findOne($data['covers']);
-            if ($data['covers'] == 2) {
-                $cover_price =  (floor($total_standard_sheets) + 1) * 1.36 * 2;
-            } else if ($data['covers'] == 1) {
-                $cover_price = (floor($total_standard_sheets) + 1) * 1.36;
-            } else {
-                $cover_price = 0;
+                $solovan = $this->coverService->findOne($data['covers']);
             }
-        } else {
-            if ($data['covers'] == 2) {
-                $cover_price = ($total_standard_sheets) * 1.36 * 2;
-            } else if ($data['covers'] == 1) {
-                $cover_price = ($total_standard_sheets) * 1.36;
+            if (is_float($total_standard_sheets) == 'true') {
+                if ($data['covers'] == 2) {
+                    $cover_price =  (floor($total_standard_sheets) + 1) * 1.36 * 2;
+                } else if ($data['covers'] == 1) {
+                    $cover_price = (floor($total_standard_sheets) + 1) * 1.36;
+                } else {
+                    $cover_price = 0;
+                }
             } else {
-                $cover_price = 0;
+                if ($data['covers'] == 2) {
+                    $cover_price = ($total_standard_sheets) * 1.36 * 2;
+                } else if ($data['covers'] == 1) {
+                    $cover_price = ($total_standard_sheets) * 1.36;
+                } else {
+                    $cover_price = 0;
+                }
             }
         }
         // dd($cover_price);
 
         // ***************************************************rega***********************************************************************
         // dd($data['cutStyle'] == 2);
-        // $cutStyle = $this->cutStyleService->findOne($data['cutStyle']);
 
         if ($data['option'] == 'rega') { //if user choose "rega"
             // dd('d');
@@ -366,7 +385,7 @@ class CartService
 
         // ***************************************************shipping***********************************************************************
 
-        $shipping_fees = 20;
+        $shipping_fees = auth()->guard('customer')->user()->city->shipping_price;
         if ($total_number_of_quarter_sheets > 1000) {
             $is_float = $total_number_of_quarter_sheets / 1000;
             if ($is_float == "true") {
@@ -399,31 +418,34 @@ class CartService
                 'الشحن' => $shipping_fees,
                 'اجمالي' => $total_order_price,
             ];
-        dd($arr);
-        // $cart_data = [
-        //     'user_id' => 1,
-        //     'image' => $imgName,
-        //     'category' => (key_exists('cat_id', $data) && !empty($data['cat_id'])) ? $category->name : null,
-        //     'paper_type' => (key_exists('paper_type', $data) && !empty($data['paper_type'])) ? $paper_type->name : null,
-        //     'paper_size' => (key_exists('paper_size', $data) && !empty($data['paper_size'])) ? $paper_size->name : null,
-        //     'quantity' => (key_exists('quantity', $data) && !empty($data['quantity'])) ? $data['quantity'] : null,
-        //     'inner_quantity' => (key_exists('inner_quantity', $data) && !empty($data['inner_quantity'])) ? $data['inner_quantity'] : null,
-        //     'print_option' => (key_exists('print_option', $data) && !empty($data['print_option'])) ? $print_option->name : null,
-        //     'front_color' => (key_exists('frontcolors', $data) && !empty($data['frontcolors'])) ? $data['frontcolors'] : null,
-        //     'back_color' => (key_exists('backcolors', $data) && !empty($data['backcolors'])) ? $data['backcolors'] : null,
-        //     'cut_style' => (key_exists('cutStyle', $data) && !empty($data['cutStyle'])) ? $cutStyle->name : null,
-        //     'rega' => (key_exists('rega', $data) && !empty($data['rega'])) ? $data['rega'] : null,
-        //     'solovan' => (key_exists('covers', $data) && !empty($data['covers'])) ? $solovan->name : null,
-        //     'cover_paper_type' => (key_exists('cover_paper_type', $data) && !empty($data['cover_paper_type'])) ? $data['cover_paper_type'] : null,
-        //     'finish_option' => (key_exists('finish_option', $data) && !empty($data['finish_option'])) ? $data['finish_option'] : null,
-        //     'finish_direction' => (key_exists('finish_dir', $data) && !empty($data['finish_dir'])) ? $data['finish_dir'] : null,
-        //     'notes' => (key_exists('notes', $data) && !empty($data['notes'])) ? $data['notes'] : null,
-        //     'shipping' => $shipping_fees,
-        //     'total_price' => $total_order_price
-        // ];
+        // dd($arr);
+        $cart_data = [
+            'user_id' =>  auth()->guard('customer')->user()->id,
+            'image' => $imgName,
+            'category' => (key_exists('cat_id', $data) && !empty($data['cat_id'])) ? $category->name : null,
+            'paper_type' => (key_exists('paper_type', $data) && !empty($data['paper_type'])) ? $paper_type->name : null,
+            'paper_size' => (key_exists('paper_size', $data) && !empty($data['paper_size'])) ? $paper_size->name : null,
+            'quantity' => (key_exists('quantity', $data) && !empty($data['quantity'])) ? $data['quantity'] : null,
+            'inner_quantity' => (key_exists('inner_quantity', $data) && !empty($data['inner_quantity'])) ? $data['inner_quantity'] : null,
+            'print_option' => (key_exists('print_option', $data) && !empty($data['print_option'])) ? $print_option->name : null,
+            'front_color' => (key_exists('frontcolors', $data) && !empty($data['frontcolors'])) ? $data['frontcolors'] : null,
+            'back_color' => (key_exists('backcolors', $data) && !empty($data['backcolors'])) ? $data['backcolors'] : null,
+            'cut_style' => (key_exists('cutStyle', $data) && !empty($data['cutStyle'])) ? $data['cutStyle'] : null,
+            'rega' => (key_exists('rega', $data) && !empty($data['rega'])) ? $data['rega'] : null,
+            'solovan' => (key_exists('covers', $data) && !empty($data['covers'])) ? $solovan->name : null,
+            'cover_paper_type' => (key_exists('cover_paper_type', $data) && !empty($data['cover_paper_type'])) ? $data['cover_paper_type'] : null,
+            'cover_front_color' => (key_exists('cover_frontcolors', $data) && !empty($data['cover_frontcolors'])) ? $data['cover_frontcolors'] : null,
+            'cover_back_color' => (key_exists('cover_backcolors', $data) && !empty($data['cover_backcolors'])) ? $data['cover_backcolors'] : null,
+            'cover_rega' => (key_exists('cover_rega', $data) && !empty($data['cover_rega'])) ? $data['cover_rega'] : null,
+            'finish_option' => (key_exists('finish_option', $data) && !empty($data['finish_option'])) ? $data['finish_option'] : null,
+            'finish_direction' => (key_exists('finish_dir', $data) && !empty($data['finish_dir'])) ? $data['finish_dir'] : null,
+            'notes' => (key_exists('notes', $data) && !empty($data['notes'])) ? $data['notes'] : null,
+            'shipping' => $shipping_fees,
+            'total_price' => $total_order_price
+        ];
         // dd($cart_data);
 
-        // return $this->cartRepository->create($cart_data);
+        return $this->cartRepository->create($cart_data);
     }
 
     public function createFlyer($data) //done
@@ -436,7 +458,17 @@ class CartService
         $cut_style_price = 0;
         $shipping_fees = 0;
 
-
+        $category = $this->categoryService->findOne($data['cat_id']);
+        $print_option = $this->printOptionService->findOne($data['print_option']);
+        // ***************************************************Image***********************************************************************
+        $imgName = null;
+        ///////Upload Image////////
+        if ($data->hasFile('image')) {
+            $imgName = $this->uploadImage($data->file('image'), 'cart', 'flyer');
+        }
+        
+        
+        $data = $data->all();
         // ***************************************************paper size,count & price***********************************************************************
         $paper_size = $this->paperSizeService->findOne($data['paper_size']); // get chosen size data 
         $total_per_full_sheet =  $paper_size->quantity_in_standard; // العدد الكلي في الفرخ الواحد
@@ -492,7 +524,9 @@ class CartService
         // ***************************************************cover(solovan)***********************************************************************
         // بحسب عدد الافرخ الربع و اضربه في السعر على 4
         // dd($data['covers']);
-        if ($data['covers'] != null) {
+        if ($data['covers'] != null && $data['covers'] !=0) {
+            $solovan = $this->coverService->findOne($data['covers']);
+
             if (is_float($total_standard_sheets) == 'true') {
                 if ($data['covers'] == 2) {
                     $cover_price =  (floor($total_standard_sheets) + 1) * 1.36 * 2;
@@ -512,8 +546,10 @@ class CartService
             }
         }
         // ***************************************************shipping***********************************************************************
+        // dd($data);
 
-        $shipping_fees = 20;
+        $shipping_fees = auth()->guard('customer')->user()->city->shipping_price;
+        // dd($shipping_fees);
         if ($total_number_of_quarter_sheets > 1200) {
             $is_float = $total_number_of_quarter_sheets / 1000;
             if ($is_float == "true") {
@@ -544,7 +580,35 @@ class CartService
                 'الشحن' => $shipping_fees,
                 'اجمالي' => $total_order_price,
             ];
-        dd($arr);
+        // dd($arr);
+
+        $cart_data = [
+            'user_id' =>  auth()->guard('customer')->user()->id,
+            'image' => $imgName,
+            'category' => (key_exists('cat_id', $data) && !empty($data['cat_id'])) ? $category->name : null,
+            'paper_type' => (key_exists('paper_type', $data) && !empty($data['paper_type'])) ? $paper_type->name : null,
+            'paper_size' => (key_exists('paper_size', $data) && !empty($data['paper_size'])) ? $paper_size->name : null,
+            'quantity' => (key_exists('quantity', $data) && !empty($data['quantity'])) ? $data['quantity'] : null,
+            'inner_quantity' => (key_exists('inner_quantity', $data) && !empty($data['inner_quantity'])) ? $data['inner_quantity'] : null,
+            'print_option' => (key_exists('print_option', $data) && !empty($data['print_option'])) ? $print_option->name : null,
+            'front_color' => (key_exists('frontcolors', $data) && !empty($data['frontcolors'])) ? $data['frontcolors'] : null,
+            'back_color' => (key_exists('backcolors', $data) && !empty($data['backcolors'])) ? $data['backcolors'] : null,
+            'cut_style' => (key_exists('cutStyle', $data) && !empty($data['cutStyle'])) ? $data['cutStyle'] : null,
+            'rega' => (key_exists('rega', $data) && !empty($data['rega'])) ? $data['rega'] : null,
+            'solovan' => (key_exists('covers', $data) && !empty($data['covers'])) ? $solovan->name : null,
+            'cover_paper_type' => (key_exists('cover_paper_type', $data) && !empty($data['cover_paper_type'])) ? $data['cover_paper_type'] : null,
+            'cover_front_color' => (key_exists('cover_frontcolors', $data) && !empty($data['cover_frontcolors'])) ? $data['cover_frontcolors'] : null,
+            'cover_back_color' => (key_exists('cover_backcolors', $data) && !empty($data['cover_backcolors'])) ? $data['cover_backcolors'] : null,
+            'cover_rega' => (key_exists('cover_rega', $data) && !empty($data['cover_rega'])) ? $data['cover_rega'] : null,
+            'finish_option' => (key_exists('finish_option', $data) && !empty($data['finish_option'])) ? $data['finish_option'] : null,
+            'finish_direction' => (key_exists('finish_dir', $data) && !empty($data['finish_dir'])) ? $data['finish_dir'] : null,
+            'notes' => (key_exists('notes', $data) && !empty($data['notes'])) ? $data['notes'] : null,
+            'shipping' => $shipping_fees,
+            'total_price' => $total_order_price
+        ];
+        // dd($cart_data);
+
+        return $this->cartRepository->create($cart_data);
     }
 
     public function createLetterhead($data) //done
@@ -556,7 +620,17 @@ class CartService
         $cut_style_price = 0;
         $shipping_fees = 0;
 
+        $category = $this->categoryService->findOne($data['cat_id']);
+        $print_option = $this->printOptionService->findOne($data['print_option']);
+        // ***************************************************Image***********************************************************************
+        $imgName = null;
+        ///////Upload Image////////
+        if ($data->hasFile('image')) {
+            $imgName = $this->uploadImage($data->file('image'), 'cart', 'letterhead');
+        }
 
+
+        $data = $data->all();
         // ***************************************************paper size,count & price***********************************************************************
         $paper_size = $this->paperSizeService->findOne($data['paper_size']); // get chosen size data 
         $total_per_full_sheet =  $paper_size->quantity_in_standard; // العدد الكلي في الفرخ الواحد
@@ -592,7 +666,7 @@ class CartService
         }
         // ***************************************************shipping***********************************************************************
 
-        $shipping_fees = 20;
+        $shipping_fees = auth()->guard('customer')->user()->city->shipping_price;
         if ($total_number_of_quarter_sheets > 1000) {
             $is_float = is_float($total_number_of_quarter_sheets / 1000);
             if ($is_float == "true") {
@@ -622,7 +696,34 @@ class CartService
                 'الشحن' => $shipping_fees,
                 'اجمالي' => $total_order_price,
             ];
-        dd($arr);
+        // dd($arr);
+        $cart_data = [
+            'user_id' =>  auth()->guard('customer')->user()->id,
+            'image' => $imgName,
+            'category' => (key_exists('cat_id', $data) && !empty($data['cat_id'])) ? $category->name : null,
+            'paper_type' => (key_exists('paper_type', $data) && !empty($data['paper_type'])) ? $paper_type->name : null,
+            'paper_size' => (key_exists('paper_size', $data) && !empty($data['paper_size'])) ? $paper_size->name : null,
+            'quantity' => (key_exists('quantity', $data) && !empty($data['quantity'])) ? $data['quantity'] : null,
+            'inner_quantity' => (key_exists('inner_quantity', $data) && !empty($data['inner_quantity'])) ? $data['inner_quantity'] : null,
+            'print_option' => (key_exists('print_option', $data) && !empty($data['print_option'])) ? $print_option->name : null,
+            'front_color' => (key_exists('frontcolors', $data) && !empty($data['frontcolors'])) ? $data['frontcolors'] : null,
+            'back_color' => (key_exists('backcolors', $data) && !empty($data['backcolors'])) ? $data['backcolors'] : null,
+            'cut_style' => (key_exists('cutStyle', $data) && !empty($data['cutStyle'])) ? $data['cutStyle'] : null,
+            'rega' => (key_exists('rega', $data) && !empty($data['rega'])) ? $data['rega'] : null,
+            // 'solovan' => (key_exists('covers', $data) && !empty($data['covers'])) ? $solovan->name : null,
+            'cover_paper_type' => (key_exists('cover_paper_type', $data) && !empty($data['cover_paper_type'])) ? $data['cover_paper_type'] : null,
+            'cover_front_color' => (key_exists('cover_frontcolors', $data) && !empty($data['cover_frontcolors'])) ? $data['cover_frontcolors'] : null,
+            'cover_back_color' => (key_exists('cover_backcolors', $data) && !empty($data['cover_backcolors'])) ? $data['cover_backcolors'] : null,
+            'cover_rega' => (key_exists('cover_rega', $data) && !empty($data['cover_rega'])) ? $data['cover_rega'] : null,
+            'finish_option' => (key_exists('finish_option', $data) && !empty($data['finish_option'])) ? $data['finish_option'] : null,
+            'finish_direction' => (key_exists('finish_dir', $data) && !empty($data['finish_dir'])) ? $data['finish_dir'] : null,
+            'notes' => (key_exists('notes', $data) && !empty($data['notes'])) ? $data['notes'] : null,
+            'shipping' => $shipping_fees,
+            'total_price' => $total_order_price
+        ];
+        // dd($cart_data);
+
+        return $this->cartRepository->create($cart_data);
     }
 
     public function createSticker($data) // done ->need to add solovan equation(fixed)
@@ -633,7 +734,17 @@ class CartService
         $cut_price = 0;
         $shipping_fees = 0;
 
+        $category = $this->categoryService->findOne($data['cat_id']);
+        $print_option = $this->printOptionService->findOne($data['print_option']);
+        // ***************************************************Image***********************************************************************
+        $imgName = null;
+        ///////Upload Image////////
+        if ($data->hasFile('image')) {
+            $imgName = $this->uploadImage($data->file('image'), 'cart', 'sticker');
+        }
 
+
+        $data = $data->all();
         // ***************************************************paper size,count & price***********************************************************************
         $paper_size = $this->paperSizeService->findOne($data['paper_size']); // get chosen size data 
         $total_per_full_sheet =  $paper_size->quantity_in_standard; // العدد الكلي في الفرخ الواحد
@@ -680,14 +791,18 @@ class CartService
         // بحسب عدد الافرخ الربع و اضربه في السعر على 4
         // dd($data['covers']);
         if ($data['covers'] != null) {
+
             if (is_float($total_standard_sheets) == 'true') {
                 if ($data['covers'] == 1) {
+                    $solovan = $this->coverService->findOne($data['covers']);
                     $cover_price = (floor($total_standard_sheets) + 1) * 1.36;
                 } else {
                     $cover_price = 0;
                 }
             } else {
                 if ($data['covers'] == 1) {
+                    $solovan = $this->coverService->findOne($data['covers']);
+
                     $cover_price = ($total_standard_sheets) * 1.36;
                 } else {
                     $cover_price = 0;
@@ -696,7 +811,7 @@ class CartService
         }
         // ***************************************************shipping***********************************************************************
 
-        $shipping_fees = 20;
+        $shipping_fees = auth()->guard('customer')->user()->city->shipping_price;
         if ($total_number_of_quarter_sheets > 1000) {
             $is_float = $total_number_of_quarter_sheets / 1000;
             if (is_float($is_float) == "true") {
@@ -726,7 +841,37 @@ class CartService
                 'الشحن' => $shipping_fees,
                 'اجمالي' => $total_order_price,
             ];
-        dd($arr);
+        // dd($arr);
+
+
+        $cart_data = [
+            'user_id' =>  auth()->guard('customer')->user()->id,
+            'image' => $imgName,
+            'category' => (key_exists('cat_id', $data) && !empty($data['cat_id'])) ? $category->name : null,
+            'paper_type' => (key_exists('paper_type', $data) && !empty($data['paper_type'])) ? $paper_type->name : null,
+            'paper_size' => (key_exists('paper_size', $data) && !empty($data['paper_size'])) ? $paper_size->name : null,
+            'quantity' => (key_exists('quantity', $data) && !empty($data['quantity'])) ? $data['quantity'] : null,
+            'inner_quantity' => (key_exists('inner_quantity', $data) && !empty($data['inner_quantity'])) ? $data['inner_quantity'] : null,
+            'print_option' => (key_exists('print_option', $data) && !empty($data['print_option'])) ? $print_option->name : null,
+            'front_color' => (key_exists('frontcolors', $data) && !empty($data['frontcolors'])) ? $data['frontcolors'] : null,
+            'back_color' => (key_exists('backcolors', $data) && !empty($data['backcolors'])) ? $data['backcolors'] : null,
+            'cut_style' => (key_exists('cutStyle', $data) && !empty($data['cutStyle'])) ? $data['cutStyle'] : null,
+            'cut_number' => (key_exists('cut_number', $data) && !empty($data['cut_number'])) ? $data['cut_number'] : null,
+            'rega' => (key_exists('rega', $data) && !empty($data['rega'])) ? $data['rega'] : null,
+            'solovan' => (key_exists('covers', $data) && !empty($data['covers'])) ? $solovan->name : null,
+            'cover_paper_type' => (key_exists('cover_paper_type', $data) && !empty($data['cover_paper_type'])) ? $data['cover_paper_type'] : null,
+            'cover_front_color' => (key_exists('cover_frontcolors', $data) && !empty($data['cover_frontcolors'])) ? $data['cover_frontcolors'] : null,
+            'cover_back_color' => (key_exists('cover_backcolors', $data) && !empty($data['cover_backcolors'])) ? $data['cover_backcolors'] : null,
+            'cover_rega' => (key_exists('cover_rega', $data) && !empty($data['cover_rega'])) ? $data['cover_rega'] : null,
+            'finish_option' => (key_exists('finish_option', $data) && !empty($data['finish_option'])) ? $data['finish_option'] : null,
+            'finish_direction' => (key_exists('finish_dir', $data) && !empty($data['finish_dir'])) ? $data['finish_dir'] : null,
+            'notes' => (key_exists('notes', $data) && !empty($data['notes'])) ? $data['notes'] : null,
+            'shipping' => $shipping_fees,
+            'total_price' => $total_order_price
+        ];
+        // dd($cart_data);
+
+        return $this->cartRepository->create($cart_data);
     }
 
     public function createBlocknote($data) // done  8/3
@@ -736,8 +881,21 @@ class CartService
         $cut_style_price = 0;
         $zinkat_price = 0;
         $traj_price = 0;
+        $traj_price_cover = 0;
+        $zinkat_price_cover = 0;
         $shipping_fees = 0;
 
+        $category = $this->categoryService->findOne($data['cat_id']);
+        $print_option = $this->printOptionService->findOne($data['print_option']);
+        // ***************************************************Image***********************************************************************
+        $imgName = null;
+        ///////Upload Image////////
+        if ($data->hasFile('image')) {
+            $imgName = $this->uploadImage($data->file('image'), 'cart', 'blocknote');
+        }
+
+
+        $data = $data->all();
         // ***************************************************paper size,count & price***********************************************************************
         $paper_size = $this->paperSizeService->findOne($data['paper_size']); // get chosen size data 
         $total_per_full_sheet =  $paper_size->quantity_in_standard; // العدد الكلي في الفرخ الواحد
@@ -859,7 +1017,7 @@ class CartService
         }
         // ***************************************************shipping***********************************************************************
 
-        $shipping_fees = 20;
+        $shipping_fees = auth()->guard('customer')->user()->city->shipping_price;
 
 
         if (($total_number_of_quarter_sheets + $total_number_of_quarter_sheets_cover) > 1000) {
@@ -901,7 +1059,35 @@ class CartService
                 'الشحن' => $shipping_fees,
                 'اجمالي' => $total_order_price,
             ];
-        dd($arr);
+        // dd($arr);
+
+        $cart_data = [
+            'user_id' =>  auth()->guard('customer')->user()->id,
+            'image' => $imgName,
+            'category' => (key_exists('cat_id', $data) && !empty($data['cat_id'])) ? $category->name : null,
+            'paper_type' => (key_exists('paper_type', $data) && !empty($data['paper_type'])) ? $paper_type->name : null,
+            'paper_size' => (key_exists('paper_size', $data) && !empty($data['paper_size'])) ? $paper_size->name : null,
+            'quantity' => (key_exists('quantity', $data) && !empty($data['quantity'])) ? $data['quantity'] : null,
+            'inner_quantity' => (key_exists('inner_quantity', $data) && !empty($data['inner_quantity'])) ? $data['inner_quantity'] : null,
+            'print_option' => (key_exists('print_option', $data) && !empty($data['print_option'])) ? $print_option->name : null,
+            'front_color' => (key_exists('frontcolors', $data) && !empty($data['frontcolors'])) ? $data['frontcolors'] : null,
+            'back_color' => (key_exists('backcolors', $data) && !empty($data['backcolors'])) ? $data['backcolors'] : null,
+            'cut_style' => (key_exists('cutStyle', $data) && !empty($data['cutStyle'])) ? $data['cutStyle'] : null,
+            'rega' => (key_exists('rega', $data) && !empty($data['rega'])) ? $data['rega'] : null,
+            'solovan' => (key_exists('covers', $data) && !empty($data['covers'])) ? $solovan->name : null,
+            'cover_paper_type' => (key_exists('cover_paper_type', $data) && !empty($data['cover_paper_type'])) ? $data['cover_paper_type'] : null,
+            'cover_front_color' => (key_exists('cover_frontcolors', $data) && !empty($data['cover_frontcolors'])) ? $data['cover_frontcolors'] : null,
+            'cover_back_color' => (key_exists('cover_backcolors', $data) && !empty($data['cover_backcolors'])) ? $data['cover_backcolors'] : null,
+            'cover_rega' => (key_exists('cover_rega', $data) && !empty($data['cover_rega'])) ? $data['cover_rega'] : null,
+            'finish_option' => (key_exists('finish_option', $data) && !empty($data['finish_option'])) ? $data['finish_option'] : null,
+            'finish_direction' => (key_exists('finish_dir', $data) && !empty($data['finish_dir'])) ? $data['finish_dir'] : null,
+            'notes' => (key_exists('notes', $data) && !empty($data['notes'])) ? $data['notes'] : null,
+            'shipping' => $shipping_fees,
+            'total_price' => $total_order_price
+        ];
+        // dd($cart_data);
+
+        return $this->cartRepository->create($cart_data);
     }
 
     public function createPrescription($data) // done
@@ -918,6 +1104,17 @@ class CartService
         $finish_price = 0;
         $shipping_fees = 0;
 
+        $category = $this->categoryService->findOne($data['cat_id']);
+        $print_option = $this->printOptionService->findOne($data['print_option']);
+        // ***************************************************Image***********************************************************************
+        $imgName = null;
+        ///////Upload Image////////
+        if ($data->hasFile('image')) {
+            $imgName = $this->uploadImage($data->file('image'), 'cart', 'prescription');
+        }
+
+
+        $data = $data->all();
         // ***************************************************paper size,count & price***********************************************************************
         $paper_size = $this->paperSizeService->findOne($data['paper_size']); // get chosen size data 
         $total_per_full_sheet =  $paper_size->quantity_in_standard; // العدد الكلي في الفرخ الواحد
@@ -969,7 +1166,7 @@ class CartService
         }
         // ***************************************************shipping***********************************************************************
 
-        $shipping_fees = 20;
+        $shipping_fees = auth()->guard('customer')->user()->city->shipping_price;
         if ($total_number_of_quarter_sheets > 1000) {
             $is_float = $total_number_of_quarter_sheets / 1000;
             if (is_float($is_float) == "true") {
@@ -999,7 +1196,34 @@ class CartService
                 'الشحن' => $shipping_fees,
                 'اجمالي' => $total_order_price,
             ];
-        dd($arr);
+        // dd($arr);
+        $cart_data = [
+            'user_id' =>  auth()->guard('customer')->user()->id,
+            'image' => $imgName,
+            'category' => (key_exists('cat_id', $data) && !empty($data['cat_id'])) ? $category->name : null,
+            'paper_type' => (key_exists('paper_type', $data) && !empty($data['paper_type'])) ? $paper_type->name : null,
+            'paper_size' => (key_exists('paper_size', $data) && !empty($data['paper_size'])) ? $paper_size->name : null,
+            'quantity' => (key_exists('quantity', $data) && !empty($data['quantity'])) ? $data['quantity'] : null,
+            'inner_quantity' => (key_exists('inner_quantity', $data) && !empty($data['inner_quantity'])) ? $data['inner_quantity'] : null,
+            'print_option' => (key_exists('print_option', $data) && !empty($data['print_option'])) ? $print_option->name : null,
+            'front_color' => (key_exists('frontcolors', $data) && !empty($data['frontcolors'])) ? $data['frontcolors'] : null,
+            'back_color' => (key_exists('backcolors', $data) && !empty($data['backcolors'])) ? $data['backcolors'] : null,
+            'cut_style' => (key_exists('cutStyle', $data) && !empty($data['cutStyle'])) ? $data['cutStyle'] : null,
+            'zigzag' => (key_exists('zigzag', $data) && !empty($data['zigzag'])) ? $data['zigzag'] : null,
+            'rega' => (key_exists('rega', $data) && !empty($data['rega'])) ? $data['rega'] : null,
+            'cover_paper_type' => (key_exists('cover_paper_type', $data) && !empty($data['cover_paper_type'])) ? $data['cover_paper_type'] : null,
+            'cover_front_color' => (key_exists('cover_frontcolors', $data) && !empty($data['cover_frontcolors'])) ? $data['cover_frontcolors'] : null,
+            'cover_back_color' => (key_exists('cover_backcolors', $data) && !empty($data['cover_backcolors'])) ? $data['cover_backcolors'] : null,
+            'cover_rega' => (key_exists('cover_rega', $data) && !empty($data['cover_rega'])) ? $data['cover_rega'] : null,
+            'finish_option' => (key_exists('finish_option', $data) && !empty($data['finish_option'])) ? $data['finish_option'] : null,
+            'finish_direction' => (key_exists('finish_dir', $data) && !empty($data['finish_dir'])) ? $data['finish_dir'] : null,
+            'notes' => (key_exists('notes', $data) && !empty($data['notes'])) ? $data['notes'] : null,
+            'shipping' => $shipping_fees,
+            'total_price' => $total_order_price
+        ];
+        // dd($cart_data);
+
+        return $this->cartRepository->create($cart_data);
     }
 
     public function createEnvelope($data) // done -> add paper type to database (fixed)
@@ -1014,6 +1238,17 @@ class CartService
         $glue_price = 0;
         $shipping_fees = 0;
 
+        $category = $this->categoryService->findOne($data['cat_id']);
+        $print_option = $this->printOptionService->findOne($data['print_option']);
+        // ***************************************************Image***********************************************************************
+        $imgName = null;
+        ///////Upload Image////////
+        if ($data->hasFile('image')) {
+            $imgName = $this->uploadImage($data->file('image'), 'cart', 'envelope');
+        }
+
+
+        $data = $data->all();
         // ***************************************************paper size,count & price***********************************************************************
         // $paper_size = $this->paperSizeService->findOne($data['paper_size']); // get chosen size data 
         // $total_per_full_sheet =  $paper_size->quantity_in_standard; // العدد الكلي في الفرخ الواحد
@@ -1032,7 +1267,7 @@ class CartService
         }
         // ***************************************************shipping***********************************************************************
 
-        $shipping_fees = 20;
+        $shipping_fees = auth()->guard('customer')->user()->city->shipping_price;
         if ($data['quantity']  > 1000) {
             // $is_float = $data['quantity']  / 1000;
             $over_1000 = floor($data['quantity'] / 1000);
@@ -1056,7 +1291,35 @@ class CartService
                 'الشحن' => $shipping_fees,
                 'اجمالي' => $total_order_price,
             ];
-        dd($arr);
+        // dd($arr);
+
+        $cart_data = [
+            'user_id' =>  auth()->guard('customer')->user()->id,
+            'image' => $imgName,
+            'category' => (key_exists('cat_id', $data) && !empty($data['cat_id'])) ? $category->name : null,
+            'paper_type' => (key_exists('paper_type', $data) && !empty($data['paper_type'])) ? $paper_type->name : null,
+            // 'paper_size' => (key_exists('paper_size', $data) && !empty($data['paper_size'])) ? $paper_size->name : null,
+            'quantity' => (key_exists('quantity', $data) && !empty($data['quantity'])) ? $data['quantity'] : null,
+            'inner_quantity' => (key_exists('inner_quantity', $data) && !empty($data['inner_quantity'])) ? $data['inner_quantity'] : null,
+            'print_option' => (key_exists('print_option', $data) && !empty($data['print_option'])) ? $print_option->name : null,
+            'front_color' => (key_exists('frontcolors', $data) && !empty($data['frontcolors'])) ? $data['frontcolors'] : null,
+            'back_color' => (key_exists('backcolors', $data) && !empty($data['backcolors'])) ? $data['backcolors'] : null,
+            'cut_style' => (key_exists('cutStyle', $data) && !empty($data['cutStyle'])) ? $data['cutStyle'] : null,
+            'rega' => (key_exists('rega', $data) && !empty($data['rega'])) ? $data['rega'] : null,
+            'solovan' => (key_exists('covers', $data) && !empty($data['covers'])) ? $solovan->name : null,
+            'cover_paper_type' => (key_exists('cover_paper_type', $data) && !empty($data['cover_paper_type'])) ? $data['cover_paper_type'] : null,
+            'cover_front_color' => (key_exists('cover_frontcolors', $data) && !empty($data['cover_frontcolors'])) ? $data['cover_frontcolors'] : null,
+            'cover_back_color' => (key_exists('cover_backcolors', $data) && !empty($data['cover_backcolors'])) ? $data['cover_backcolors'] : null,
+            'cover_rega' => (key_exists('cover_rega', $data) && !empty($data['cover_rega'])) ? $data['cover_rega'] : null,
+            'finish_option' => (key_exists('finish_option', $data) && !empty($data['finish_option'])) ? $data['finish_option'] : null,
+            'finish_direction' => (key_exists('finish_dir', $data) && !empty($data['finish_dir'])) ? $data['finish_dir'] : null,
+            'notes' => (key_exists('notes', $data) && !empty($data['notes'])) ? $data['notes'] : null,
+            'shipping' => $shipping_fees,
+            'total_price' => $total_order_price
+        ];
+        // dd($cart_data);
+
+        return $this->cartRepository->create($cart_data);
     }
 
     public function createCopybook($data)
@@ -1178,7 +1441,7 @@ class CartService
 
     public function createMagazine($data) //done 9/3
     {
-        // dd($data);
+        // dd($data->image);
         $total_sheets_price = 0;
         $zinkat_price = 0;
         $traj_price = 0;
@@ -1187,6 +1450,17 @@ class CartService
         $finish_price = 0;
         $shipping_fees = 0;
 
+        $category = $this->categoryService->findOne($data['cat_id']);
+        $print_option = $this->printOptionService->findOne($data['print_option']);
+        // ***************************************************Image***********************************************************************
+        $imgName = null;
+        ///////Upload Image////////
+        if ($data->hasFile('image')) {
+            $imgName = $this->uploadImage($data->file('image'), 'cart', 'magazine');
+        }
+
+
+        $data = $data->all();
         // ***************************************************paper size,count & price***********************************************************************
         $paper_size = $this->paperSizeService->findOne($data['paper_size']); // get chosen size data 
         $total_per_full_sheet =  $paper_size->quantity_in_standard; // العدد الكلي في الفرخ الواحد
@@ -1210,18 +1484,18 @@ class CartService
 
 
         $number_of_zinkat = $data['inner_quantity'] / $total_per_quarter_sheet;
-        if($data['print_option'] == 1){
+        if ($data['print_option'] == 1) {
             $used_zinkat = $number_of_zinkat;
             // dd($number_of_zinkat);
-        }else{
-            $used_zinkat = 2*$number_of_zinkat;
+        } else {
+            $used_zinkat = 2 * $number_of_zinkat;
         }
         // dd($used_zinkat);
-        for ($i =1;$i<= $used_zinkat;$i++){
+        for ($i = 1; $i <= $used_zinkat; $i++) {
 
-                $total_number_of_quarter_sheets += 50;
-                $total_standard_sheets = $total_number_of_quarter_sheets/4;
-                $total_sheets_price =  ($standard_sheet_price) * $total_standard_sheets; // حساب ثمن الورق كله
+            $total_number_of_quarter_sheets += 50;
+            $total_standard_sheets = $total_number_of_quarter_sheets / 4;
+            $total_sheets_price =  ($standard_sheet_price) * $total_standard_sheets; // حساب ثمن الورق كله
 
 
         }
@@ -1285,7 +1559,7 @@ class CartService
             $total_per_full_sheet =  $paper_size->quantity_in_standard; // العدد الكلي في الفرخ الواحد
             $cover_paper_type = $this->paperTypeService->findOne($data['cover_paper_type']); // معرفة نوع الورق
             $standard_sheet_cover_price = $cover_paper_type->price; // تحديد سعر الورقة
-            $total_used_sheets = (($data['quantity']) / $total_per_full_sheet)+18;
+            $total_used_sheets = (($data['quantity']) / $total_per_full_sheet) + 18;
             $total_cover_paper_price =  $total_used_sheets * $cover_paper_type->price; // حساب ثمن الغلاف
             $total_number_of_quarter_sheets_cover =  ($data['quantity'] * 2) / $total_per_quarter_sheet; // عدد الافرخ الربع المستخدمة
 
@@ -1341,7 +1615,7 @@ class CartService
                 // dd($data['rega']);
             }
         } else {
-            $total_number_of_quarter_sheets_cover=0;
+            $total_number_of_quarter_sheets_cover = 0;
             $total_used_sheets = 0;
             $standard_sheet_cover_price = 0;
             $cover_price = 0;
@@ -1352,7 +1626,7 @@ class CartService
         }
         // ***************************************************shipping***********************************************************************
 
-        $shipping_fees = 20;
+        $shipping_fees = auth()->guard('customer')->user()->city->shipping_price;
         if (($total_number_of_quarter_sheets + $total_number_of_quarter_sheets_cover) > 1000) {
             $is_float_inner = ($total_number_of_quarter_sheets) / 1000;
             $is_float_cover = ($total_number_of_quarter_sheets_cover) / 1000;
@@ -1367,8 +1641,10 @@ class CartService
                 $over_1000 = floor(($total_number_of_quarter_sheets + $total_number_of_quarter_sheets_cover) / 1000);
             }
             // dd($over_1000);
-            $shipping_fees += 10 * ($over_1000 -1);
+            $shipping_fees += 10 * ($over_1000 - 1);
         }
+
+
 
         // ***************************************************total***********************************************************************
         // $standard_sheet_price=10;
@@ -1388,7 +1664,6 @@ class CartService
                 'عدد افرخ الغلاف' => $total_used_sheets,
                 ' الغلاف سعر الفرخ' => $standard_sheet_cover_price,
                 'الغلاف عدد الافرخ الربع' => $total_number_of_quarter_sheets_cover,
-
                 'سعر افرخ الغلاف' => $total_cover_paper_price,
                 'سولفان' => $cover_price,
                 'زنكات الغلاف' => $zinkat_price_cover,
@@ -1398,7 +1673,36 @@ class CartService
                 'اجمالي' => $total_order_price,
             ];
         // dd($standard_sheet_price);
-        dd($arr);
+        // dd($arr);
+        // dd($cutStyle);
+
+        $cart_data = [
+            'user_id' => auth()->guard('customer')->user()->id,
+            'image' => $imgName,
+            'category' => (key_exists('cat_id', $data) && !empty($data['cat_id'])) ? $category->name : null,
+            'paper_type' => (key_exists('paper_type', $data) && !empty($data['paper_type'])) ? $paper_type->name : null,
+            'paper_size' => (key_exists('paper_size', $data) && !empty($data['paper_size'])) ? $paper_size->name : null,
+            'quantity' => (key_exists('quantity', $data) && !empty($data['quantity'])) ? $data['quantity'] : null,
+            'inner_quantity' => (key_exists('inner_quantity', $data) && !empty($data['inner_quantity'])) ? $data['inner_quantity'] : null,
+            'print_option' => (key_exists('print_option', $data) && !empty($data['print_option'])) ? $print_option->name : null,
+            'front_color' => (key_exists('frontcolors', $data) && !empty($data['frontcolors'])) ? $data['frontcolors'] : null,
+            'back_color' => (key_exists('backcolors', $data) && !empty($data['backcolors'])) ? $data['backcolors'] : null,
+            'cut_style' => (key_exists('cutStyle', $data) && !empty($data['cutStyle'])) ? $data['cutStyle'] : null,
+            'rega' => (key_exists('rega', $data) && !empty($data['rega'])) ? $data['rega'] : null,
+            'solovan' => (key_exists('covers', $data) && !empty($data['covers'])) ? $solovan->name : null,
+            'cover_paper_type' => (key_exists('cover_paper_type', $data) && !empty($data['cover_paper_type'])) ? $data['cover_paper_type'] : null,
+            'cover_front_color' => (key_exists('cover_frontcolors', $data) && !empty($data['cover_frontcolors'])) ? $data['cover_frontcolors'] : null,
+            'cover_back_color' => (key_exists('cover_backcolors', $data) && !empty($data['cover_backcolors'])) ? $data['cover_backcolors'] : null,
+            'cover_rega' => (key_exists('cover_rega', $data) && !empty($data['cover_rega'])) ? $data['cover_rega'] : null,
+            'finish_option' => (key_exists('finish_option', $data) && !empty($data['finish_option'])) ? $data['finish_option'] : null,
+            'finish_direction' => (key_exists('finish_dir', $data) && !empty($data['finish_dir'])) ? $data['finish_dir'] : null,
+            'notes' => (key_exists('notes', $data) && !empty($data['notes'])) ? $data['notes'] : null,
+            'shipping' => $shipping_fees,
+            'total_price' => $total_order_price
+        ];
+        // dd($cart_data);
+
+        return $this->cartRepository->create($cart_data);
     }
 
 

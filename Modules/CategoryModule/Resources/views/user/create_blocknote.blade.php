@@ -52,7 +52,7 @@
 
                     </p>
                     <table class="table">
-                        <input type="hidden" name="" id="cat_id" value="{{$category->id}}">
+                        <input type="hidden" name="cat_id" id="cat_id" value="{{$category->id}}">
                         <tbody>
                             <tr>
                                 <td> المقاس : </td>

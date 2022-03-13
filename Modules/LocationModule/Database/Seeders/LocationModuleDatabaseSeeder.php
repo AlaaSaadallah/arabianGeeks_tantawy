@@ -4,6 +4,8 @@ namespace Modules\LocationModule\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Modules\LocationModule\Entities\City;
 
 class LocationModuleDatabaseSeeder extends Seeder
 {
@@ -16,6 +18,6 @@ class LocationModuleDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        // $this->call("OthersTableSeeder");
+     
     }
 }

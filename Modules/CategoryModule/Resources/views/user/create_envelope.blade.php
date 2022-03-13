@@ -42,7 +42,7 @@
                 <form action="{{route('user.cart.addEnvelope')}}" method="POST" enctype="multipart/form-data" class="form">
                     @csrf
 					<input type="file" id="myFile" name="filename">
-					<input type="hidden" name="" id="cat_id" value="{{$category->id}}">
+					<input type="hidden" name="cat_id" id="cat_id" value="{{$category->id}}">
 
 				<p>
 					الظروف :

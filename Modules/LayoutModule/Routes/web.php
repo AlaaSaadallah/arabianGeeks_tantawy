@@ -12,5 +12,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::group(['middleware' => 'customer'], function () {
+    Route::get('/', 'LayoutModuleController@index')->name('customer.index');
 
-    Route::get('/', 'LayoutModuleController@index');
+// });

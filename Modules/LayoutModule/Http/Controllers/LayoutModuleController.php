@@ -14,7 +14,7 @@ class LayoutModuleController extends Controller
      */
     public function index()
     {
-        return view('layoutmodule::user.main');
+        return view('customermodule::user.login');
     }
 
     /**

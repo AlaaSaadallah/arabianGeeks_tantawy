@@ -5,75 +5,84 @@ namespace Modules\CustomerModule\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Modules\CustomerModule\Entities\Customer;
+use Modules\CustomerModule\Services\CustomerService;
 
 class CustomerModuleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
+    public function __construct(CustomerService $customerService)
+    {
+        $this->customerService = $customerService;
+    }
+
+
+    public function login(Request $request)
+    {
+// dd(Auth::guard('customer')->attempt(
+//     [
+//                 'email' => $request->email,
+//                 'password' => $request->password
+//             ],            ));
+        // if (Auth::guard('customer')->attempt(
+        //     [
+        //                 'email' => $request->email,
+        //                 'password' => $request->password
+        //             ],            )) {
+        //     $request->session()->regenerate();
+ 
+        //     return redirect()->intended('dashboard');
+        // }
+ 
+        // return back()->withErrors([
+        //     'email' => 'The provided credentials do not match our records.',
+        // ]);
+        // dd(Auth::guard('customer')->attempt($request->only('email', 'password')));
+        // dd(Auth::guard('customer')->attempt(
+        //     [
+        //         'email' => "'".$request->email."'",
+        //         // 'em ail' => $request->email,
+        //         'phone' => "'".$request->password."'"
+        //     ],
+
+        // ));
+        if (auth()->guard('customer')->attempt(
+            [
+                'email' => $request->email,
+                'password' => $request->password
+            ],
+
+        )) {
+
+            return redirect()->intended('customer');
+        }
+        return redirect()->view('customermodule::user.login');
+    }
+
+
+
+
+
     public function index()
     {
-        return view('customermodule::index');
+        if (Auth::guard('customer')->check()) {
+            redirect()->route('customer.home');
+        } else {
+            return view('customermodule::user.login');
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
-    public function create()
+    public function home()
     {
-        return view('customermodule::create');
+        return view('customermodule::user.index');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
-    public function store(Request $request)
+    function logout(Request $request)
     {
-        //
-    }
-
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
-    {
-        return view('customermodule::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
-    {
-        return view('customermodule::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
-    public function destroy($id)
-    {
-        //
+        Auth::guard('customer')->logout();
+        $request->session()->flush();
+        $request->session()->regenerate();
+        return redirect()->to('/');
     }
 }

@@ -44,9 +44,9 @@
 				<h6 class="item_price">ارفع التصميم</h6><br>
 				<form action="{{route('user.cart.addPrescription')}}" method="POST" enctype="multipart/form-data" class="form">
 					@csrf
-					<input type="hidden" name="" id="cat_id" value="{{$category->id}}">
+					<input type="hidden" name="cat_id" id="cat_id" value="{{$category->id}}">
 
-					<input type="file" id="myFile" name="filename">
+					<input type="file" id="myFile" name="image">
 
 					<p>
 						روشتات :
@@ -89,7 +89,7 @@
 								<td>عدد ألوان الوجه</td>
 								<td>
 									<select class="form-select" aria-label="Default select example" name="frontcolors">
-										<option selected>اختر</option>
+										<option value="" selected>اختر</option>
 										<option value="1">1 لون</option>
 										<option value="2">2 لون</option>
 										<option value="3">3 لون</option>
@@ -103,7 +103,7 @@
 								<td>عدد ألوان الظهر</td>
 								<td>
 									<select class="form-select" aria-label="Default select example" name="backcolors">
-										<option selected>اختر</option>
+										<option value="" selected>اختر</option>
 										<option value="1">1 لون</option>
 										<option value="2">2 لون</option>
 										<option value="3">3 لون</option>

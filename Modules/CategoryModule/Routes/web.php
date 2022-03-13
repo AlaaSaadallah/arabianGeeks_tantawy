@@ -14,7 +14,7 @@
 use Illuminate\Support\Facades\Route;
 
 // Route::prefix('category')->group(function() {
-    Route::group(['prefix' => 'category', 'namespace' => 'User'], function () {
+    Route::group(['prefix' => 'category', 'middleware'=>['auth:customer'],'namespace' => 'User'], function () {
 
     /*************************views route ************************************** */
     Route::get('/blocknote', 'CategoryUserController@createBlocknote')->name('user.create.blocknote');

@@ -35,32 +35,35 @@
               
                 <li><a><i class="fa fa-clone"></i>المكونات الاساسية <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a href="size.html">المقاس</a></li>
-                    <li><a href="print_shape.html">شكل الطباغة</a></li>
+                    <!-- <li><a href="size.html">المقاس</a></li> -->
+                    <!-- <li><a href="print_shape.html">شكل الطباغة</a></li> -->
                     <li><a href="{{route('admin.material.paperType')}}">نوع الورق</a></li>
-                    <li><a href="#"> الكمية</a></li>
-                    <li><a href="#">عدد الألوان</a></li>
-                    <li><a href="#">التقفيل </a></li>
-                    <li><a href="#">شرشرة</a></li>
-                    <li><a href="fixed_footer.html">جهة التقفيل </a></li>
-                    <li><a href="fixed_sidebar.html">القص</a></li>
-                    <li><a href="fixed_footer.html">سلوفان </a></li>
-                    <li><a href="fixed_sidebar.html">ريجة</a></li>
-                    <li><a href="fixed_footer.html">تكسير</a></li>
-                    <li><a href="fixed_sidebar.html">لزق</a></li>
+                    <!-- <li><a href="#"> الكمية</a></li> -->
+                    <!-- <li><a href="#">عدد الألوان</a></li> -->
+                    <!-- <li><a href="#">التقفيل </a></li> -->
+                    <!-- <li><a href="#">شرشرة</a></li> -->
+                    <!-- <li><a href="fixed_footer.html">جهة التقفيل </a></li> -->
+                    <!-- <li><a href="fixed_sidebar.html">القص</a></li> -->
+                    <!-- <li><a href="fixed_footer.html">سلوفان </a></li> -->
+                    <!-- <li><a href="fixed_sidebar.html">ريجة</a></li> -->
+                    <!-- <li><a href="fixed_footer.html">تكسير</a></li> -->
+                    <!-- <li><a href="fixed_sidebar.html">لزق</a></li> -->
               
                   </ul>
                 </li>
                 <li><a href="{{route('admin.customers')}}"><i class="fa fa-desktop"></i> عملاءنا</a>
                  
                 </li>
-                <li><a href="form_upload.html"><i class="fa fa-table"></i> قائمة التسعير </a>
+                <!-- <li><a href="form_upload.html"><i class="fa fa-table"></i> قائمة التسعير </a> -->
                  
                 </li>
                 <li><a href="{{route('admin.cities')}}"><i class="fa fa-windows"></i> المحافظات </a>
                   
                 </li>
 
+                <li><a href="{{route('admin.carts')}}"><i class="fa fa-windows"></i> الطلبات </a>
+                  
+                  </li>
               </ul>
             </div>
             
