@@ -47,6 +47,7 @@ class CustomerModuleController extends Controller
         //     ],
 
         // ));
+        
         if (auth()->guard('customer')->attempt(
             [
                 'email' => $request->email,
@@ -56,9 +57,11 @@ class CustomerModuleController extends Controller
         )) {
 
             return redirect()->intended('customer');
-        }
-        return redirect()->view('customermodule::user.login');
+        }else{
+        return redirect('/');
+        // ->view('customermodule::user.login');
     }
+}
 
 
 
@@ -67,7 +70,7 @@ class CustomerModuleController extends Controller
     public function index()
     {
         if (Auth::guard('customer')->check()) {
-            redirect()->route('customer.home');
+         return   redirect()->route('customer.home');
         } else {
             return view('customermodule::user.login');
         }

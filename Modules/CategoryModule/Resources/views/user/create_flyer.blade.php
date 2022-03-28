@@ -1,7 +1,7 @@
 @extends('layoutmodule::user.main')
 @section('content')
 
-{{auth()->guard('customer')->user()->city->name}}
+
 <div class="breadcrumbs" dir="rtl" lang="ar">
     <div class="container">
         <ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">

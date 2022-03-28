@@ -28,5 +28,8 @@ class PaperSizeService
     {
         return $this->paperSizeRepository->find($id);
     }
-
+    public function update($data)
+    {
+        return $this->paperSizeRepository->update($data,$data['id']);
+    }
 }

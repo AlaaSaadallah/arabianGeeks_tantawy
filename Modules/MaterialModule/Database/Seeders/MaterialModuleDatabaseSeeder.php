@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Modules\MaterialModule\Entities\Color;
+use Modules\MaterialModule\Entities\Constant;
 use Modules\MaterialModule\Entities\Cover;
 use Modules\MaterialModule\Entities\CutStyle;
 use Modules\MaterialModule\Entities\FinishDirection;
@@ -29,6 +30,22 @@ class MaterialModuleDatabaseSeeder extends Seeder
     public function run()
     {
         Model::unguard();
+                // *************************************************constants***********************************************************
+
+                DB::table('constants')->truncate();
+                Constant::create([
+                    'name' => "زنكات",
+                    'price' => "40"
+                ]);
+                Constant::create([
+                    'name' => "تراج",
+                    'price' => "40"
+                ]);
+                Constant::create([
+                    'name' => "سولفان",
+                    'price' => "1.60"
+                ]);
+               
         // *************************************************colors***********************************************************
 
         DB::table('colors')->truncate();

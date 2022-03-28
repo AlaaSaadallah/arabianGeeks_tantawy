@@ -33,3 +33,13 @@ use Illuminate\Support\Facades\Route;
     Route::get('/sticker', 'CategoryUserController@createSticker')->name('user.create.sticker');
 
 });
+
+
+Route::group(['prefix' => 'admin/products', 
+// 'middleware' => ['auth:admin'],
+ 'namespace' => 'Admin'], function () {
+    Route::get('/', 'CategoryAdminController@index')->name('admin.products'); // page view which include datatable
+    Route::get('/indexProducts', 'CategoryAdminController@indexProducts')->name('admin.products.index'); // page view which include datatable
+    Route::get('/edit/{id}', 'CategoryAdminController@editProducts')->name('admin.products.edit'); // page view which include datatable
+    Route::post('/update', 'CategoryAdminController@updateProducts')->name('admin.products.update'); // page view which include datatable
+   });

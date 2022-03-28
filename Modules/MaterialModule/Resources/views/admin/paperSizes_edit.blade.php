@@ -3,7 +3,7 @@
 @section('content')
 <div class="page-title">
     <div class="title_left">
-        <h3> تعديل المنتج</h3>
+        <h3> تعديل المقاس</h3>
     </div>
 
 </div>
@@ -33,22 +33,25 @@
                         <tr>
 
                             <th>الاسم </th>
-                            <th>السعر</th>
-
-                            <th>الحالة </th>
+                            <th >الطول</th>
+                            <th>العرض</th>
+                            <th class="col-3">الحالة </th>
 
                         </tr>
                     </thead>
                     <tbody>
-                        <form method="post" action="{{route('admin.material.paperType.update')}}">
+                        <form method="post" action="{{route('admin.material.paperSize.update')}}">
                             @csrf
                         <tr>
                             <td>
-                                <input type="hidden" name="id" value="{{$paperType->id}}">
-                                <input type="text" class="form-control" required="required" name="name"  value="{{$paperType->name}}">
+                                <input type="hidden" name="id" value="{{$paperSize->id}}">
+                                <input type="text" class="form-control" required="required" name="name"  value="{{$paperSize->name}}">
                             </td>
                             <td>
-                                <input type="number" step="0.01" class="form-control" name="price" required="required" value="{{$paperType->price}}">
+                                <input type="number" step="0.1" class="form-control" name="price" required="required" value="{{$paperSize->height}}">
+                            </td>
+                            <td>
+                                <input type="number" step="0.1" class="form-control" name="price" required="required" value="{{$paperSize->width}}">
                             </td>
                             <td>
                                 <div class="col-md-6 col-sm-6 " dir="rtl" lang="ar">

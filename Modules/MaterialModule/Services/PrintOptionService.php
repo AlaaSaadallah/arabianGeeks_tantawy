@@ -23,7 +23,13 @@ class PrintOptionService
     {
         return $this->printOptionRepository->find($id);
     }
-
+    public function getAll()
+    {
+        return $this->printOptionRepository->all();
+    }
    
-
+    public function update($data)
+    {
+        return $this->printOptionRepository->update($data,$data['id']);
+    }
 }

@@ -151,7 +151,19 @@ public function index()
 
 
 
+public function mail()
+{
+    $pdf = FacadePdf::loadView('cartmodule::pdf',$data);
 
+    // Mail::send('paymentmodule::supplier.email', $data, function ($message) use ($data, $pdf) {
+
+    //     $message->to($data["email"], $data["email"])
+
+    //         ->subject($data["title"])
+
+    //         ->attachData($pdf->output(), "Transactions_report.pdf");
+    // });
+}
 
 
 

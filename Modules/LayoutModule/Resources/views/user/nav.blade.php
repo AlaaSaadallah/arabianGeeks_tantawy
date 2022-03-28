@@ -48,9 +48,13 @@
 						<a href="{{route('user.cart')}}"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
 						<h4><a href="{{route('user.cart')}}">
 								<span class=""> 
+								@if(auth()->guard('customer')->user())
 								@if(auth()->guard('customer')->user()->cartItems())	
 								({{auth()->guard('customer')->user()->cartItems->count()}})
 								{{auth()->guard('customer')->user()->cartItems->sum('total_price')}} LE  
+								@else
+								0 &nbsp;&nbsp; 0 LE
+								@endif
 							@else
 						
 						@endif
@@ -170,6 +174,7 @@
 				<div id="cd-search" class="cd-search">
 					<form>
 						<input type="search" placeholder="Search...">
+						
 					</form>
 				</div>
 			</div>

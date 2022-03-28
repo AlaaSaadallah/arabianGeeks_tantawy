@@ -17,7 +17,7 @@ class FinishDirectionService
 
     public function findAll()
     {
-        return $this->finishDirectionRepository->findAll();
+        return $this->finishDirectionRepository->all();
     }
     public function findOne($id)
     {
@@ -25,4 +25,8 @@ class FinishDirectionService
     }
 
 
+    public function update($data)
+    {
+        return $this->finishDirectionRepository->update($data,$data['id']);
+    }
 }

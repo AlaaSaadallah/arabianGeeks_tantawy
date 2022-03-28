@@ -16,7 +16,7 @@ class ColorsService
 
     public function findAll()
     {
-        return $this->colorRepository->findAll();
+        return $this->colorRepository->all();
     }
     public function findOne($id)
     {
@@ -24,6 +24,9 @@ class ColorsService
         return $this->colorRepository->find($id);
     }
 
-  
+    public function update($data)
+    {
+        return $this->colorRepository->update($data,$data['id']);
+    }
 
 }

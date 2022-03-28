@@ -34,9 +34,9 @@
 
         <!-- page content -->
         <div class="right_col" role="main" style="min-height: 2000px;">
-          <div class="">
+          <!-- <div class=""> -->
 		  @yield('content')
-          </div>
+          <!-- </div> -->
         </div>
         <!-- /page content -->
 

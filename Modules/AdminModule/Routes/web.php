@@ -13,6 +13,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/admin', 'AdminModuleController@index');
+Route::get('/admin', 'AdminModuleController@index')->name('dashboard');
 // Route::prefix('adminmodule')->group(function() {
 // });

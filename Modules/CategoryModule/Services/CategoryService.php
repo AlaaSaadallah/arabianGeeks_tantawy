@@ -17,7 +17,7 @@ class CategoryService
 
     public function findAll()
     {
-        return $this->categoryRepository->findAll();
+        return $this->categoryRepository->all();
     }
     public function findOne($id)
     {

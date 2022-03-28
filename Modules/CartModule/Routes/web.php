@@ -38,3 +38,5 @@ Route::group(['prefix' => 'admin/carts',
     Route::get('/show/{id}', 'CartAdminController@show')->name('admin.carts.show');
 
 });
+
+Route::get('/pdf', 'CartModuleController@pdf');

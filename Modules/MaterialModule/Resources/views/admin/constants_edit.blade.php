@@ -35,27 +35,27 @@
                             <th>الاسم </th>
                             <th>السعر</th>
 
-                            <th>الحالة </th>
+                            <!-- <th>الحالة </th> -->
 
                         </tr>
                     </thead>
                     <tbody>
-                        <form method="post" action="{{route('admin.material.paperType.update')}}">
+                        <form method="post" action="{{route('admin.material.constants.update')}}">
                             @csrf
                         <tr>
                             <td>
-                                <input type="hidden" name="id" value="{{$paperType->id}}">
-                                <input type="text" class="form-control" required="required" name="name"  value="{{$paperType->name}}">
+                                <input type="hidden" name="id" value="{{$constant->id}}">
+                                <input type="text" class="form-control" required="required" name="name"  value="{{$constant->name}}" readonly>
                             </td>
                             <td>
-                                <input type="number" step="0.01" class="form-control" name="price" required="required" value="{{$paperType->price}}">
+                                <input type="number" step="0.01" class="form-control" name="price" required="required" value="{{$constant->price}}">
                             </td>
-                            <td>
+                            <!-- <td>
                                 <div class="col-md-6 col-sm-6 " dir="rtl" lang="ar">
                                     <input type="radio" class="flat" name="is_available"  value="1" checked="" required /> متاح
                                     <input type="radio" class="flat" name="is_available"  value="0" /> غير متاح
                                 </div>
-                            </td>
+                            </td> -->
                         </tr>
                         <tr>
                             <td></td>

@@ -11,8 +11,10 @@ use Modules\CartModule\Repository\CartItemRepository;
 use Modules\CartModule\Repository\CartRepository;
 use Modules\CategoryModule\Services\CategoryService;
 use Modules\MaterialModule\Entities\PrintOption;
+use Modules\MaterialModule\Services\ConstantsService;
 use Modules\MaterialModule\Services\CoverService;
 use Modules\MaterialModule\Services\CutStyleService;
+use Modules\MaterialModule\Services\FinishOptionService;
 use Modules\MaterialModule\Services\PaperSizeService;
 use Modules\MaterialModule\Services\PaperTypeService;
 use Modules\MaterialModule\Services\PrintOptionService;
@@ -31,7 +33,9 @@ class CartService
         CategoryService $categoryService,
         PrintOptionService $printOptionService,
         CutStyleService $cutStyleService,
-        CoverService $coverService
+        CoverService $coverService,
+        FinishOptionService $finishOptionService,
+        ConstantsService $constantsService
     ) {
         $this->cartRepository = $cartRepository;
         $this->paperSizeService = $paperSizeService;
@@ -40,6 +44,8 @@ class CartService
         $this->printOptionService = $printOptionService;
         $this->cutStyleService = $cutStyleService;
         $this->coverService = $coverService;
+        $this->finishOptionService = $finishOptionService;
+        $this->constantsService = $constantsService;
     }
 
     public function delete($id)
@@ -91,20 +97,22 @@ class CartService
         if (is_float($total_number_of_quarter_sheets / 1000)) {
             $total_number_of_quarter_sheets = 1000 * (floor($total_number_of_quarter_sheets / 1000) + 1);
         }
-
+        $zinkat = $this->constantsService->findOne(1);
+        $traj = $this->constantsService->findOne(2);
+        // dd($zinkat->price, $trag->price);
         $print_option = $this->printOptionService->findOne($data['print_option']);
         if ($data['print_option'] == 1) { // وجه 
-            $zinkat_price = $data['frontcolors'] * 30;
-            $traj_price =  1 * $data['frontcolors'] * 30; // التراج 
+            $zinkat_price = $data['frontcolors'] * $zinkat->price;
+            $traj_price =  1 * $data['frontcolors'] * $traj->price; // التراج 
             // dd($total_number_of_quarter_sheets);
             if ($total_number_of_quarter_sheets > 1000) {
                 $pull_nu_sheet = floor($total_number_of_quarter_sheets / 1000);
                 $pull_nu_quantity = $data['quantity'] / 1000;
                 // dd($pull_nu_quantity);
-                $traj_price =  $pull_nu_sheet * $data['frontcolors'] * 30; // التراج 
+                $traj_price =  $pull_nu_sheet * $data['frontcolors'] * $traj->price; // التراج 
             }
         } elseif ($data['print_option'] == 2) { //  وجه و ضهر
-            $zinkat_price = ($data['frontcolors'] + $data['backcolors']) * 30;
+            $zinkat_price = ($data['frontcolors'] + $data['backcolors']) * $zinkat->price;
             if ($total_number_of_quarter_sheets > 1000) {
                 $is_float = $total_number_of_quarter_sheets / 1000;
                 if ($is_float == "true") {
@@ -115,13 +123,13 @@ class CartService
 
                 $pull_nu_quantity = $data['quantity'] / 1000;
                 // dd($pull_nu_sheet);
-                $traj_price =  $pull_nu_sheet * ($data['frontcolors'] + $data['backcolors']) * 30; // التراج 
+                $traj_price =  $pull_nu_sheet * ($data['frontcolors'] + $data['backcolors']) * $traj->price; // التراج 
                 // $rega_price = 2 * $pull_nu_quantity * 25;
                 // dd( 2 .'*'. $pull_nu .'*'. $request->colors .'* 30');
                 // dd($traj);
             } else {
 
-                $traj_price =  2 * ($data['frontcolors'] + $data['backcolors']) * 30;
+                $traj_price =  2 * ($data['frontcolors'] + $data['backcolors']) * $traj->price;
             }
         }
         // ***************************************************rega***********************************************************************
@@ -146,20 +154,21 @@ class CartService
         }
         // ***************************************************cover(solovan)***********************************************************************
         // بحسب عدد الافرخ الربع و اضربه في السعر على 4
+        $solovan_price = $this->constantsService->findOne(3);
 
         if ($data['covers'] != null) {
             $solovan = $this->coverService->findOne($data['covers']);
             if (is_float($total_standard_sheets) == 'true') {
                 if ($data['covers'] == 2) {
-                    $cover_price =  (floor($total_standard_sheets) + 1) * 1.36 * 2;
+                    $cover_price =  (floor($total_standard_sheets) + 1) * $solovan_price->price * 2;
                 } else {
-                    $cover_price = (floor($total_standard_sheets) + 1) * 1.36;
+                    $cover_price = (floor($total_standard_sheets) + 1) * $solovan_price->price;
                 }
             } else {
                 if ($data['covers'] == 2) {
-                    $cover_price = ($total_standard_sheets) * 1.36 * 2;
+                    $cover_price = ($total_standard_sheets) * $solovan_price->price * 2;
                 } else {
-                    $cover_price = ($total_standard_sheets) * 1.36;
+                    $cover_price = ($total_standard_sheets) * $solovan_price->price;
                 }
             }
         }
@@ -264,9 +273,12 @@ class CartService
         $total_number_of_quarter_sheets =  $data['quantity'] / $total_per_quarter_sheet; // عدد الافرخ الربع المستخدمة
         $pull_nu = $total_number_of_quarter_sheets / 1000;
         // dd($pull_nu);
+        $zinkat = $this->constantsService->findOne(1);
+        $traj = $this->constantsService->findOne(2);
+
         if ($data['print_option'] == 1) { //  وجه فقط
             // dd('5');
-            $zinkat_price = $data['frontcolors'] * 30; //سعر الزنكات
+            $zinkat_price = $data['frontcolors'] * $zinkat->price; //سعر الزنكات
 
             if (is_float($pull_nu) == 'true') {
                 $pull_nu_sheet = floor($pull_nu) + 1; // عدد السحبات
@@ -276,15 +288,15 @@ class CartService
             // dd($pull_nu_sheet);
             // dd($pull_nu_sheet%1000); 
             if (($total_number_of_quarter_sheets % 1000) > 100) {
-                $traj_price = $pull_nu_sheet * $data['frontcolors'] * 30; //سعر التراج 
+                $traj_price = $pull_nu_sheet * $data['frontcolors'] * $traj->price; //سعر التراج 
                 //   dd($traj_price);
             } else {
-                $traj_price = $pull_nu_sheet * $data['frontcolors'] * 30; //سعر التراج 
+                $traj_price = $pull_nu_sheet * $data['frontcolors'] * $traj->price; //سعر التراج 
 
             }
             // dd($pull_nu_sheet .'*'. $data['frontcolors'] .'*'. 30);
         } elseif ($data['print_option'] == 2) { //  وجه و ضهر
-            $zinkat_price = ($data['frontcolors'] + $data['backcolors']) * 30; // سعر الزنكات
+            $zinkat_price = ($data['frontcolors'] + $data['backcolors']) * $zinkat->price; // سعر الزنكات
 
             if (is_float($pull_nu) == 'true') {
                 $pull_nu_sheet = floor($pull_nu) + 1; // عدد السحبات
@@ -292,13 +304,15 @@ class CartService
                 $pull_nu_sheet = $pull_nu;
             }
             // dd($pull_nu_sheet);
-            $traj_price = $pull_nu_sheet * ($data['frontcolors'] + $data['backcolors']) * 30; // سعر التراج 
+            $traj_price = $pull_nu_sheet * ($data['frontcolors'] + $data['backcolors']) * $traj->price; // سعر التراج 
             // dd($pull_nu_sheet . '*' . ($data['frontcolors'] . '+' . $data['backcolors']) . '* 30');
         }
 
         // ***************************************************cover(solovan)***********************************************************************
         // بحسب عدد الافرخ الربع و اضربه في السعر على 4
         // dd($data['covers']);
+        $solovan_price = $this->constantsService->findOne(3);
+
         if ($data['covers'] != null) {
             if ($data['covers'] != 0) {
 
@@ -306,17 +320,17 @@ class CartService
             }
             if (is_float($total_standard_sheets) == 'true') {
                 if ($data['covers'] == 2) {
-                    $cover_price =  (floor($total_standard_sheets) + 1) * 1.36 * 2;
+                    $cover_price =  (floor($total_standard_sheets) + 1) * $solovan_price->price * 2;
                 } else if ($data['covers'] == 1) {
-                    $cover_price = (floor($total_standard_sheets) + 1) * 1.36;
+                    $cover_price = (floor($total_standard_sheets) + 1) * $solovan_price->price;
                 } else {
                     $cover_price = 0;
                 }
             } else {
                 if ($data['covers'] == 2) {
-                    $cover_price = ($total_standard_sheets) * 1.36 * 2;
+                    $cover_price = ($total_standard_sheets) * $solovan_price->price * 2;
                 } else if ($data['covers'] == 1) {
-                    $cover_price = ($total_standard_sheets) * 1.36;
+                    $cover_price = ($total_standard_sheets) * $solovan_price->price;
                 } else {
                     $cover_price = 0;
                 }
@@ -466,8 +480,8 @@ class CartService
         if ($data->hasFile('image')) {
             $imgName = $this->uploadImage($data->file('image'), 'cart', 'flyer');
         }
-        
-        
+
+
         $data = $data->all();
         // ***************************************************paper size,count & price***********************************************************************
         $paper_size = $this->paperSizeService->findOne($data['paper_size']); // get chosen size data 
@@ -483,12 +497,15 @@ class CartService
         $total_number_of_quarter_sheets =  $data['quantity'] / $total_per_quarter_sheet; // عدد الافرخ الربع المستخدمة
         $pull_nu = $total_number_of_quarter_sheets / 1000;
 
+        $zinkat = $this->constantsService->findOne(1);
+        $traj = $this->constantsService->findOne(2);
+
         if ($data['print_option'] == 1) { //  وجه فقط
-            $zinkat_price = $data['frontcolors'] * 30; //سعر الزنكات
-            $traj_price = $pull_nu * $data['frontcolors'] * 30; //سعر التراج 
+            $zinkat_price = $data['frontcolors'] * $zinkat->price; //سعر الزنكات
+            $traj_price = $pull_nu * $data['frontcolors'] * $traj->price; //سعر التراج 
             // dd($pull_nu_sheet .'*'. $data['frontcolors'] .'*'. 30);
         } elseif ($data['print_option'] == 2) { //  وجه و ضهر
-            $zinkat_price = ($data['frontcolors'] + $data['backcolors']) * 30; // سعر الزنكات
+            $zinkat_price = ($data['frontcolors'] + $data['backcolors']) * $zinkat->price; // سعر الزنكات
             // dd($pull_nu);
             if (is_float($pull_nu) == 'true') {
                 $pull_nu_sheet = floor($pull_nu) + 1; // عدد السحبات
@@ -496,7 +513,7 @@ class CartService
                 $pull_nu_sheet = $pull_nu;
             }
             // dd($pull_nu_sheet);
-            $traj_price = $pull_nu_sheet * ($data['frontcolors'] + $data['backcolors']) * 30; // سعر التراج 
+            $traj_price = $pull_nu_sheet * ($data['frontcolors'] + $data['backcolors']) * $traj->price; // سعر التراج 
             // dd($pull_nu_sheet . '*' . ($data['frontcolors'] . '+' . $data['backcolors']) . '* 30');
         }
 
@@ -524,22 +541,25 @@ class CartService
         // ***************************************************cover(solovan)***********************************************************************
         // بحسب عدد الافرخ الربع و اضربه في السعر على 4
         // dd($data['covers']);
-        if ($data['covers'] != null && $data['covers'] !=0) {
+
+        $solovan_price = $this->constantsService->findOne(3);
+
+        if ($data['covers'] != null && $data['covers'] != 0) {
             $solovan = $this->coverService->findOne($data['covers']);
 
             if (is_float($total_standard_sheets) == 'true') {
                 if ($data['covers'] == 2) {
-                    $cover_price =  (floor($total_standard_sheets) + 1) * 1.36 * 2;
+                    $cover_price =  (floor($total_standard_sheets) + 1) * $solovan_price->price * 2;
                 } else if ($data['covers'] == 1) {
-                    $cover_price = (floor($total_standard_sheets) + 1) * 1.36;
+                    $cover_price = (floor($total_standard_sheets) + 1) * $solovan_price->price;
                 } else {
                     $cover_price = 0;
                 }
             } else {
                 if ($data['covers'] == 2) {
-                    $cover_price = ($total_standard_sheets) * 1.36 * 2;
+                    $cover_price = ($total_standard_sheets) * $solovan_price->price * 2;
                 } else if ($data['covers'] == 1) {
-                    $cover_price = ($total_standard_sheets) * 1.36;
+                    $cover_price = ($total_standard_sheets) * $solovan_price->price;
                 } else {
                     $cover_price = 0;
                 }
@@ -547,7 +567,7 @@ class CartService
         }
         // ***************************************************shipping***********************************************************************
         // dd($data);
-
+        // dd(auth()->guard('customer')->user());  
         $shipping_fees = auth()->guard('customer')->user()->city->shipping_price;
         // dd($shipping_fees);
         if ($total_number_of_quarter_sheets > 1200) {
@@ -645,13 +665,16 @@ class CartService
         $total_number_of_quarter_sheets =  $data['quantity'] / $total_per_quarter_sheet; // عدد الافرخ الربع المستخدمة
         $pull_nu_sheet = $total_number_of_quarter_sheets / 1000;
         // dd(is_float($pull_nu_sheet));
+        $zinkat = $this->constantsService->findOne(1);
+        $traj = $this->constantsService->findOne(2);
+
         if (is_float($pull_nu_sheet) == 'true') {
             $pull_nu_sheet = (floor($pull_nu_sheet) + 1);
             // dd($rega);
         }
         if ($data['print_option'] == 1) { //  وجه فقط
-            $zinkat_price = $data['frontcolors'] * 30; //سعر الزنكات
-            $traj_price = $pull_nu_sheet * $data['frontcolors'] * 30; //سعر التراج 
+            $zinkat_price = $data['frontcolors'] * $zinkat->price; //سعر الزنكات
+            $traj_price = $pull_nu_sheet * $data['frontcolors'] * $traj->price; //سعر التراج 
             // dd($pull_nu_sheet . '*' . $data['frontcolors'] . '*' . 30);
         }
 
@@ -759,13 +782,16 @@ class CartService
         $total_number_of_quarter_sheets =  $data['quantity'] / $total_per_quarter_sheet; // عدد الافرخ الربع المستخدمة
         $pull_nu = $total_number_of_quarter_sheets / 1000;
 
+        $zinkat = $this->constantsService->findOne(1);
+        $traj = $this->constantsService->findOne(2);
+
         if ($data['print_option'] == 1) { //  وجه فقط
-            $zinkat_price = $data['frontcolors'] * 30; //سعر الزنكات
+            $zinkat_price = $data['frontcolors'] * $zinkat->price; //سعر الزنكات
 
             if (is_float($pull_nu) == true) {
                 $pull_nu = floor($pull_nu) + 1;
             }
-            $traj_price = $pull_nu * $data['frontcolors'] * 30; //سعر التراج 
+            $traj_price = $pull_nu * $data['frontcolors'] * $traj->price; //سعر التراج 
             // dd($pull_nu_sheet .'*'. $data['frontcolors'] .'*'. 30);
         }
         // ***************************************************cut number***********************************************************************
@@ -790,12 +816,14 @@ class CartService
         // ***************************************************cover(solovan)***********************************************************************
         // بحسب عدد الافرخ الربع و اضربه في السعر على 4
         // dd($data['covers']);
+        $solovan_price = $this->constantsService->findOne(3);
+
         if ($data['covers'] != null) {
 
             if (is_float($total_standard_sheets) == 'true') {
                 if ($data['covers'] == 1) {
                     $solovan = $this->coverService->findOne($data['covers']);
-                    $cover_price = (floor($total_standard_sheets) + 1) * 1.36;
+                    $cover_price = (floor($total_standard_sheets) + 1) * $solovan_price->price;
                 } else {
                     $cover_price = 0;
                 }
@@ -803,7 +831,7 @@ class CartService
                 if ($data['covers'] == 1) {
                     $solovan = $this->coverService->findOne($data['covers']);
 
-                    $cover_price = ($total_standard_sheets) * 1.36;
+                    $cover_price = ($total_standard_sheets) * $solovan_price->price;
                 } else {
                     $cover_price = 0;
                 }
@@ -908,6 +936,10 @@ class CartService
         $total_per_quarter_sheet =  $paper_size->quantity_in_quarter; // العدد الكلي في الربع فرخ الواحد
         $total_number_of_quarter_sheets =  ($data['quantity'] * $data['inner_quantity']) / $total_per_quarter_sheet; // عدد الافرخ الربع المستخدمة
         $pull_nu = $total_number_of_quarter_sheets / 1000;
+
+        $zinkat = $this->constantsService->findOne(1);
+        $traj = $this->constantsService->findOne(2);
+
         if (is_float($pull_nu) == 'true') {
             $pull_nu_sheet = floor($pull_nu) + 1; // عدد السحبات
         } else {
@@ -915,17 +947,19 @@ class CartService
         }
         // dd($pull_nu_sheet);
         if ($data['print_option'] == 1) { //  وجه فقط
-            $zinkat_price = $data['frontcolors'] * 30; //سعر الزنكات
-            $traj_price = $pull_nu_sheet * $data['frontcolors'] * 30; //سعر التراج 
+            $zinkat_price = $data['frontcolors'] * $zinkat->price; //سعر الزنكات
+            $traj_price = $pull_nu_sheet * $data['frontcolors'] * $traj->price; //سعر التراج 
         } elseif ($data['print_option'] == 2) { //  وجه و ضهر
-            $zinkat_price = ($data['frontcolors'] + $data['backcolors']) * 30; // سعر الزنكات
+            $zinkat_price = ($data['frontcolors'] + $data['backcolors']) * $zinkat->price; // سعر الزنكات
 
-            $traj_price = $pull_nu_sheet * ($data['frontcolors'] + $data['backcolors']) * 30; // سعر التراج 
+            $traj_price = $pull_nu_sheet * ($data['frontcolors'] + $data['backcolors']) * $traj->price; // سعر التراج 
         }
         // *************************************************** finish option/direction ***********************************************************************
 
+        $finish_option_price = $this->finishOptionService->findOne($data['finish_option']);
+
         if ($data['finish_option'] == 1 || $data['finish_option'] == 2) {
-            $finish_price = $data['quantity'] * 1;
+            $finish_price = $data['quantity'] * $finish_option_price->price;
         } else {
             $finish_direction = $data['finish_dir'];
             if ($finish_direction == 1 || $finish_direction == 2) {
@@ -933,18 +967,18 @@ class CartService
                 $is_length_fraction = $length - floor($length);
                 // dd($is_length_fraction);
                 if ($is_length_fraction > 0 == true) {
-                    $finish_price = $data['quantity'] * (floor($length) + 1) * 0.15;
+                    $finish_price = $data['quantity'] * (floor($length) + 1) * $finish_option_price->price;
                 } else {
-                    $finish_price = $data['quantity'] * floor($length) * 0.15;
+                    $finish_price = $data['quantity'] * floor($length) * $finish_option_price->price;
                 }
                 // dd($finish_price);
             } elseif ($finish_direction == 3 || $finish_direction == 4) {
                 $length = $paper_size->height;
                 $is_length_fraction = $length - floor($length);
                 if ($is_length_fraction > 0 == true) {
-                    $finish_price = $data['quantity'] * (floor($length) + 1) * 0.15;
+                    $finish_price = $data['quantity'] * (floor($length) + 1) * $finish_option_price->price;
                 } else {
-                    $finish_price = $data['quantity'] * floor($length) * 0.15;
+                    $finish_price = $data['quantity'] * floor($length) * $finish_option_price->price;
                 }
             }
         }
@@ -959,21 +993,23 @@ class CartService
         $total_cover_paper_price =  $total_used_sheets * $cover_paper_type->price; // حساب ثمن الغلاف
 
         // ***********************solovan**********************************
+        $solovan_price = $this->constantsService->findOne(3);
+
         if ($data['covers'] != null) {
             $solovan = $this->coverService->findOne($data['covers']);
             if (is_float($total_used_sheets) == 'true') {
                 if ($data['covers'] == 2) {
-                    $cover_price =  (floor($total_used_sheets) + 1) * 1.36 * 2;
+                    $cover_price =  (floor($total_used_sheets) + 1) * $solovan_price->price * 2;
                 } else if ($data['covers'] == 1) {
-                    $cover_price = (floor($total_used_sheets) + 1) * 1.36;
+                    $cover_price = (floor($total_used_sheets) + 1) * $solovan_price->price;
                 } else {
                     $cover_price = 0;
                 }
             } else {
                 if ($data['covers'] == 2) {
-                    $cover_price = ($total_used_sheets) * 1.36 * 2;
+                    $cover_price = ($total_used_sheets) * $solovan_price->price * 2;
                 } else if ($data['covers'] == 1) {
-                    $cover_price = ($total_used_sheets) * 1.36;
+                    $cover_price = ($total_used_sheets) * $solovan_price->price;
                 } else {
                     $cover_price = 0;
                 }
@@ -1138,21 +1174,26 @@ class CartService
             $pull_nu = $total_number_of_quarter_sheets / 1000;
         }
 
+        $zinkat = $this->constantsService->findOne(1);
+        $traj = $this->constantsService->findOne(2);
+
         // dd($pull_nu);
         if ($data['print_option'] == 1) { //  وجه فقط
-            $zinkat_price = $data['frontcolors'] * 30; //سعر الزنكات
+            $zinkat_price = $data['frontcolors'] * $zinkat->price; //سعر الزنكات
             // dd($zinkat_price);
-            $traj_price = $pull_nu * $data['frontcolors'] * 30; //سعر التراج 
+            $traj_price = $pull_nu * $data['frontcolors'] * $traj->price; //سعر التراج 
         } elseif ($data['print_option'] == 2) { //  وجه و ضهر
-            $zinkat_price = ($data['frontcolors'] + $data['backcolors'])  * 30; // سعر الزنكات
+            $zinkat_price = ($data['frontcolors'] + $data['backcolors'])  * $zinkat->price; // سعر الزنكات
 
-            $traj_price = $pull_nu * ($data['frontcolors'] + $data['backcolors']) * 30; // سعر التراج 
+            $traj_price = $pull_nu * ($data['frontcolors'] + $data['backcolors']) * $traj->price; // سعر التراج 
             // dd($pull_nu_sheet);
         }
 
         // *************************************************** finish option/direction ***********************************************************************
         //    دبوس/غراء
-        $finish_price = $data['quantity'] * 1;
+        $finish_option_price = $this->finishOptionService->findOne($data['finish_option']);
+
+        $finish_price = $data['quantity'] * $finish_option_price->price;
 
         // ***************************************************zigzag***********************************************************************
         //    dd($data['inner_quantity']);
@@ -1260,10 +1301,12 @@ class CartService
         // $total_per_quarter_sheet =  $paper_size->quantity_in_quarter; // العدد الكلي في الربع فرخ الواحد
         // $total_number_of_quarter_sheets =  $data['quantity'] / $total_per_quarter_sheet; // عدد الافرخ الربع المستخدمة
         $pull_nu = $data['quantity'] / 1000;
+        $zinkat = $this->constantsService->findOne(1);
+        $traj = $this->constantsService->findOne(2);
 
         if ($data['print_option'] == 1) { //  وجه فقط
-            $zinkat_price = $data['frontcolors'] * 30; //سعر الزنكات
-            $traj_price = $pull_nu * $data['frontcolors'] * 40; //سعر التراج 
+            $zinkat_price = $data['frontcolors'] * $zinkat->price; //سعر الزنكات
+            $traj_price = $pull_nu * $data['frontcolors'] * $traj->price; //سعر التراج 
         }
         // ***************************************************shipping***********************************************************************
 
@@ -1306,7 +1349,7 @@ class CartService
             'back_color' => (key_exists('backcolors', $data) && !empty($data['backcolors'])) ? $data['backcolors'] : null,
             'cut_style' => (key_exists('cutStyle', $data) && !empty($data['cutStyle'])) ? $data['cutStyle'] : null,
             'rega' => (key_exists('rega', $data) && !empty($data['rega'])) ? $data['rega'] : null,
-            'solovan' => (key_exists('covers', $data) && !empty($data['covers'])) ? $solovan->name : null,
+            // 'solovan' => (key_exists('covers', $data) && !empty($data['covers'])) ? $solovan->name : null,
             'cover_paper_type' => (key_exists('cover_paper_type', $data) && !empty($data['cover_paper_type'])) ? $data['cover_paper_type'] : null,
             'cover_front_color' => (key_exists('cover_frontcolors', $data) && !empty($data['cover_frontcolors'])) ? $data['cover_frontcolors'] : null,
             'cover_back_color' => (key_exists('cover_backcolors', $data) && !empty($data['cover_backcolors'])) ? $data['cover_backcolors'] : null,
@@ -1353,16 +1396,19 @@ class CartService
         } else {
             $pull_nu_sheet = $pull_nu;
         }
+        $zinkat = $this->constantsService->findOne(1);
+        $traj = $this->constantsService->findOne(2);
+
         if ($data['print_option'] == 1) { //  وجه فقط
-            $zinkat_price = $data['frontcolors'] * 30; //سعر الزنكات
-            $traj_price = $pull_nu_sheet * $data['frontcolors'] * 30; //سعر التراج 
+            $zinkat_price = $data['frontcolors'] * $zinkat->price; //سعر الزنكات
+            $traj_price = $pull_nu_sheet * $data['frontcolors'] * $traj->price; //سعر التراج 
             // dd($pull_nu_sheet .'*'. $data['frontcolors'] .'*'. 30);
         } elseif ($data['print_option'] == 2) { //  وجه و ضهر
-            $zinkat_price = ($data['frontcolors'] + $data['backcolors']) * 30; // سعر الزنكات
+            $zinkat_price = ($data['frontcolors'] + $data['backcolors']) * $zinkat->price; // سعر الزنكات
             // dd($pull_nu);
 
             // dd($pull_nu_sheet);
-            $traj_price = $pull_nu_sheet * ($data['frontcolors'] + $data['backcolors']) * 30; // سعر التراج 
+            $traj_price = $pull_nu_sheet * ($data['frontcolors'] + $data['backcolors']) * $traj->price; // سعر التراج 
             // dd($pull_nu_sheet . '*' . ($data['frontcolors'] . '+' . $data['backcolors']) . '* 30');
         }
 
@@ -1377,12 +1423,14 @@ class CartService
         }
 
         // *************************************************** finish option/direction ***********************************************************************
+        $finish_option_price = $this->finishOptionService->findOne($data['finish_option']);
+
         if ($data['zigzag'] == 1) {
             //    دبوس/غراء
-            $finish_price = $data['quantity'] * 1;
+            $finish_price = $data['quantity'] * $finish_option_price->price;
         } else {
             if ($data['finish_option'] == 1 || $data['finish_option'] == 2) {
-                $finish_price = $data['quantity'] * 1;
+                $finish_price = $data['quantity'] * $finish_option_price->price;
             } else {
                 $finish_direction = $data['finish_dir'];
                 if ($finish_direction == 1 || $finish_direction == 2) {
@@ -1504,20 +1552,24 @@ class CartService
         } else {
             $pull_nu_sheet = $pull_nu;
         }
+
+        $zinkat = $this->constantsService->findOne(1);
+        $traj = $this->constantsService->findOne(2);
+
         // dd($number_of_zinkat);
         if ($data['print_option'] == 1) { //  وجه فقط
-            $zinkat_price = $data['frontcolors'] * $number_of_zinkat * 30; //سعر الزنكات
+            $zinkat_price = $data['frontcolors'] * $number_of_zinkat * $zinkat->price; //سعر الزنكات
 
 
 
             if ($data['print_option'] == 1) {
 
-                $traj_price = $pull_nu_sheet * $data['frontcolors'] * 30; //سعر التراج 
+                $traj_price = $pull_nu_sheet * $data['frontcolors'] * $traj->price; //سعر التراج 
             }
         } elseif ($data['print_option'] == 2) { //  وجه و ضهر
-            $zinkat_price = ($data['frontcolors'] + $data['backcolors']) * $number_of_zinkat * 30; // سعر الزنكات
+            $zinkat_price = ($data['frontcolors'] + $data['backcolors']) * $number_of_zinkat * $zinkat->price; // سعر الزنكات
 
-            $traj_price = $pull_nu_sheet * ($data['frontcolors'] + $data['backcolors']) * 30; // سعر التراج 
+            $traj_price = $pull_nu_sheet * ($data['frontcolors'] + $data['backcolors']) * $traj->price; // سعر التراج 
             // dd($pull_nu_sheet);
         }
         // $total_sheets_price =  ($standard_sheet_price/4) * $total_number_of_quarter_sheets; // حساب ثمن الورق كله
@@ -1564,21 +1616,23 @@ class CartService
             $total_number_of_quarter_sheets_cover =  ($data['quantity'] * 2) / $total_per_quarter_sheet; // عدد الافرخ الربع المستخدمة
 
             // ***********************solovan**********************************
+            $solovan_price = $this->constantsService->findOne(3);
+
             if ($data['covers'] != null) {
                 $solovan = $this->coverService->findOne($data['covers']);
                 if (is_float($total_used_sheets) == 'true') {
                     if ($data['covers'] == 2) {
-                        $cover_price =  (floor($total_used_sheets) + 1) * 1.36 * 2;
+                        $cover_price =  (floor($total_used_sheets) + 1) * $solovan_price->price * 2;
                     } else if ($data['covers'] == 1) {
-                        $cover_price = (floor($total_used_sheets) + 1) * 1.36;
+                        $cover_price = (floor($total_used_sheets) + 1) * $solovan_price->price;
                     } else {
                         $cover_price = 0;
                     }
                 } else {
                     if ($data['covers'] == 2) {
-                        $cover_price = ($total_used_sheets) * 1.36 * 2;
+                        $cover_price = ($total_used_sheets) * $solovan_price->price * 2;
                     } else if ($data['covers'] == 1) {
-                        $cover_price = ($total_used_sheets) * 1.36;
+                        $cover_price = ($total_used_sheets) * $solovan_price->price;
                     } else {
                         $cover_price = 0;
                     }

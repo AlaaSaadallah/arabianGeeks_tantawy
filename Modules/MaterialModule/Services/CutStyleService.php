@@ -16,7 +16,7 @@ class CutStyleService
 
     public function findAll()
     {
-        return $this->cutStyleRepository->findAll();
+        return $this->cutStyleRepository->all();
     }
     public function findOne($id)
     {
@@ -25,5 +25,8 @@ class CutStyleService
     }
 
   
-
+    public function update($data)
+    {
+        return $this->cutStyleRepository->update($data,$data['id']);
+    }
 }

@@ -24,8 +24,9 @@ class CustomerService
         return $this->customerRepository->find($id);
     }
 
-    public function create($customer_data)
+    public function create($data)
     {
+        $customer_data=$this->validateUpdateData($data);
 
 
         return $this->customerRepository->create($customer_data);
@@ -51,6 +52,9 @@ class CustomerService
         }
         if(key_exists('password',$data)&&$data['password'] !=null){
             $customer_data['password']=bcrypt($data['password']);
+        }
+        if(key_exists('city_id',$data)){
+            $customer_data['city_id']=$data['city_id'];
         }
         return $customer_data;
         

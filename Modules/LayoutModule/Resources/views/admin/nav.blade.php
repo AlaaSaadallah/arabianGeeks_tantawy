@@ -25,43 +25,45 @@
             <div class="menu_section">
               <h3>General</h3>
               <ul class="nav side-menu">
-                <li><a href="index.html"><i class="fa fa-home"></i> الرئيسية</a>
+                <li><a href="{{route('dashboard')}}"><i class="fa fa-home"></i> الرئيسية</a>
                   
                 </li>
-                <li><a href="items.html"><i class="fa fa-edit"></i> المنتجات </a>
+                <li><a href="{{ route('admin.products')}}"><i class="fa fa-tags"></i> المنتجات </a>
                 
                 </li>
  
               
                 <li><a><i class="fa fa-clone"></i>المكونات الاساسية <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <!-- <li><a href="size.html">المقاس</a></li> -->
-                    <!-- <li><a href="print_shape.html">شكل الطباغة</a></li> -->
+                    <li><a href="{{route('admin.material.paperSize')}}">المقاس</a></li>
+                    <li><a href="{{route('admin.material.printOption')}}">شكل الطباغة</a></li>
                     <li><a href="{{route('admin.material.paperType')}}">نوع الورق</a></li>
                     <!-- <li><a href="#"> الكمية</a></li> -->
-                    <!-- <li><a href="#">عدد الألوان</a></li> -->
-                    <!-- <li><a href="#">التقفيل </a></li> -->
+                    <li><a href="{{route('admin.material.colors')}}">عدد الألوان</a></li>
+                    <li><a href="{{route('admin.material.finishOptions')}}">التقفيل </a></li>
                     <!-- <li><a href="#">شرشرة</a></li> -->
-                    <!-- <li><a href="fixed_footer.html">جهة التقفيل </a></li> -->
-                    <!-- <li><a href="fixed_sidebar.html">القص</a></li> -->
+                    <li><a href="{{route('admin.material.finishDirections')}}">جهة التقفيل </a></li>
+                    <li><a href="{{route('admin.material.cutStyle')}}">القص</a></li>
                     <!-- <li><a href="fixed_footer.html">سلوفان </a></li> -->
-                    <!-- <li><a href="fixed_sidebar.html">ريجة</a></li> -->
+                    <li><a href="{{route('admin.material.rega')}}">ريجة</a></li>
                     <!-- <li><a href="fixed_footer.html">تكسير</a></li> -->
-                    <!-- <li><a href="fixed_sidebar.html">لزق</a></li> -->
+                    <li><a href="{{route('admin.material.glue')}}">لزق</a></li>
+                    <li><a href="{{route('admin.material.constants')}}">الثوابت</a></li>
+
               
                   </ul>
                 </li>
-                <li><a href="{{route('admin.customers')}}"><i class="fa fa-desktop"></i> عملاءنا</a>
+                <li><a href="{{route('admin.customers')}}"><i class="fa fa-users"></i> عملاءنا</a>
                  
                 </li>
                 <!-- <li><a href="form_upload.html"><i class="fa fa-table"></i> قائمة التسعير </a> -->
                  
                 </li>
-                <li><a href="{{route('admin.cities')}}"><i class="fa fa-windows"></i> المحافظات </a>
+                <li><a href="{{route('admin.cities')}}"><i class="fa fa-map-marker"></i> المحافظات </a>
                   
                 </li>
 
-                <li><a href="{{route('admin.carts')}}"><i class="fa fa-windows"></i> الطلبات </a>
+                <li><a href="{{route('admin.carts')}}"><i class="fa fa-shopping-bag"></i> الطلبات </a>
                   
                   </li>
               </ul>

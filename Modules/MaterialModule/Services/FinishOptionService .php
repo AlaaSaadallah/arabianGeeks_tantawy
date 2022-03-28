@@ -17,13 +17,16 @@ class FinishOptionService
 
     public function findAll()
     {
-        return $this->finishOptionRepository->findAll();
+        return $this->finishOptionRepository->all();
     }
     public function findOne($id)
     {
         return $this->finishOptionRepository->find($id);
     }
 
-
+    public function update($data)
+    {
+        return $this->finishOptionRepository->update($data,$data['id']);
+    }
 
 }
