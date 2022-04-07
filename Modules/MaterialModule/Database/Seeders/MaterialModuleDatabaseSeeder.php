@@ -45,7 +45,10 @@ class MaterialModuleDatabaseSeeder extends Seeder
                     'name' => "سولفان",
                     'price' => "1.60"
                 ]);
-               
+                Constant::create([
+                    'name' => "تراج مظاريف",
+                    'price' => "50"
+                ]);
         // *************************************************colors***********************************************************
 
         DB::table('colors')->truncate();
@@ -9190,13 +9193,16 @@ class MaterialModuleDatabaseSeeder extends Seeder
             'name' => "غراء=لزق",
         ]);
         FinishOption::create([
-            'name' => "دبوس",
+            'name' => "دبوس-دفتر",
         ]);
         FinishOption::create([
             'name' => "سلك",
         ]);
         FinishOption::create([
             'name' => "ملازم",
+        ]);
+        FinishOption::create([
+            'name' => "دبوس-مجلة",
         ]);
         // *************************************************finish direction***********************************************************
 

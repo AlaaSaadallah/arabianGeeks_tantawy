@@ -166,6 +166,9 @@
                                     <select class="form-select" aria-label="Default select example" name="finish_option">
                                         <option value="" selected>اختر</option>
                                         @foreach ($category->finishOptions as $finish_option)
+                                        @if($finish_option->id == 5)
+                                        continue
+                                        @endif
                                         <option value="{{ $finish_option->id }}">{{ $finish_option->name }}</option>
                                         @endforeach
                                     </select>

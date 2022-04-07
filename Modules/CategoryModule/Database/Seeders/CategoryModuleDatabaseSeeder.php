@@ -2271,7 +2271,7 @@ class CategoryModuleDatabaseSeeder extends Seeder
         // magazine
         CategoryFinishOption::create([
             'category_id' => "4",
-            'finish_option_id' => "2",
+            'finish_option_id' => "5",
         ]);
         CategoryFinishOption::create([
             'category_id' => "4",

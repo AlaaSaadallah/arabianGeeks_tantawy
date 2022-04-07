@@ -14,10 +14,12 @@
 use Illuminate\Support\Facades\Route;
 
 
-Route::group(['prefix' => 'order', 'namespace' => 'User'], function () {
+Route::group(['prefix' => 'order', 'middleware'=>['auth:customer'],'namespace' => 'User'], function () {
 
 //     /*************************views route ************************************** */
-//     Route::post('store', 'OrderUserController@storeBrochure')->name('user.order.store'); // add new orderaction
+Route::get('pdf/{id}', 'OrderUserController@index')->name('user.order.index'); // add new orderaction
+
+    Route::post('store/{id}', 'OrderUserController@create')->name('user.order.create'); // add new orderaction
 //     Route::post('storeFolder', 'OrderUserController@storeLargeFolder')->name('user.order.storeFolder'); // add new orderaction
 //     // Route::post('storeSmallFolder', 'OrderUserController@storeSmallFolder')->name('user.order.storeFolder'); // add new orderaction
 //     Route::post('storeFlyer', 'OrderUserController@storeFlyer')->name('user.order.storeFlyer'); // add new orderaction

@@ -2,14 +2,22 @@
 
 namespace Modules\OrderModule\Http\Controllers\user;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\File as HttpFile;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use Modules\CartModule\Services\CartService;
 use Modules\MaterialModule\Entities\PaperSize;
 use Modules\MaterialModule\Services\PaperSizePaperTypeService;
 use Modules\MaterialModule\Services\PaperSizeService;
 use Modules\MaterialModule\Services\PaperTypeService;
 use Modules\OrderModule\Services\OrderService;
+use PHPUnit\Framework\Constraint\FileExists;
 
 use function PHPUnit\Framework\assertIsFloat;
 
@@ -17,29 +25,60 @@ class OrderUserController extends Controller
 {
 
     private $paperSizeService;
-    public function __construct(OrderService $orderService, PaperSizeService $paperSizeService, PaperTypeService $paperTypeService, PaperSizePaperTypeService $paperSizePaperTypeService)
-    {
+    public function __construct(
+        OrderService $orderService,
+        PaperSizeService $paperSizeService,
+        PaperTypeService $paperTypeService,
+        PaperSizePaperTypeService $paperSizePaperTypeService,
+        CartService $cartService
+    ) {
         $this->orderService = $orderService;
         $this->paperSizeService = $paperSizeService;
         $this->paperTypeService = $paperTypeService;
         $this->paperSizePaperTypeService = $paperSizePaperTypeService;
+        $this->cartService = $cartService;
     }
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('ordermodule::index');
+        // $order_item = $this->cartService->findOne($request->id);
+        // $data['image'] = $order_item->image;
+        // $image = $data['image'] ;
+        // $pdf = Pdf::loadView('cartmodule::attach', compact('image'), $data);
+        // // $pdf = App::make('dompdf.wrapper');
+        // // $pdf->loadHTML('<img src="'.public_path('uploads/cart/').'">')
+        // // $pdf->loadHTML('<h1>ddd</h1>');
+
+        // // $pdf->loadHTML('<img src="'.$data['image'].'">');
+        // return $pdf->stream();
+        // return view('ordermodule::index');
     }
 
     /**
      * Show the form for creating a new resource.
      * @return Renderable
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('ordermodule::create');
+        
+        $order_item = $this->cartService->findOne($request->id);
+        $data["email"] = 'print@mall105.com';
+        $data["title"] = "ORDER";
+        $data['item'] = $order_item;
+        $data['user'] = $order_item->customer;
+        $data['image'] = $order_item->image;
+        $image = $data['image'] ;
+        $pdf = Pdf::loadView('cartmodule::attach', compact('image'), $data);
+        Mail::send('cartmodule::pdf', $data, function ($message) use ($data,$pdf) {
+            $message->to($data["email"], $data["email"])
+                ->subject($data["title"])
+                ->attachData($pdf->output(), "design.pdf");
+
+        }
+);
     }
 
     /**

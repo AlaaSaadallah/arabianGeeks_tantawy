@@ -172,6 +172,7 @@
                                     <select class="form-select" aria-label="Default select example" name="finish_option">
                                         <option value="" selected>اختر</option>
                                         @foreach ($category->finishOptions as $finish_option)
+                                     
                                         <option value="{{ $finish_option->id }}">{{ $finish_option->name }}</option>
                                         @endforeach
                                     </select>

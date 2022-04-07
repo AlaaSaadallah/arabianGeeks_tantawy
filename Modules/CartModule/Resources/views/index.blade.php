@@ -125,6 +125,14 @@
 
                             </form>
                         </li>
+                        <li>
+                            <form action="{{route('user.order.create', $item->id)}}" method="post">
+                              
+                                @csrf
+                                <button>اتمام الطلب</button>
+
+                            </form>
+                        </li>
                     </ul>
                     <!-- <div class="delivery">
                         <p>Service Charges : $10.00</p>

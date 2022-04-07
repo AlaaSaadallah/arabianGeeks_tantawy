@@ -2,8 +2,10 @@
 
 namespace Modules\CartModule\Http\Controllers;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Modules\CartModule\Services\CartService;
 use Modules\MaterialModule\Services\PaperSizePaperTypeService;
@@ -150,20 +152,6 @@ public function index()
 
 
 
-
-public function mail()
-{
-    $pdf = FacadePdf::loadView('cartmodule::pdf',$data);
-
-    // Mail::send('paymentmodule::supplier.email', $data, function ($message) use ($data, $pdf) {
-
-    //     $message->to($data["email"], $data["email"])
-
-    //         ->subject($data["title"])
-
-    //         ->attachData($pdf->output(), "Transactions_report.pdf");
-    // });
-}
 
 
 

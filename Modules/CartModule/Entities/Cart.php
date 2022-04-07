@@ -21,7 +21,7 @@ class Cart extends Model
     {
       
          
-                return asset('public/uploads/carts/' . $this->attributes['image']);
+                return asset('/uploads/cart/' . $this->attributes['image']);
             
         
     }

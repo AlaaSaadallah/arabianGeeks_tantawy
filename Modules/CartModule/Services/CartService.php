@@ -112,7 +112,13 @@ class CartService
                 $traj_price =  $pull_nu_sheet * $data['frontcolors'] * $traj->price; // التراج 
             }
         } elseif ($data['print_option'] == 2) { //  وجه و ضهر
-            $zinkat_price = ($data['frontcolors'] + $data['backcolors']) * $zinkat->price;
+            if ($data['frontcolors'] == $data['backcolors']) {
+                // طبع و قلب
+                $zinkat_price = ($data['frontcolors']) * $zinkat->price;
+            } else {
+
+                $zinkat_price = ($data['frontcolors'] + $data['backcolors']) * $zinkat->price;
+            }
             if ($total_number_of_quarter_sheets > 1000) {
                 $is_float = $total_number_of_quarter_sheets / 1000;
                 if ($is_float == "true") {
@@ -312,24 +318,22 @@ class CartService
         // بحسب عدد الافرخ الربع و اضربه في السعر على 4
         // dd($data['covers']);
         $solovan_price = $this->constantsService->findOne(3);
+        // dd($data['covers']);
+        if ($data['covers'] != null && $data['covers'] != 0) {
+            $solovan = $this->coverService->findOne($data['covers']);
 
-        if ($data['covers'] != null) {
-            if ($data['covers'] != 0) {
-
-                $solovan = $this->coverService->findOne($data['covers']);
-            }
             if (is_float($total_standard_sheets) == 'true') {
-                if ($data['covers'] == 2) {
+                if ($data['covers'] == 2 || $data['covers'] == 4) {
                     $cover_price =  (floor($total_standard_sheets) + 1) * $solovan_price->price * 2;
-                } else if ($data['covers'] == 1) {
+                } else if ($data['covers'] == 1 || $data['covers'] == 3) {
                     $cover_price = (floor($total_standard_sheets) + 1) * $solovan_price->price;
                 } else {
                     $cover_price = 0;
                 }
             } else {
-                if ($data['covers'] == 2) {
+                if ($data['covers'] == 2 || $data['covers'] == 4) {
                     $cover_price = ($total_standard_sheets) * $solovan_price->price * 2;
-                } else if ($data['covers'] == 1) {
+                } else if ($data['covers'] == 1 || $data['covers'] == 3) {
                     $cover_price = ($total_standard_sheets) * $solovan_price->price;
                 } else {
                     $cover_price = 0;
@@ -505,8 +509,13 @@ class CartService
             $traj_price = $pull_nu * $data['frontcolors'] * $traj->price; //سعر التراج 
             // dd($pull_nu_sheet .'*'. $data['frontcolors'] .'*'. 30);
         } elseif ($data['print_option'] == 2) { //  وجه و ضهر
-            $zinkat_price = ($data['frontcolors'] + $data['backcolors']) * $zinkat->price; // سعر الزنكات
-            // dd($pull_nu);
+            if ($data['frontcolors'] == $data['backcolors']) {
+                // طبع و قلب
+                $zinkat_price = ($data['frontcolors']) * $zinkat->price;
+            } else {
+
+                $zinkat_price = ($data['frontcolors'] + $data['backcolors']) * $zinkat->price;
+            }            // dd($pull_nu);
             if (is_float($pull_nu) == 'true') {
                 $pull_nu_sheet = floor($pull_nu) + 1; // عدد السحبات
             } else {
@@ -1302,7 +1311,7 @@ class CartService
         // $total_number_of_quarter_sheets =  $data['quantity'] / $total_per_quarter_sheet; // عدد الافرخ الربع المستخدمة
         $pull_nu = $data['quantity'] / 1000;
         $zinkat = $this->constantsService->findOne(1);
-        $traj = $this->constantsService->findOne(2);
+        $traj = $this->constantsService->findOne(4);
 
         if ($data['print_option'] == 1) { //  وجه فقط
             $zinkat_price = $data['frontcolors'] * $zinkat->price; //سعر الزنكات
@@ -1597,9 +1606,10 @@ class CartService
 
         // *************************************************** finish option/direction ***********************************************************************
         //    دبوس/غراء
+        $finish_option = $this->finishOptionService->findOne($data['finish_option']);
         $inner_pages_price = ($data['inner_quantity'] * 0.05);
 
-        $price_of_pins =  $inner_pages_price + 0.20;
+        $price_of_pins =  $inner_pages_price +$finish_option->price;
         $finish_price = $data['quantity'] * $price_of_pins;
         //    dd($inner_pages_price + 0.20 );
 

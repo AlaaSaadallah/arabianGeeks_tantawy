@@ -36,7 +36,7 @@
                 <li><a><i class="fa fa-clone"></i>المكونات الاساسية <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li><a href="{{route('admin.material.paperSize')}}">المقاس</a></li>
-                    <li><a href="{{route('admin.material.printOption')}}">شكل الطباغة</a></li>
+                    <li><a href="{{route('admin.material.printOption')}}">شكل الطباعة</a></li>
                     <li><a href="{{route('admin.material.paperType')}}">نوع الورق</a></li>
                     <!-- <li><a href="#"> الكمية</a></li> -->
                     <li><a href="{{route('admin.material.colors')}}">عدد الألوان</a></li>

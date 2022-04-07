@@ -39,4 +39,4 @@ Route::group(['prefix' => 'admin/carts',
 
 });
 
-Route::get('/pdf', 'CartModuleController@pdf');
+Route::get('/pdf', 'CartModuleController@mail');

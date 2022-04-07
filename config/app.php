@@ -175,7 +175,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
-
+        // Spatie\Browsershot\Browsershot::class
+        Barryvdh\Snappy\ServiceProvider::class,
     ],
 
     /*
@@ -229,7 +230,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
-
+        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
 
     ],
 
